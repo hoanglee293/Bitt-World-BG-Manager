@@ -84,7 +84,7 @@ export default function CommissionHistory() {
                         {entry.bacr_wallet.substring(0, 4)}...{entry.bacr_wallet.substring(entry.bacr_wallet.length - 4)}
                       </TableCell>
                       <TableCell >
-                        ${Number.parseFloat(entry.bacr_commission_amount).toFixed(2)}
+                        ${Number.parseFloat(entry.bacr_commission_amount).toFixed(6)}
                       </TableCell>
                       <TableCell className="text-right">{entry.bacr_level}</TableCell>
                       <TableCell className="text-right">{format(new Date(entry.bacr_created_at), "dd/MM/yyyy HH:mm")}</TableCell>

@@ -138,7 +138,7 @@ export default function DownlineStats() {
           <div className="grid gap-4 mt-0">
             <h3 className="font-semibold text-lg">Tổng quan:</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card className="p-4 bg-[#e0fcff] border-none flex justify-between flex-col">
+              <Card className="p-4 bg-[#e0fcff] border-none flex justify-between flex-col" style={{ boxShadow: "0px 0px 10px 0x #1f1f1f14" }}>
                 <div className="text-sm text-muted-foreground">Tổng thành viên</div>
                 <div className="text-2xl font-bold">{stats.totalMembers}</div>
               </Card>

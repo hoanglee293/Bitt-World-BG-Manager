@@ -712,8 +712,8 @@ const simulateApiCall = <T,>(data: T): Promise<T> => {
 export const getCommissionHistoryWithFallback = async () => {
   try {
     // fake data
-    // return await getCommissionHistory()
-    return mockCommissionHistory
+    return await getCommissionHistory()
+    // return mockCommissionHistory
   } catch (error) {
     return simulateApiCall(mockCommissionHistory)
   }
@@ -722,8 +722,8 @@ export const getCommissionHistoryWithFallback = async () => {
 export const getMyBgAffiliateStatusWithFallback = async () => {
   try {
     // fake data
-    // return await getMyBgAffiliateStatus()
-    return mockMyBgAffiliateStatus
+    return await getMyBgAffiliateStatus()
+    // return mockMyBgAffiliateStatus
   } catch (error) {
     return simulateApiCall(mockMyBgAffiliateStatus)
   }
@@ -732,8 +732,8 @@ export const getMyBgAffiliateStatusWithFallback = async () => {
 export const getBgAffiliateStatsWithFallback = async () => {
   try {
     // fake data
-    // return await getBgAffiliateStats()
-    return mockBgAffiliateStats
+    return await getBgAffiliateStats()
+    // return mockBgAffiliateStats
   } catch (error) {
     return simulateApiCall(mockBgAffiliateStats)
   }
@@ -742,8 +742,8 @@ export const getBgAffiliateStatsWithFallback = async () => {
 export const getAffiliateTreeWithFallback = async () => {
   try {
     // fake data
-    // return await getAffiliateTree()
-    return mockAffiliateTree
+    return await getAffiliateTree()
+    // return mockAffiliateTree
   } catch (error) {
     return simulateApiCall(mockAffiliateTree)
   }
@@ -752,8 +752,8 @@ export const getAffiliateTreeWithFallback = async () => {
 export const getDownlineStatsWithFallback = async (filters: any = {}) => {
   try {
     // fake data
-    // return await getDownlineStats(filters)
-    return mockDownlineStats
+    return await getDownlineStats(filters)
+    // return mockDownlineStats
   } catch (error) {
     return simulateApiCall(mockDownlineStats)
   }

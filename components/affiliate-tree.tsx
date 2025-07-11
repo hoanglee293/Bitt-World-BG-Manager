@@ -14,7 +14,7 @@ interface ReferrerInfo {
 
 interface TreeInfo {
   treeId: number
-  referrer: ReferrerInfo
+  referrer: ReferrerInfo | null
   totalCommissionPercent: number
   createdAt: string
 }
@@ -182,13 +182,20 @@ export default function AffiliateTree() {
           
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <h4 className="font-semibold mb-2">Người giới thiệu:</h4>
-            <div className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              <span className="font-medium">{treeData.treeInfo.referrer.nickName}</span>
-              <Badge variant="outline" className="text-xs">
-                {treeData.treeInfo.referrer.solanaAddress.substring(0, 8)}...
-              </Badge>
-            </div>
+            {treeData.treeInfo.referrer ? (
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                <span className="font-medium">{treeData.treeInfo.referrer.nickName}</span>
+                <Badge variant="outline" className="text-xs">
+                  {treeData.treeInfo.referrer.solanaAddress.substring(0, 8)}...
+                </Badge>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                <span className="text-muted-foreground">Không có người giới thiệu</span>
+              </div>
+            )}
             <div className="text-sm text-muted-foreground mt-1">
               Tạo ngày: {format(new Date(treeData.treeInfo.createdAt), "dd/MM/yyyy HH:mm")}
             </div>

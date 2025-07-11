@@ -82,7 +82,7 @@ export default function LoginPage() {
                   <span className="w-full border-t border-black" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-transparent px-2 text-sm text-black bg-[#b9daf3]">
+                  <span className="bg-[#b8d9f1] px-2 text-sm text-black">
                     Hoặc
                   </span>
                 </div>

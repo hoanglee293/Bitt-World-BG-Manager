@@ -63,7 +63,7 @@ export default function BgAffiliateStats() {
               <div className="font-medium">ID Cây:</div>
               <div>{stats.treeInfo.treeId}</div>
               <div className="font-medium">Ví gốc:</div>
-              <div className="truncate">{stats.treeInfo.rootWallet?.substring(0, 7)}...{stats.treeInfo.rootWallet?.substring(stats.treeInfo.rootWallet.length - 4)}</div>
+              <div className="truncate">{stats.treeInfo.rootWallet?.solanaAddress.substring(0, 7)}...{stats.treeInfo.rootWallet?.solanaAddress.substring(stats.treeInfo.rootWallet.solanaAddress.length - 4)}</div>
               <div className="font-medium">Tổng phần trăm hoa hồng:</div>
               <div>{stats.treeInfo.totalCommissionPercent}%</div>
             </div>
@@ -76,7 +76,7 @@ export default function BgAffiliateStats() {
               <div className="font-medium">ID Cây:</div>
               <div>{stats.nodeInfo.treeId}</div>
               <div className="font-medium">Ví cha:</div>
-              <div className="truncate">{stats.nodeInfo.parentWallet?.substring(0, 7)}...{stats.nodeInfo.parentWallet?.substring(stats.nodeInfo.parentWallet.length - 4)}</div>
+              <div className="truncate">{stats.nodeInfo.parentWallet?.solanaAddress.substring(0, 7)}...{stats.nodeInfo.parentWallet?.solanaAddress.substring(stats.nodeInfo.parentWallet.solanaAddress.length - 4)}</div>
               <div className="font-medium">Phần trăm hoa hồng:</div>
               <div>{stats.nodeInfo.commissionPercent}%</div>
               <div className="font-medium">Cấp độ:</div>
@@ -87,7 +87,7 @@ export default function BgAffiliateStats() {
         {stats.totalEarnings &&
           <div className="flex items-center justify-between text-lg font-bold border-t pt-4 ">
             <span>Tổng thu nhập:</span>
-            <span>${stats.totalEarnings.toFixed(2)}</span>
+            <span>${stats.totalEarnings.toFixed(6)}</span>
           </div>
         }
       </CardContent>
