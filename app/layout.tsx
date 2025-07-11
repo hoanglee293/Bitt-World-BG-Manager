@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { Toaster } from 'sonner'
+import { AuthProvider } from '@/contexts/auth-context'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'BG Affiliate Dashboard',
+  description: 'Hệ thống quản lý BG Affiliate',
   generator: 'v0.dev',
 }
 
@@ -14,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
+      </body>
     </html>
   )
 }

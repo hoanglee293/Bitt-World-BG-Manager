@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getAffiliateTree } from "@/lib/api"
-import { Loader2 } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { getAffiliateTreeWithFallback } from "@/lib/api"
+import { Loader2, Users, User, Crown, TrendingUp } from "lucide-react"
 import { format } from "date-fns"
 
 interface ReferrerInfo {
@@ -39,17 +40,75 @@ interface AffiliateTreeData {
   downlineNodes: DownlineNode[]
 }
 
+
+
+// Tree Node Component
+function TreeNodeComponent({ 
+  node,
+  level
+}: { 
+  node: DownlineNode
+  level: number
+}) {
+  const getLevelColor = (level: number) => {
+    switch (level) {
+      case 1: return "bg-blue-50 border-blue-200 text-blue-800"
+      case 2: return "bg-green-50 border-green-200 text-green-800"
+      case 3: return "bg-yellow-50 border-yellow-200 text-yellow-800"
+      case 4: return "bg-purple-50 border-purple-200 text-purple-800"
+      default: return "bg-gray-50 border-gray-200 text-gray-800"
+    }
+  }
+
+  const getLevelIcon = (level: number) => {
+    switch (level) {
+      case 1: return <Crown className="h-4 w-4" />
+      case 2: return <Users className="h-4 w-4" />
+      case 3: return <User className="h-4 w-4" />
+      default: return <User className="h-4 w-4" />
+    }
+  }
+
+  return (
+    <div 
+      className="flex items-center gap-2 p-3 rounded-lg border transition-all hover:shadow-md"
+      style={{ marginLeft: `${(level - 1) * 24}px` }}
+    >
+      {/* Node content */}
+      <div className={`flex items-center gap-2 p-2 rounded-md border ${getLevelColor(node.level)}`}>
+        {getLevelIcon(node.level)}
+        <div className="flex flex-col min-w-0">
+          <div className="font-medium truncate">{node.walletInfo.nickName}</div>
+          <div className="text-xs opacity-75 truncate">
+            {node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}
+          </div>
+        </div>
+      </div>
+      
+      {/* Commission badge */}
+      <Badge variant="secondary" className="ml-auto">
+        <TrendingUp className="h-3 w-3 mr-1" />
+        {node.commissionPercent}%
+      </Badge>
+      
+      {/* Level indicator */}
+      <Badge variant="outline" className="text-xs">
+        Lv.{node.level}
+      </Badge>
+    </div>
+  )
+}
+
 export default function AffiliateTree() {
   const [treeData, setTreeData] = useState<AffiliateTreeData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-
   useEffect(() => {
     const fetchTree = async () => {
       setIsLoading(true)
       setError(null)
       try {
-        const data = await getAffiliateTree()
+        const data = await getAffiliateTreeWithFallback()
         setTreeData(data)
       } catch (err) {
         setError("Failed to fetch affiliate tree data.")
@@ -82,59 +141,106 @@ export default function AffiliateTree() {
     )
   }
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Thông tin cây Affiliate</CardTitle>
-        <CardDescription>Xem cấu trúc cây affiliate và các thành viên tuyến dưới của bạn.</CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-6">
-        <div className="grid gap-2">
-          <h3 className="font-semibold text-lg">Thông tin cây:</h3>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-            <div className="font-medium">ID Cây:</div>
-            <div>{treeData.treeInfo.treeId}</div>
-            <div className="font-medium">Người giới thiệu:</div>
-            <div>
-              {treeData.treeInfo.referrer.nickName} ({treeData.treeInfo.referrer.solanaAddress.substring(0, 8)}...)
-            </div>
-            <div className="font-medium">Tổng phần trăm hoa hồng:</div>
-            <div>{treeData.treeInfo.totalCommissionPercent}%</div>
-            <div className="font-medium">Ngày tạo:</div>
-            <div>{format(new Date(treeData.treeInfo.createdAt), "dd/MM/yyyy HH:mm")}</div>
-          </div>
-        </div>
+  // Group nodes by level for statistics
+  const nodesByLevel = treeData.downlineNodes.reduce((acc, node) => {
+    acc[node.level] = (acc[node.level] || 0) + 1
+    return acc
+  }, {} as Record<number, number>)
 
-        <div className="grid gap-2">
-          <h3 className="font-semibold text-lg">Các nút tuyến dưới:</h3>
+  return (
+    <div className="space-y-6 border-l-8 border-[#00c0ff]/50 border-y-0 border-r-0 rounded-none p-4">
+      {/* Tree Info Card */}
+      <Card className="border-none" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Crown className="h-5 w-5" />
+            Thông tin cây Affiliate
+          </CardTitle>
+          <CardDescription>
+            Cấu trúc cây affiliate và thống kê thành viên tuyến dưới
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600">{treeData.treeInfo.treeId}</div>
+              <div className="text-sm text-blue-600">ID</div>
+            </div>
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">{treeData.downlineNodes.length}</div>
+              <div className="text-sm text-green-600">Tổng thành viên</div>
+            </div>
+            <div className="text-center p-4 bg-yellow-50 rounded-lg">
+              <div className="text-2xl font-bold text-yellow-600">{treeData.treeInfo.totalCommissionPercent}%</div>
+              <div className="text-sm text-yellow-600">Tổng hoa hồng</div>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600">{Object.keys(nodesByLevel).length}</div>
+              <div className="text-sm text-purple-600">Số cấp độ</div>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-semibold mb-2">Người giới thiệu:</h4>
+            <div className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              <span className="font-medium">{treeData.treeInfo.referrer.nickName}</span>
+              <Badge variant="outline" className="text-xs">
+                {treeData.treeInfo.referrer.solanaAddress.substring(0, 8)}...
+              </Badge>
+            </div>
+            <div className="text-sm text-muted-foreground mt-1">
+              Tạo ngày: {format(new Date(treeData.treeInfo.createdAt), "dd/MM/yyyy HH:mm")}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Tree Structure Card */}
+      <Card className="border-none" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Cấu trúc cây Affiliate
+          </CardTitle>
+          <CardDescription>
+            Xem cấu trúc phân cấp và thông tin chi tiết từng thành viên
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           {treeData.downlineNodes.length === 0 ? (
-            <p className="text-muted-foreground">Không có thành viên tuyến dưới nào.</p>
+            <div className="text-center py-12 text-muted-foreground">
+              <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p>Chưa có thành viên tuyến dưới nào.</p>
+              <p className="text-sm">Bắt đầu mời bạn bè để xây dựng mạng lưới affiliate của bạn!</p>
+            </div>
           ) : (
-            <div className="grid gap-4">
-              {treeData.downlineNodes.map((node) => (
-                <Card key={node.nodeId} className="p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                    <div className="font-medium">ID Nút:</div>
-                    <div>{node.nodeId}</div>
-                    <div className="font-medium">Biệt danh:</div>
-                    <div>{node.walletInfo.nickName}</div>
-                    <div className="font-medium">Địa chỉ Solana:</div>
-                    <div className="truncate">{node.solanaAddress}</div>
-                    <div className="font-medium">Địa chỉ ETH:</div>
-                    <div className="truncate">{node.walletInfo.ethAddress}</div>
-                    <div className="font-medium">Phần trăm hoa hồng:</div>
-                    <div>{node.commissionPercent}%</div>
-                    <div className="font-medium">Cấp độ:</div>
-                    <div>{node.level}</div>
-                    <div className="font-medium">Có hiệu lực từ:</div>
-                    <div>{format(new Date(node.effectiveFrom), "dd/MM/yyyy HH:mm")}</div>
-                  </div>
-                </Card>
-              ))}
+            <div className="space-y-4">
+              {/* Level Statistics */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {Object.entries(nodesByLevel).map(([level, count]) => (
+                  <Badge key={level} variant="secondary" className="text-sm">
+                    Cấp {level}: {count} thành viên
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Tree Structure */}
+              <div className="border rounded-lg p-4 bg-white space-y-2">
+                {treeData.downlineNodes
+                  .sort((a, b) => a.level - b.level)
+                  .map((node) => (
+                    <TreeNodeComponent
+                      key={node.nodeId}
+                      node={node}
+                      level={node.level}
+                    />
+                  ))}
+              </div>
             </div>
           )}
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

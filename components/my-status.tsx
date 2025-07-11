@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { getMyBgAffiliateStatus } from "@/lib/api"
+import { getMyBgAffiliateStatusWithFallback } from "@/lib/api"
 import { Loader2 } from "lucide-react"
 
 interface WalletInfo {
@@ -35,7 +35,7 @@ export default function MyBgAffiliateStatus() {
       setIsLoading(true)
       setError(null)
       try {
-        const data = await getMyBgAffiliateStatus()
+        const data = await getMyBgAffiliateStatusWithFallback()
         setStatus(data)
       } catch (err) {
         setError("Failed to fetch BG affiliate status.")
@@ -65,27 +65,27 @@ export default function MyBgAffiliateStatus() {
   }
 
   return (
-    <Card>
+    <Card className="border-l-8 border-[#00c0ff]/50 border-y-0 border-r-0 rounded-none h-full">
       <CardHeader>
         <CardTitle>Trạng thái BG Affiliate của tôi</CardTitle>
         <CardDescription>Thông tin chi tiết về trạng thái BG Affiliate của ví hiện tại.</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <span className="font-medium">Là BG Affiliate:</span>
           <span>{status.isBgAffiliate ? "Có" : "Không"}</span>
-        </div>
+        </div> */}
         <div className="grid gap-2">
           <h3 className="font-semibold text-lg">Thông tin ví hiện tại:</h3>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
             <div className="font-medium">ID Ví:</div>
             <div>{status.currentWallet.walletId}</div>
             <div className="font-medium">Địa chỉ Solana:</div>
-            <div className="truncate">{status.currentWallet.solanaAddress}</div>
+            <div className="truncate">{status.currentWallet.solanaAddress.substring(0, 8)}...{status.currentWallet.solanaAddress.substring(status.currentWallet.solanaAddress.length - 4)}</div>
             <div className="font-medium">Biệt danh:</div>
             <div>{status.currentWallet.nickName}</div>
             <div className="font-medium">Địa chỉ ETH:</div>
-            <div className="truncate">{status.currentWallet.ethAddress}</div>
+            <div className="truncate">{status.currentWallet.ethAddress.substring(0, 8)}...{status.currentWallet.ethAddress.substring(status.currentWallet.ethAddress.length - 4)}</div>
           </div>
         </div>
         {status.isBgAffiliate && (

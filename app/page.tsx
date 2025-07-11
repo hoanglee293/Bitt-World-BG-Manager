@@ -1,10 +1,18 @@
+"use client"
+
+import Header from "@/components/header"
 import BgAffiliateDashboard from "@/components/bg-affiliate-dashboard"
+import ProtectedRoute from "@/components/protected-route"
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">BG Affiliate System - User Dashboard</h1>
-      <BgAffiliateDashboard />
-    </div>
+    <ProtectedRoute requireBgAffiliate={true}>
+      <div className="min-h-screen bg-background flex flex-col">
+        <Header />
+        <main className="flex-1 flex">
+          <BgAffiliateDashboard />
+        </main>
+      </div>
+    </ProtectedRoute>
   )
 }
