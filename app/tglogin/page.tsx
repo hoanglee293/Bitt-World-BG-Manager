@@ -1,5 +1,5 @@
 "use client"
-import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/hooks/useAuth';
 import { TelegramWalletService } from '@/services/api';
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, Suspense, useState, useRef } from 'react'
@@ -18,6 +18,7 @@ function TelegramLoginContent() {
     const telegramId = searchParams.get("id");
     const code = searchParams.get("code");
 
+    console.log("isAuthenticated", isAuthenticated);
     useEffect(() => {
         if (isAuthenticated) {
             router.push('/');
@@ -30,25 +31,23 @@ function TelegramLoginContent() {
                 router.push('/login');
             }, 2000);
         }
-    }, [isAuthenticated, telegramId, code, router, t]);
+    }, [isAuthenticated, telegramId, code, router]);
 
     const handleLogin = async () => {
         setIsProcessing(true);
         try {
             const data = { id: telegramId, code: code };
             const res = await TelegramWalletService.login(data);
-            if (res.status === 401) {
+            console.log("res", res);
+            if (res.status === 401 || res.status === 400) {
                 toast.error(t("auth.telegramFailed"));
                 setTimeout(() => {
                     router.push('/login');
                 }, 2000);
-            } else if (res.status === 200 && res.token) {
-                // Store the token in localStorage
-                localStorage.setItem('auth_token', res.token);
-                
+            } else if (res.status == 200 || res.status == 201) {
+                console.log("res.token", res.token);
                 // Call login function to set user data (BG Affiliate API will be called in login function)
                 await login(res.token);
-                
                 // Show success message based on BG Affiliate status
                 toast.success(t("auth.telegramSuccess"));
                 setTimeout(() => {

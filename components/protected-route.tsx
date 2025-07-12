@@ -1,6 +1,6 @@
 "use client"
 
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/hooks/useAuth"
 import { Loader2 } from "lucide-react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -11,27 +11,34 @@ interface ProtectedRouteProps {
   requireBgAffiliate?: boolean
 }
 
-export default function ProtectedRoute({ children, requireBgAffiliate = false }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading, user } = useAuth()
+export default function ProtectedRoute({ children, requireBgAffiliate = true }: ProtectedRouteProps) {
+  const { isAuthenticated, isLoading, user, refreshUser } = useAuth()
   const router = useRouter()
+
+  // Refresh user data when component mounts
+  useEffect(() => {
+    if (isAuthenticated) {
+      refreshUser()
+    }
+  }, [isAuthenticated, refreshUser])
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.push('/login')
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isAuthenticated, isLoading, router])
 
   // Check if user has required data for BG Affiliate
   useEffect(() => {
     if (!isLoading && isAuthenticated && user && requireBgAffiliate) {
-      // For BG Affiliate, user must be a BG Affiliate
       if (!user.isBgAffiliate) {
         toast.error("Bạn không phải là BG Affiliate")
         router.push('/unauthorized')
       }
     }
-  }, [isLoading, isAuthenticated, user, requireBgAffiliate, router])
+  }, [isAuthenticated, isLoading, user, requireBgAffiliate, router])
 
+  // Show loading while checking authentication
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -43,10 +50,12 @@ export default function ProtectedRoute({ children, requireBgAffiliate = false }:
     )
   }
 
+  // Don't render anything if not authenticated
   if (!isAuthenticated) {
     return null
   }
 
+  // Check BG Affiliate requirement
   if (requireBgAffiliate && user && !user.isBgAffiliate) {
     return null
   }

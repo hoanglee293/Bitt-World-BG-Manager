@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/hooks/useAuth"
 import { Loader2, Shield, Users } from "lucide-react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"

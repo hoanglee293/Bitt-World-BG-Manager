@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/protected-route"
 
 export default function HomePage() {
   return (
-    <ProtectedRoute requireBgAffiliate={true}>
+    <ProtectedRoute >
       <div className="h-screen bg-background flex flex-col">
         <Header />
         <main className="flex-1 flex">

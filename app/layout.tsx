@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from 'sonner'
-import { AuthProvider } from '@/contexts/auth-context'
 import { LangProvider } from '@/app/lang'
+import AuthInitializer from '@/components/auth-initializer'
 
 export const metadata: Metadata = {
   title: 'BG Affiliate Dashboard',
@@ -19,10 +19,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LangProvider>
-          <AuthProvider>
+          <AuthInitializer>
             {children}
             <Toaster />
-          </AuthProvider>
+          </AuthInitializer>
         </LangProvider>
       </body>
     </html>

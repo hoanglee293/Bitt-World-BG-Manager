@@ -760,20 +760,20 @@ export const getDownlineStatsWithFallback = async (filters: any = {}) => {
 }
 
 // Helper function to check BG Affiliate status with token
-const checkBgAffiliateStatusWithToken = async (token: string): Promise<MyStatusData | null> => {
+const checkBgAffiliateStatusWithToken = async (): Promise<MyStatusData | null> => {
   try {
     // Temporarily set token for this request
-    const originalToken = localStorage.getItem('auth_token')
-    localStorage.setItem('auth_token', token)
+    // const originalToken = localStorage.getItem('auth_token')
+    // localStorage.setItem('auth_token', token)
     
     const response = await axiosClient.get('/bg-ref/my-bg-affiliate-status')
     
     // Restore original token
-    if (originalToken) {
-      localStorage.setItem('auth_token', originalToken)
-    } else {
-      localStorage.removeItem('auth_token')
-    }
+    // if (originalToken) {
+    //   localStorage.setItem('auth_token', originalToken)
+    // } else {
+    //   localStorage.removeItem('auth_token')
+    // }
     
     return response.data
   } catch (error) {

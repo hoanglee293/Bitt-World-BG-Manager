@@ -28,7 +28,7 @@ function LoginEmailContent() {
         try {
           const response = await login(code)
           // Handle successful login here
-          loginAuth(response.data.token)
+          await loginAuth(response.data.token)
           router.push('/')
         } catch (error: any) {
           if(error.status === 400) {

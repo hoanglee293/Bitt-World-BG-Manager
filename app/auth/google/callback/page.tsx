@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, Suspense } from "react"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/hooks/useAuth"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
@@ -42,7 +42,7 @@ function GoogleCallbackContent() {
       if (response.ok) {
         const data = await response.json()
         if (data.token) {
-          login(data.token)
+          await login(data.token)
           toast.success("Đăng nhập Google thành công!")
           router.push('/')
         } else {

@@ -2,7 +2,7 @@ import axiosClient from "@/utils/axiosClient";
 
 export const login = async (item: any) => {
     try {
-        const response = await axiosClient.post(`/telegram-wallets/connect-wallets`, item);
+        const response = await axiosClient.post(`/bg-ref/connect-telegram`, item);
         return {
             status: 200,
             token: response.data.token,

@@ -51,25 +51,33 @@ NEXT_PUBLIC_GOOGLE_REDIRECT_URI=http://localhost:3000/auth/google/callback
 **Cấu hình Authentication:**
 
 ```typescript
-// Trong contexts/auth-context.tsx
-const login = (token: string) => {
+// Trong hooks/useAuth.ts (Zustand Store)
+const login = async (token?: string) => {
   try {
-    const decoded = jwtDecode(token) as any
-    localStorage.setItem('auth_token', token)
-    
-    const userData: User = {
-      walletId: decoded.walletId || 0,
-      solanaAddress: decoded.solanaAddress || '',
-      nickName: decoded.nickName || 'User',
-      ethAddress: decoded.ethAddress || '',
-      isBgAffiliate: decoded.isBgAffiliate || false,
-      telegramId: decoded.telegramId,
-      email: decoded.email
+    if (token) {
+      localStorage.setItem("auth_token", token);
+    } else {
+      localStorage.setItem("auth_token", "true");
     }
     
-    setUser(userData)
+    // Call BG Affiliate API to get status
+    const bgData = await checkBgAffiliateStatusWithToken();
+    
+    if (bgData) {
+      const userData: User = {
+        walletId: bgData.currentWallet?.walletId || 0,
+        solanaAddress: bgData.currentWallet?.solanaAddress || '',
+        nickName: bgData.currentWallet?.nickName || 'User',
+        ethAddress: bgData.currentWallet?.ethAddress || '',
+        isBgAffiliate: bgData.isBgAffiliate || false,
+        level: bgData.bgAffiliateInfo?.level,
+        commissionPercent: bgData.bgAffiliateInfo?.commissionPercent
+      };
+      
+      set({ user: userData, isAuthenticated: true, isLoading: false });
+    }
   } catch (error) {
-    console.error('Failed to decode token:', error)
+    console.error('Failed to login:', error);
   }
 }
 ```

@@ -44,62 +44,62 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  const login = async (token: string) => {
+  const login = async () => {
     try {
-      const decoded = jwtDecode(token) as any
-      localStorage.setItem('auth_token', token)
+      // const decoded = jwtDecode(token) as any
+      localStorage.setItem('isAuth', 'true')
       
       // Extract user info from JWT token
-      const userData: User = {
-        walletId: decoded.walletId || 0,
-        solanaAddress: decoded.solanaAddress || '',
-        nickName: decoded.nickName || 'User',
-        ethAddress: decoded.ethAddress || '',
-        isBgAffiliate: false, // Will be updated below
-        telegramId: decoded.telegramId,
-        email: decoded.email
-      }
+      // const userData: User = {
+      //   walletId: decoded.walletId || 0,
+      //   solanaAddress: decoded.solanaAddress || '',
+      //   nickName: decoded.nickName || 'User',
+      //   ethAddress: decoded.ethAddress || '',
+      //   isBgAffiliate: false, // Will be updated below
+      //   telegramId: decoded.telegramId,
+      //   email: decoded.email
+      // }
       
       // Call BG Affiliate API to get status
       try {
-        const bgData = await checkBgAffiliateStatusWithToken(token);
-        
+        const bgData = await checkBgAffiliateStatusWithToken();
+        console.log("bgData", bgData);
         if (bgData) {
-          userData.isBgAffiliate = bgData.isBgAffiliate || false;
+          // userData.isBgAffiliate = bgData.isBgAffiliate || false;
           
-          // Update wallet info from BG Affiliate response if available
-          if (bgData.currentWallet) {
-            userData.walletId = bgData.currentWallet.walletId || userData.walletId;
-            userData.solanaAddress = bgData.currentWallet.solanaAddress || userData.solanaAddress;
-            userData.nickName = bgData.currentWallet.nickName || userData.nickName;
-            userData.ethAddress = bgData.currentWallet.ethAddress || userData.ethAddress;
-          }
+          // // Update wallet info from BG Affiliate response if available
+          // if (bgData.currentWallet) {
+          //   userData.walletId = bgData.currentWallet.walletId || userData.walletId;
+          //   userData.solanaAddress = bgData.currentWallet.solanaAddress || userData.solanaAddress;
+          //   userData.nickName = bgData.currentWallet.nickName || userData.nickName;
+          //   userData.ethAddress = bgData.currentWallet.ethAddress || userData.ethAddress;
+          // }
           
-          // Update BG Affiliate info if available
-          if (bgData.bgAffiliateInfo) {
-            userData.level = bgData.bgAffiliateInfo.level;
-            userData.commissionPercent = bgData.bgAffiliateInfo.commissionPercent;
-          }
+          // // Update BG Affiliate info if available
+          // if (bgData.bgAffiliateInfo) {
+          //   userData.level = bgData.bgAffiliateInfo.level;
+          //   userData.commissionPercent = bgData.bgAffiliateInfo.commissionPercent;
+          // }
         }
       } catch (bgError) {
         // Error calling BG Affiliate API in login
       }
       
-      setUser(userData)
+      // setUser(userData)
     } catch (error) {
       console.error('Failed to decode token:', error)
     }
   }
 
   const logout = () => {
-    localStorage.removeItem('auth_token')
-    sessionStorage.removeItem('auth_token')
+    localStorage.removeItem('isAuth')
+    sessionStorage.removeItem('isAuth')
     setUser(null)
     window.location.href = '/login'
   }
 
   const refreshUser = async () => {
-    const token = localStorage.getItem('auth_token')
+    const token = localStorage.getItem('isAuth')
     
     if (!token) {
       setUser(null)
@@ -131,7 +131,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Check BG Affiliate status using the token
       try {
-        const bgAffiliateInfo = await checkBgAffiliateStatusWithToken(token)
+        const bgAffiliateInfo = await checkBgAffiliateStatusWithToken()
         
         if (bgAffiliateInfo) {
           userData.isBgAffiliate = bgAffiliateInfo.isBgAffiliate || false

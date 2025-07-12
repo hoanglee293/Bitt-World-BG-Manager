@@ -15,15 +15,13 @@ import UpdateCommission from "./update-commission"
 export default function BgAffiliateDashboard() {
   const [activeTab, setActiveTab] = useState("downline-stats")
   const { t } = useLang()
-  const { isMobile, isTablet, isDesktop } = useResponsive()
 
   const tabOptions = [
     { value: "downline-stats", label: t("dashboard.downlineStats") },
     { value: "commission-history", label: t("dashboard.commissionHistory") },
     { value: "affiliate-stats", label: t("dashboard.affiliateStats") },
     { value: "affiliate-tree", label: t("dashboard.affiliateTree") },
-    // { value: "update-commission", label: t("dashboard.updateCommission") },
-    // { value: "my-status", label: t("dashboard.myStatus") },
+   
   ]
 
   const handleTabChange = (value: string) => {
@@ -34,7 +32,7 @@ export default function BgAffiliateDashboard() {
     <div className="w-full h-full">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
         {/* Mobile & Tablet: Dropdown select */}
-        <div className="lg:hidden w-full bg-background border-b sticky top-14 z-30 py-4" style={{ zIndex: 10 }}>
+        <div className="lg:hidden w-full bg-background border-b sticky top-12 z-30 py-4" style={{ zIndex: 10 }}>
           <Select value={activeTab} onValueChange={handleTabChange}>
             <SelectTrigger className="w-full max-w-sm mx-auto">
               <SelectValue placeholder={t("dashboard.selectTab")} />

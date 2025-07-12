@@ -1,16 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const axiosClient = axios.create({
   baseURL: `${apiUrl}/api/v1`,
+    withCredentials: true,
 });
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.getItem("auth_token");
-    if (authToken) {
-      config.headers.Authorization = `Bearer ${authToken}`;
-    }
     return config;
   },
   (error) => {
@@ -21,13 +18,20 @@ axiosClient.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
     if (error.response && error.response.status === 401) {
-      // console.error("Lỗi 401: Unauthorized");
-      // localStorage.removeItem("auth_token");
-      // window.location.href = "/login";
-    } else if (error.code === "ERR_NETWORK") {
-      // Server is not responding. Please try again later.
+      try {
+        await axios.post(`${apiUrl}/api/v1/bg-ref/refresh-token`, {}, { withCredentials: true })
+      } catch (refreshError) {
+        console.warn('Không thể refresh token:', refreshError)
+      }
+      console.warn('Lỗi 401: Unauthorized');
+      if (window.location.pathname !== '/login') {
+        window.location.href = "/login";
+        localStorage.removeItem('user')
+      }
+    }else if(error.code === "ERR_NETWORK"){
+      console.warn("Máy chủ đang gặp sự cố !");
     }
     return Promise.reject(error);
   }
