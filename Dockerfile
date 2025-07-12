@@ -3,16 +3,16 @@
 
     WORKDIR /app
     
-    # Copy package files và cài dependencies
     COPY package*.json ./
     RUN npm install --force
     
-    # Copy toàn bộ mã nguồn + file env
     COPY . .
     COPY .env.local .env.local
     
-    # Build ứng dụng ở chế độ standalone
     RUN npm run build
+    
+    # Sửa port cứng 3000 trong server.js thành lấy từ ENV
+    RUN sed -i 's/server\.listen(3000)/server.listen(process.env.PORT || 3000)/' .next/standalone/server.js
     
     # ----------- PHASE 2: Runner -----------
     FROM node:20-alpine AS runner
@@ -20,15 +20,14 @@
     WORKDIR /app
     
     ENV NODE_ENV=production
+    ENV PORT=3700
     
-    # Copy toàn bộ nội dung standalone từ builder
     COPY --from=builder /app/.next/standalone ./
     COPY --from=builder /app/.next/static ./.next/static
     COPY --from=builder /app/public ./public
     COPY --from=builder /app/.env.local .env.local
     
-    # Expose cổng
-    EXPOSE 3000
+    EXPOSE 3700
     
-    # Chạy ứng dụng
     CMD ["node", "server.js"]
+    
