@@ -68,7 +68,14 @@
     "or": "Hoặc",
     "highSecurity": "Bảo mật cao",
     "affiliateSystem": "Hệ thống affiliate",
-    "googleConnectionError": "Lỗi kết nối Google"
+    "googleConnectionError": "Lỗi kết nối Google",
+    "emailProcessing": "Đang xử lý đăng nhập email...",
+    "emailSuccess": "Đăng nhập thành công!",
+    "emailFailed": "Đăng nhập thất bại - Vui lòng thử lại",
+    "emailConnectionError": "Lỗi kết nối - Vui lòng thử lại",
+    "emailMissingInfo": "Thiếu thông tin đăng nhập email",
+    "emailVerifying": "Vui lòng chờ trong khi chúng tôi xác thực thông tin của bạn...",
+    "emailConnecting": "Kết nối Email"
   },
   "dashboard": {
     "title": "MemePump Affiliate",

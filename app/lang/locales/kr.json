@@ -68,7 +68,14 @@
     "or": "또는",
     "highSecurity": "높은 보안",
     "affiliateSystem": "어필리에이트 시스템",
-    "googleConnectionError": "Google 연결 오류"
+    "googleConnectionError": "Google 연결 오류",
+    "emailProcessing": "이메일 로그인 처리 중...",
+    "emailSuccess": "로그인 성공!",
+    "emailFailed": "로그인 실패 - 다시 시도해 주세요",
+    "emailConnectionError": "연결 오류 - 다시 시도해 주세요",
+    "emailMissingInfo": "이메일 로그인 정보가 누락되었습니다",
+    "emailVerifying": "정보를 확인하는 동안 잠시 기다려 주세요...",
+    "emailConnecting": "이메일 연결"
   },
   "dashboard": {
     "title": "MemePump 제휴하다",

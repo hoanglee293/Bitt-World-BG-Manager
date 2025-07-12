@@ -68,7 +68,14 @@
     "or": "または",
     "highSecurity": "高セキュリティ",
     "affiliateSystem": "アフィリエイトシステム",
-    "googleConnectionError": "Google接続エラー"
+    "googleConnectionError": "Google接続エラー",
+    "emailProcessing": "メールログイン処理中...",
+    "emailSuccess": "ログイン成功！",
+    "emailFailed": "ログインに失敗しました - もう一度お試しください",
+    "emailConnectionError": "接続エラー - もう一度お試しください",
+    "emailMissingInfo": "メールログイン情報が不足しています",
+    "emailVerifying": "情報を確認している間、お待ちください...",
+    "emailConnecting": "メール接続"
   },
   "dashboard": {
     "title": "MemePump Affiliate",

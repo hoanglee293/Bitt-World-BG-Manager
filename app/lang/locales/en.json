@@ -68,7 +68,14 @@
     "or": "Or",
     "highSecurity": "High Security",
     "affiliateSystem": "Affiliate System",
-    "googleConnectionError": "Google connection error"
+    "googleConnectionError": "Google connection error",
+    "emailProcessing": "Processing email login...",
+    "emailSuccess": "Login successful!",
+    "emailFailed": "Login failed - Please try again",
+    "emailConnectionError": "Connection error - Please try again",
+    "emailMissingInfo": "Missing email login information",
+    "emailVerifying": "Please wait while we verify your information...",
+    "emailConnecting": "Connecting Email"
   },
   "dashboard": {
     "title": "MemePump Affiliate",
