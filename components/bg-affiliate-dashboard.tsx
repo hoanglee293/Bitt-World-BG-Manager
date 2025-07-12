@@ -50,7 +50,7 @@ export default function BgAffiliateDashboard() {
         </div>
 
         {/* Desktop: Vertical sidebar */}
-        <div className="hidden lg:block lg:fixed top-20 left-0 w-[280px] xl:w-[320px] z-20 h-full md:h-fit">
+        <div className="hidden lg:block lg:fixed top-20 left-0 w-[300px] z-20 h-full md:h-fit">
           <TabsList className="flex flex-col justify-around items-start bg-transparent w-full h-full p-4 space-y-2">
             {tabOptions.map((option) => (
               <TabsTrigger
@@ -65,20 +65,20 @@ export default function BgAffiliateDashboard() {
         </div>
 
         {/* Content Area */}
-        <div className="lg:ml-[280px] xl:ml-[320px] md:w-auto w-full h-full">
-          <TabsContent className="border-none p-3 sm:p-4 lg:p-6 h-full" value="commission-history">
+        <div className="lg:ml-[300px] lg:w-auto w-full h-full">
+          <TabsContent className="border-none p-3 sm:p-4 h-full overflow-y-scroll" value="commission-history">
             <CommissionHistory />
           </TabsContent>
-          <TabsContent className="border-none p-3 sm:p-4 lg:p-6 h-full" value="my-status">
+          <TabsContent className="border-none p-3 sm:p-4 h-full overflow-y-scroll" value="my-status">
             <MyBgAffiliateStatus />
           </TabsContent>
-          <TabsContent className="border-none p-3 sm:p-4 lg:p-6 h-full" value="affiliate-stats">
+          <TabsContent className="border-none p-3 sm:p-4 h-full overflow-y-scroll" value="affiliate-stats">
             <BgAffiliateStats />
           </TabsContent>
-          <TabsContent className="border-none p-3 sm:p-4 lg:p-6 h-full" value="affiliate-tree">
+          <TabsContent className="border-none p-3 sm:p-4 h-full overflow-y-scroll" value="affiliate-tree">
             <AffiliateTree />
           </TabsContent>
-          <TabsContent className="border-none p-3 sm:p-4 lg:p-6 h-full" value="downline-stats">
+          <TabsContent className="border-none p-3 sm:p-4 h-[calc(100vh-56px)] overflow-y-scroll" value="downline-stats">
             <DownlineStats />
           </TabsContent>
         </div>

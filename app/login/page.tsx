@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 import { useAuth } from "@/contexts/auth-context"
 import { Loader2, Shield, Users } from "lucide-react"
 import { toast } from "sonner"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useLang } from "@/app/lang"
 
 export default function LoginPage() {
   const { isAuthenticated, login } = useAuth()
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const { t } = useLang()
 

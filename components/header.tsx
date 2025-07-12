@@ -41,14 +41,14 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-      <div className="px-4 py-3">
+    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 h-14 flex items-center justify-between">
+      <div className="px-4 py-2  w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="h-8 w-8  rounded-lg flex items-center justify-center">
               <img src="/logo.png" alt="logo" className="h-8 w-8" />
             </div>
-            <span className="text-lg font-semibold">{t("dashboard.title")}</span>
+            <span className="text-base font-semibold">{t("dashboard.title")}</span>
           </div>
 
           <div className="flex items-center space-x-4">
