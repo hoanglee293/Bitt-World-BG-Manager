@@ -1,19 +1,22 @@
 "use client"
 
 import { useAuth } from "@/contexts/auth-context"
+import { useLang } from "@/app/lang"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { LogOut, User, Wallet, Settings } from "lucide-react"
 import { toast } from "sonner"
+import LangSwitcher from "./lang-switcher"
 
 export default function Header() {
   const { user, isAuthenticated, logout, isLoading } = useAuth()
+  const { t } = useLang()
 
   const handleLogout = () => {
     logout()
-    toast.success("Đăng xuất thành công")
+    toast.success(t("auth.logoutSuccess"))
   }
 
   const formatWalletAddress = (address: string) => {
@@ -28,7 +31,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="h-8 w-8 bg-muted animate-pulse rounded"></div>
-              <span className="text-lg font-semibold">BG Affiliate Dashboard</span>
+              <span className="text-lg font-semibold">{t("dashboard.bgAffiliateDashboard")}</span>
             </div>
             <div className="h-8 w-20 bg-muted animate-pulse rounded"></div>
           </div>
@@ -45,15 +48,17 @@ export default function Header() {
             <div className="h-8 w-8  rounded-lg flex items-center justify-center">
               <img src="/logo.png" alt="logo" className="h-8 w-8" />
             </div>
-            <span className="text-lg font-semibold">MemePump Affiliate</span>
+            <span className="text-lg font-semibold">{t("dashboard.title")}</span>
           </div>
 
           <div className="flex items-center space-x-4">
+            <LangSwitcher />
+            
             {isAuthenticated && user ? (
               <>
                 <div className="hidden md:flex items-center space-x-2 text-sm text-muted-foreground">
                   <Wallet className="h-4 w-4" />
-                  <span>Solana: {formatWalletAddress(user.solanaAddress)}</span>
+                  <span>{t("auth.solana")}: {formatWalletAddress(user.solanaAddress)}</span>
                 </div>
                 
                 <DropdownMenu>
@@ -69,9 +74,9 @@ export default function Header() {
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user.nickName || "User"}</p>
+                        <p className="text-sm font-medium leading-none">{user.nickName || t("auth.user")}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                          {user.telegramId ? `Telegram ID: ${user.telegramId}` : formatWalletAddress(user.solanaAddress)}
+                          {user.telegramId ? `${t("auth.telegramId")}: ${user.telegramId}` : formatWalletAddress(user.solanaAddress)}
                         </p>
                         {user.email && (
                           <p className="text-xs leading-none text-muted-foreground">
@@ -80,29 +85,29 @@ export default function Header() {
                         )}
                         <div className="flex items-center space-x-1 mt-1">
                           <Badge variant={user.isBgAffiliate ? "default" : "secondary"} className="text-xs">
-                            {user.isBgAffiliate ? "BG Affiliate" : "Regular User"}
+                            {user.isBgAffiliate ? t("auth.bgAffiliate") : t("auth.regularUser")}
                           </Badge>
                           {user.isBgAffiliate && (
                             <Badge variant="outline" className="text-xs">
-                              Level {user.level || 0}
+                              {t("auth.level")} {user.level || 0}
                             </Badge>
                           )}
                         </div>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    {/* <DropdownMenuItem>
                       <User className="mr-2 h-4 w-4" />
-                      <span>Hồ sơ</span>
+                      <span>{t("auth.profile")}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Settings className="mr-2 h-4 w-4" />
-                      <span>Cài đặt</span>
-                    </DropdownMenuItem>
+                      <span>{t("auth.settings")}</span>
+                    </DropdownMenuItem> */}
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>
+                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Đăng xuất</span>
+                      <span>{t("auth.logout")}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -110,10 +115,10 @@ export default function Header() {
             ) : (
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" size="sm" onClick={() => window.location.href = '/login'}>
-                  Đăng nhập
+                  {t("auth.login")}
                 </Button>
                 <Button size="sm" onClick={() => window.location.href = '/login'}>
-                  Kết nối ví
+                  {t("auth.connectWallet")}
                 </Button>
               </div>
             )}

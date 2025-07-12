@@ -7,12 +7,14 @@ import { useAuth } from "@/contexts/auth-context"
 import { Loader2, Shield, Users } from "lucide-react"
 import { toast } from "sonner"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useLang } from "@/app/lang"
 
 export default function LoginPage() {
   const { isAuthenticated, login } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
+  const { t } = useLang()
 
   // Check if user is already authenticated
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function LoginPage() {
     try {
       window.open(`https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile&access_type=offline`)
     } catch (error) {
-      toast.error("Lỗi kết nối Google")
+      toast.error(t("auth.googleConnectionError"))
     } finally {
       setIsLoading(false)
     }
@@ -39,7 +41,7 @@ export default function LoginPage() {
       const telegramUrl = `${process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}=${ref}`
       window.open(telegramUrl, '_self')
     } catch (error) {
-      toast.error("Lỗi kết nối Telegram")
+      toast.error(t("auth.telegramConnectionError"))
       setIsLoading(false)
     }
   }
@@ -54,7 +56,7 @@ export default function LoginPage() {
             </div>
             <CardTitle className="text-2xl pt-4 uppercase">BG Affiliate</CardTitle>
             <CardDescription className="text-black text-sm">
-              Kết nối ví để truy cập hệ thống affiliate
+              {t("auth.connectWalletToAccess")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -74,7 +76,7 @@ export default function LoginPage() {
                     className="mr-2 h-8 w-8"
                   />
                 )}
-                <span className="text-white text-base">Kết nối qua Google</span>
+                <span className="text-white text-base">{t("auth.connectViaGoogle")}</span>
               </Button>
 
               <div className="relative">
@@ -83,7 +85,7 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-[#b8d9f1] px-2 text-sm text-black">
-                    Hoặc
+                    {t("auth.or")}
                   </span>
                 </div>
               </div>
@@ -104,7 +106,7 @@ export default function LoginPage() {
                     className="mr-2 h-8 w-8"
                   />
                 )}
-                <span className="text-base">Đăng nhập với Telegram</span>
+                <span className="text-base">{t("auth.loginWithTelegram")}</span>
               </Button>
             </div>
 
@@ -112,11 +114,11 @@ export default function LoginPage() {
               <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-1">
                   <Shield className="h-4 w-4 text-black" />
-                  <span className="text-black">Bảo mật cao</span>
+                  <span className="text-black">{t("auth.highSecurity")}</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Users className="h-4 w-4 text-black" />
-                  <span className="text-black">Hệ thống affiliate</span>
+                  <span className="text-black">{t("auth.affiliateSystem")}</span>
                 </div>
               </div>
             </div>

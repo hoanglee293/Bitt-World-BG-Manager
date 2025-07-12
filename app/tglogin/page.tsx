@@ -5,9 +5,11 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, Suspense, useState, useRef } from 'react'
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useLang } from '@/app/lang';
 
 function TelegramLoginContent() {
     const { isAuthenticated, login } = useAuth();
+    const { t } = useLang();
     const searchParams = useSearchParams();
     const router = useRouter();
     const hasCalledLogin = useRef(false);
@@ -23,12 +25,12 @@ function TelegramLoginContent() {
             hasCalledLogin.current = true;
             handleLogin();
         } else if (!telegramId || !code) {
-            toast.error("Thiếu thông tin đăng nhập Telegram");
+            toast.error(t("auth.telegramMissingInfo"));
             setTimeout(() => {
                 router.push('/login');
             }, 2000);
         }
-    }, [isAuthenticated, telegramId, code, router]);
+    }, [isAuthenticated, telegramId, code, router, t]);
 
     const handleLogin = async () => {
         setIsProcessing(true);
@@ -36,7 +38,7 @@ function TelegramLoginContent() {
             const data = { id: telegramId, code: code };
             const res = await TelegramWalletService.login(data);
             if (res.status === 401) {
-                toast.error("Đăng nhập thất bại - Vui lòng thử lại");
+                toast.error(t("auth.telegramFailed"));
                 setTimeout(() => {
                     router.push('/login');
                 }, 2000);
@@ -48,19 +50,19 @@ function TelegramLoginContent() {
                 await login(res.token);
                 
                 // Show success message based on BG Affiliate status
-                toast.success("Đăng nhập thành công!");
+                toast.success(t("auth.telegramSuccess"));
                 setTimeout(() => {
                     router.push('/');
                 }, 1500);
             } else {
-                toast.error("Đăng nhập thất bại - Vui lòng thử lại");
+                toast.error(t("auth.telegramFailed"));
                 setTimeout(() => {
                     router.push('/login');
                 }, 2000);
             }
         } catch (error: any) {
             console.error('Telegram login error:', error);
-            toast.error("Lỗi kết nối - Vui lòng thử lại");
+            toast.error(t("auth.telegramConnectionError"));
             setTimeout(() => {
                 router.push('/login');
             }, 2000);
@@ -81,7 +83,7 @@ function TelegramLoginContent() {
                     {isProcessing ? (
                         <div className="space-y-4">
                             <Loader2 className="h-8 w-8 animate-spin mx-auto" />
-                            <p className="text-sm">Đang xử lý đăng nhập Telegram...</p>
+                            <p className="text-sm">{t("auth.telegramProcessing")}</p>
                         </div>
                     ) : (
                         <div className="space-y-4">
@@ -91,10 +93,10 @@ function TelegramLoginContent() {
                                     alt="telegram"
                                     className="h-6 w-6"
                                 />
-                                <span className="text-sm">Kết nối Telegram</span>
+                                <span className="text-sm">{t("auth.telegramConnecting")}</span>
                             </div>
                             <p className="text-sm text-muted-foreground">
-                                Vui lòng chờ trong khi chúng tôi xác thực thông tin của bạn...
+                                {t("auth.telegramVerifying")}
                             </p>
                         </div>
                     )}
