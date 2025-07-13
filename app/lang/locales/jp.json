@@ -178,7 +178,8 @@
     "treeStructure": "アフィリエイトツリー構造",
     "structureDescription": "階層構造と各メンバーの詳細情報を確認してください",
     "noDownlineMembers": "まだダウンラインメンバーがいません。",
-    "startInviting": "友達を招待してアフィリエイトネットワークを構築しましょう！"
+    "startInviting": "友達を招待してアフィリエイトネットワークを構築しましょう！",
+    "shareThisLink": "このリンクを他の人に共有して、あなたのネットワークに参加してください！"
   },
   "table": {
     "noData": "データがありません",
@@ -225,7 +226,8 @@
     "browserLanguage": "ブラウザ言語",
     "languageCode": "言語コード",
     "languageList": "言語リスト",
-    "languageMismatch": "ブラウザ言語が現在の言語と異なります"
+    "languageMismatch": "ブラウザ言語が現在の言語と異なります",
+    "copiedToClipboard": "クリップボードにコピーされました"
   },
   "login": {
     "error": "ログインエラー",

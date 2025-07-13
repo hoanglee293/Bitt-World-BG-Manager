@@ -65,7 +65,7 @@ export default function MyBgAffiliateStatus() {
   }
 
   return (
-    <Card className="border-l-8 border-[#00c0ff]/50 border-y-0 border-r-0 rounded-none h-full">
+    <Card className="border-none rounded-none h-full">
       <CardHeader>
         <CardTitle>Trạng thái BG Affiliate của tôi</CardTitle>
         <CardDescription>Thông tin chi tiết về trạng thái BG Affiliate của ví hiện tại.</CardDescription>

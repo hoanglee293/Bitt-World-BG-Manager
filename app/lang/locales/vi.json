@@ -178,7 +178,8 @@
     "treeStructure": "Cấu trúc cây Affiliate",
     "structureDescription": "Xem cấu trúc phân cấp và thông tin chi tiết từng thành viên",
     "noDownlineMembers": "Chưa có thành viên tuyến dưới nào.",
-    "startInviting": "Bắt đầu mời bạn bè để xây dựng mạng lưới affiliate của bạn!"
+    "startInviting": "Bắt đầu mời bạn bè để xây dựng mạng lưới affiliate của bạn!",
+    "shareThisLink": "Chia sẻ liên kết này với người khác để tham gia mạng lưới affiliate của bạn!"
   },
   "table": {
     "noData": "Không có dữ liệu",
@@ -225,7 +226,8 @@
     "browserLanguage": "Ngôn ngữ trình duyệt",
     "languageCode": "Mã ngôn ngữ",
     "languageList": "Danh sách ngôn ngữ",
-    "languageMismatch": "Ngôn ngữ trình duyệt khác với ngôn ngữ hiện tại"
+    "languageMismatch": "Ngôn ngữ trình duyệt khác với ngôn ngữ hiện tại",
+    "copiedToClipboard": "Đã sao chép vào clipboard"
   },
   "login": {
     "error": "Lỗi đăng nhập",

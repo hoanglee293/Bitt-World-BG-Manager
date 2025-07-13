@@ -5,6 +5,7 @@ export interface WalletInfo {
   solanaAddress: string
   nickName: string
   ethAddress: string
+  refCode: string
 }
 
 export interface CommissionEntry {

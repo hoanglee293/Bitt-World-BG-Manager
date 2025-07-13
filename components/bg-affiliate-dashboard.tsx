@@ -48,13 +48,13 @@ export default function BgAffiliateDashboard() {
         </div>
 
         {/* Desktop: Vertical sidebar */}
-        <div className="hidden lg:block lg:fixed top-20 left-0 w-[300px] z-20 h-full md:h-fit">
-          <TabsList className="flex flex-col justify-around items-start bg-transparent w-full h-full p-4 space-y-2">
+        <div className="hidden lg:block lg:fixed top-20 left-0 w-[300px] z-20 h-full bg-[#2D69C9] " style={{borderTopRightRadius: "100px"}}>
+          <TabsList className="flex flex-col justify-around mt-12 items-start bg-transparent w-full h-fit p-4 pl-0 space-y-2">
             {tabOptions.map((option) => (
               <TabsTrigger
                 key={option.value}
                 value={option.value}
-                className="w-full text-left justify-start text-sm xl:text-base"
+                className="w-full text-left justify-start rounded-tr-full rounded-br-full text-sm xl:text-base text-white cursor-pointer"
               >
                 {option.label}
               </TabsTrigger>

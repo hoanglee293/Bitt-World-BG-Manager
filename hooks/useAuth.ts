@@ -14,6 +14,7 @@ interface User {
   email?: string
   level?: number
   commissionPercent?: number
+  code?: string
 }
 
 interface AuthState {
@@ -61,7 +62,8 @@ const useAuthStore = create<AuthState>((set, get) => {
               telegramId: undefined, // Will be set from JWT token if available
               email: undefined, // Will be set from JWT token if available
               level: bgData.bgAffiliateInfo?.level,
-              commissionPercent: bgData.bgAffiliateInfo?.commissionPercent
+              commissionPercent: bgData.bgAffiliateInfo?.commissionPercent,
+              code: bgData.currentWallet?.refCode
             };
             
             set({ 
@@ -143,7 +145,8 @@ const useAuthStore = create<AuthState>((set, get) => {
               telegramId: undefined, // Will be set from JWT token if available
               email: undefined, // Will be set from JWT token if available
               level: bgAffiliateInfo.bgAffiliateInfo?.level,
-              commissionPercent: bgAffiliateInfo.bgAffiliateInfo?.commissionPercent
+              commissionPercent: bgAffiliateInfo.bgAffiliateInfo?.commissionPercent,
+              code: bgAffiliateInfo.currentWallet?.refCode
             };
             
             set({ user: userData, isAuthenticated: true, isLoading: false });

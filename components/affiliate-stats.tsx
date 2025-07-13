@@ -3,14 +3,19 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { getBgAffiliateStatsWithFallback } from "@/lib/api"
-import { Loader2 } from "lucide-react"
+import { Loader2, Sparkles, TreePine, Users, Wallet, Target, DollarSign, TrendingUp, Copy, Network, UserCheck, BarChart3, Hash } from "lucide-react"
 import { useLang } from "@/app/lang"
+import axiosClient from "@/utils/axiosClient"
+import { cn } from "@/lib/utils"
+import { useAuth } from "@/hooks/useAuth"
+import { toast } from "sonner"
 
 export default function BgAffiliateStats() {
   const [stats, setStats] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { t } = useLang()
+  const { user } = useAuth()
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -32,8 +37,13 @@ export default function BgAffiliateStats() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin" />
-        <span className="sr-only">{t("common.loading")}</span>
+        <div className="flex flex-col items-center space-y-4">
+          <div className="relative">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Sparkles className="h-4 w-4 animate-pulse text-yellow-400 absolute -top-1 -right-1" />
+          </div>
+          <span className="sr-only">{t("common.loading")}</span>
+        </div>
       </div>
     )
   }
@@ -45,50 +55,149 @@ export default function BgAffiliateStats() {
   if (!stats) {
     return <div className="text-center text-muted-foreground py-8">{t("common.noData")}</div>
   }
-  console.log("stats", stats)
+
   return (
-    <Card className="border-l-8 border-[#00c0ff]/50 border-y-0 border-r-0 rounded-none h-full">
+    <Card className="border-none rounded-none h-full">
       <CardHeader>
-        <CardTitle>{t("dashboard.affiliateStats")}</CardTitle>
-        <CardDescription>{t("messages.welcome")} {t("auth.bgAffiliate")}</CardDescription>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+            <BarChart3 className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <CardTitle className="text-lg sm:text-xl lg:text-2xl">{t("dashboard.affiliateStats")}</CardTitle>
+            <CardDescription className="text-sm sm:text-base">{t("messages.welcome")} {t("auth.bgAffiliate")}</CardDescription>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="grid gap-4 p-4 mx-4 rounded-lg" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
+      <CardContent className="grid gap-4 p-4 mx-4 rounded-lg animate-in slide-in-from-bottom-2 duration-500" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
         {/* <div className="flex items-center justify-between">
           <span className="font-medium">{t("auth.bgAffiliate")}:</span>
           <span>{stats.isBgAffiliate ? t("common.yes") : t("common.no")}</span>
         </div> */}
+        {/* Referral Link Box */}
+        {user?.code && (
+          <div className="grid gap-3 p-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2">
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-gradient-to-r from-yellow-500 to-orange-600 rounded">
+                <Users className="h-4 w-4 text-white" />
+              </div>
+              <h3 className="font-semibold text-lg group-hover:text-orange-600 transition-colors">{t("affiliate.referralLink") || "Referral Link"}:</h3>
+            </div>
+            <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg border border-orange-200">
+              <span className="font-mono text-sm text-orange-700 truncate flex-1">
+                {process.env.NEXT_PUBLIC_API_URL}/?ref={user.code}
+              </span>
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_API_URL}/?ref=${user.code}`)
+                  toast.success(t("messages.copiedToClipboard") || "Copied to clipboard!")
+                }}
+                className="p-2 hover:bg-orange-100 rounded transition-all duration-200 hover:scale-110"
+                title={t("common.copy") || "Copy"}
+              >
+                <Copy className="h-4 w-4 text-orange-500" />
+              </button>
+            </div>
+            <p className="text-xs text-orange-600 opacity-75">
+              {t("affiliate.shareThisLink") || "Share this link with others to invite them to join your network"}
+            </p>
+          </div>
+        )}
+
         {stats.treeInfo.rootWallet &&
-          <div className="grid gap-2">
-            <h3 className="font-semibold text-lg">{t("affiliate.tree")} {t("common.view")}:</h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              <div className="font-medium">{t("affiliate.tree")} ID:</div>
-              <div>{stats.treeInfo.treeId}</div>
-              <div className="font-medium">{t("affiliate.tree")} {t("affiliate.walletAddress")}:</div>
-              <div className="truncate">{stats.treeInfo.rootWallet?.solanaAddress.substring(0, 7)}...{stats.treeInfo.rootWallet?.solanaAddress.substring(stats.treeInfo.rootWallet.solanaAddress.length - 4)}</div>
-              <div className="font-medium">{t("commission.totalCommission")} {t("commission.percentage")}:</div>
-              <div>{stats.treeInfo.totalCommissionPercent}%</div>
+          <div className="grid gap-3 p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2">
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-gradient-to-r from-blue-500 to-cyan-600 rounded">
+                <TreePine className="h-4 w-4 text-white" />
+              </div>
+              <h3 className="font-semibold text-lg group-hover:text-blue-600 transition-colors">{t("affiliate.tree")} {t("common.view")}:</h3>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Hash className="h-3 w-3 text-blue-500" />
+                <span className="font-medium">{t("affiliate.tree")} ID:</span>
+              </div>
+              <div className="font-mono bg-white/50 p-1 rounded text-blue-700">{stats.treeInfo.treeId}</div>
+              
+              <div className="flex items-center gap-2">
+                <Wallet className="h-3 w-3 text-yellow-500" />
+                <span className="font-medium">{t("affiliate.tree")} {t("affiliate.walletAddress")}:</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono bg-white/50 p-1 rounded text-yellow-700 truncate">
+                  {stats.treeInfo.rootWallet?.solanaAddress.substring(0, 7)}...{stats.treeInfo.rootWallet?.solanaAddress.substring(stats.treeInfo.rootWallet.solanaAddress.length - 4)}
+                </span>
+                <button 
+                  onClick={() => navigator.clipboard.writeText(stats.treeInfo.rootWallet?.solanaAddress)}
+                  className="p-1 hover:bg-yellow-100 rounded transition-all duration-200 hover:scale-110"
+                >
+                  <Copy className="h-3 w-3 text-yellow-500" />
+                </button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-3 w-3 text-green-500" />
+                <span className="font-medium">{t("commission.totalCommission")} {t("commission.percentage")}:</span>
+              </div>
+              <div className="font-bold text-green-600 group-hover:text-green-700 transition-colors">{stats.treeInfo.totalCommissionPercent}%</div>
             </div>
           </div>
         }
         {stats.nodeInfo.parentWallet &&
-          <div className="grid gap-2 border-t pt-4">
-            <h3 className="font-semibold text-lg">{t("affiliate.upline")} {t("affiliate.walletAddress")}:</h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              <div className="font-medium">{t("affiliate.tree")} ID:</div>
-              <div>{stats.nodeInfo.treeId}</div>
-              <div className="font-medium">{t("affiliate.upline")}:</div>
-              <div className="truncate">{stats.nodeInfo.parentWallet?.solanaAddress.substring(0, 7)}...{stats.nodeInfo.parentWallet?.solanaAddress.substring(stats.nodeInfo.parentWallet.solanaAddress.length - 4)}</div>
-              <div className="font-medium">{t("commission.commissionRate")}:</div>
-              <div>{stats.nodeInfo.commissionPercent}%</div>
-              <div className="font-medium">{t("auth.level")}:</div>
-              <div>{stats.nodeInfo.level}</div>
+          <div className="grid gap-3 p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 delay-200">
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded">
+                <Network className="h-4 w-4 text-white" />
+              </div>
+              <h3 className="font-semibold text-lg group-hover:text-purple-600 transition-colors">{t("affiliate.upline")} {t("affiliate.walletAddress")}:</h3>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Hash className="h-3 w-3 text-purple-500" />
+                <span className="font-medium">{t("affiliate.tree")} ID:</span>
+              </div>
+              <div className="font-mono bg-white/50 p-1 rounded text-purple-700">{stats.nodeInfo.treeId}</div>
+              
+              <div className="flex items-center gap-2">
+                <UserCheck className="h-3 w-3 text-purple-500" />
+                <span className="font-medium">{t("affiliate.upline")}:</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono bg-white/50 p-1 rounded text-purple-700 truncate">
+                  {stats.nodeInfo.parentWallet?.solanaAddress.substring(0, 7)}...{stats.nodeInfo.parentWallet?.solanaAddress.substring(stats.nodeInfo.parentWallet.solanaAddress.length - 4)}
+                </span>
+                <button 
+                  onClick={() => navigator.clipboard.writeText(stats.nodeInfo.parentWallet?.solanaAddress)}
+                  className="p-1 hover:bg-purple-100 rounded transition-all duration-200 hover:scale-110"
+                >
+                  <Copy className="h-3 w-3 text-purple-500" />
+                </button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-3 w-3 text-green-500" />
+                <span className="font-medium">{t("commission.commissionRate")}:</span>
+              </div>
+              <div className="font-bold text-green-600 group-hover:text-green-700 transition-colors">{stats.nodeInfo.commissionPercent}%</div>
+              
+              <div className="flex items-center gap-2">
+                <Target className="h-3 w-3 text-orange-500" />
+                <span className="font-medium">{t("auth.level")}:</span>
+              </div>
+              <div className="font-bold text-orange-600 group-hover:text-orange-700 transition-colors">{stats.nodeInfo.level}</div>
             </div>
           </div>
         }
         {stats.totalEarnings &&
-          <div className="flex items-center justify-between text-lg font-bold border-t pt-4 ">
-            <span>{t("commission.totalCommission")}:</span>
-            <span>${stats.totalEarnings.toFixed(6)}</span>
+          <div className="flex items-center justify-between text-lg font-bold p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl transition-all hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500 delay-300">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-500 group-hover:animate-pulse" />
+              <span className="group-hover:text-green-600 transition-colors">{t("commission.totalCommission")}:</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-green-500 group-hover:animate-bounce" />
+              <span className="text-green-600 group-hover:text-green-700 transition-colors">${stats.totalEarnings.toFixed(6)}</span>
+            </div>
           </div>
         }
       </CardContent>

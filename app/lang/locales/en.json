@@ -178,7 +178,8 @@
     "treeStructure": "Affiliate Tree Structure",
     "structureDescription": "View hierarchical structure and detailed information of each member",
     "noDownlineMembers": "No downline members yet.",
-    "startInviting": "Start inviting friends to build your affiliate network!"
+    "startInviting": "Start inviting friends to build your affiliate network!",
+    "shareThisLink": "Share this link with others to invite them to join your network!"
   },
   "table": {
     "noData": "No data available",
@@ -225,7 +226,8 @@
     "browserLanguage": "Browser Language",
     "languageCode": "Language Code",
     "languageList": "Language List",
-    "languageMismatch": "Browser language differs from current language"
+    "languageMismatch": "Browser language differs from current language",
+    "copiedToClipboard": "Copied to clipboard"
   },
   "login": {
     "error": "Login Error",

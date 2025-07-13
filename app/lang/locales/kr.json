@@ -178,7 +178,8 @@
     "treeStructure": "어필리에이트 트리 구조",
     "structureDescription": "계층 구조와 각 멤버의 상세 정보를 확인하세요",
     "noDownlineMembers": "아직 하위 라인 멤버가 없습니다.",
-    "startInviting": "친구를 초대하여 어필리에이트 네트워크를 구축하세요!"
+    "startInviting": "친구를 초대하여 어필리에이트 네트워크를 구축하세요!",
+    "shareThisLink": "이 링크를 다른 사람에게 공유하여 어필리에이트 네트워크를 구축하세요!"
   },
   "table": {
     "noData": "데이터가 없습니다",
@@ -225,7 +226,8 @@
     "browserLanguage": "브라우저 언어",
     "languageCode": "언어 코드",
     "languageList": "언어 목록",
-    "languageMismatch": "브라우저 언어가 현재 언어와 다릅니다"
+    "languageMismatch": "브라우저 언어가 현재 언어와 다릅니다",
+    "copiedToClipboard": "복사되었습니다"
   },
   "login": {
     "error": "로그인 오류",
