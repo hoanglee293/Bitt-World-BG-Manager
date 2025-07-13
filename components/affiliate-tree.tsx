@@ -111,9 +111,9 @@ function UpdateCommissionModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!validateInput(newPercent)) {
-      return
-    }
+    // if (!validateInput(newPercent)) {
+    //   return
+    // }
 
     setIsLoading(true)
     setSuccess(false)
@@ -130,9 +130,9 @@ function UpdateCommissionModal({
         onClose()
         setSuccess(false)
       }, 1500)
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to update commission:", error)
-      toast.error(t("commission.updateError"))
+      toast.error(error.response.data.message)
     } finally {
       setIsLoading(false)
     }
@@ -189,14 +189,14 @@ function UpdateCommissionModal({
               onChange={handleInputChange}
               placeholder={t("commission.percentage") + " (0-100)"}
               disabled={isLoading}
-              className={`text-sm transition-all duration-200 hover:scale-[1.02] focus:scale-[1.02] ${validationError ? "border-red-500 focus:border-red-500" : ""}`}
+              className={`text-sm transition-all duration-200 hover:scale-[1.02] focus:scale-[1.02]`}
             />
-            {validationError && (
+            {/* {validationError && (
               <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
                 <Activity className="h-2 w-2" />
                 {validationError}
               </p>
-            )}
+            )} */}
           </div>
 
           <div className="flex flex-col sm:flex-row justify-end gap-2">
