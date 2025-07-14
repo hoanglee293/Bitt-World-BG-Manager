@@ -289,11 +289,11 @@ function TreeNodeComponent({
         style={{ marginLeft: `${(level - 1) * 16}px` }}
       >
         {/* Node content */}
-        <div className={`flex items-center gap-2 p-2 rounded-md border ${getLevelColor(level)} flex-1 min-w-0 transition-all duration-200 hover:scale-105`}>
+        <div className={`flex items-center gap-2 p-2 rounded-md w-fit border ${getLevelColor(level)}  min-w-0 transition-all duration-200 hover:scale-105`}>
           <div className="p-1 bg-white/50 rounded">
             {getLevelIcon(level)}
           </div>
-          <div className="flex flex-col min-w-0 flex-1">
+          <div className="flex flex-col min-w-0 ">
             <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.nickName}</div>
             <div className="text-xs opacity-75 truncate flex items-center gap-1">
               <Wallet className="h-2 w-2" />
@@ -310,7 +310,7 @@ function TreeNodeComponent({
         </div>
 
         {/* Transaction Statistics */}
-        <div className="flex flex-col sm:flex-row gap-2 lg:gap-4 flex-shrink-0 flex-wrap xl:flex-nowrap">
+        <div className="flex flex-col sm:flex-row gap-2 lg:gap-4 flex-shrink-0 flex-wrap xl:flex-nowrap flex-1">
           <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-green-50 to-emerald-50 px-2 py-1 rounded">
             <DollarSign className="h-3 w-3 text-green-500" />
             <span className="text-gray-700 font-medium">{t("stats.totalReward")}:</span>
