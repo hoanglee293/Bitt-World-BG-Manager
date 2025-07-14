@@ -37,6 +37,9 @@ interface DownlineNode {
   solanaAddress: string
   commissionPercent: string
   effectiveFrom: string
+  totalVolume: number
+  totalReward: number
+  totalTrans: number
   walletInfo: WalletInfo
   children: DownlineNode[]
 }
@@ -282,7 +285,7 @@ function TreeNodeComponent({
     <div className="space-y-3">
       {/* Parent Node */}
       <div
-        className="flex flex-col sm:flex-row items-start sm:items-center gap-2 p-2 sm:p-3 rounded-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg justify-between group animate-in slide-in-from-bottom-2 duration-500"
+        className="flex flex-col lg:flex-row items-start lg:items-center gap-3 p-3 sm:p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500"
         style={{ marginLeft: `${(level - 1) * 16}px` }}
       >
         {/* Node content */}
@@ -306,8 +309,27 @@ function TreeNodeComponent({
           </div>
         </div>
 
-        {/* Commission badge */}
-        <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-between sm:justify-end">
+        {/* Transaction Statistics */}
+        <div className="flex flex-col sm:flex-row gap-2 lg:gap-4 flex-shrink-0">
+          <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-blue-50 to-cyan-50 px-2 py-1 rounded">
+            <BarChart3 className="h-3 w-3 text-blue-500" />
+            <span className="text-gray-700 font-medium">{t("stats.totalVolume")}:</span>
+            <span className="font-bold text-blue-600">{node.totalVolume.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-green-50 to-emerald-50 px-2 py-1 rounded">
+            <DollarSign className="h-3 w-3 text-green-500" />
+            <span className="text-gray-700 font-medium">{t("stats.totalReward")}:</span>
+            <span className="font-bold text-green-600">{node.totalReward.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-purple-50 to-pink-50 px-2 py-1 rounded">
+            <Activity className="h-3 w-3 text-purple-500" />
+            <span className="text-gray-700 font-medium">{t("stats.totalTransactions")}:</span>
+            <span className="font-bold text-purple-600">{node.totalTrans.toLocaleString()}</span>
+          </div>
+        </div>
+
+        {/* Commission badge and action */}
+        <div className="flex items-center gap-2 flex-shrink-0 w-full lg:w-auto justify-between lg:justify-end flex-wrap sm:flex-nowrap">
           <div className="flex gap-1">
             <Badge variant="secondary" className="text-xs sm:text-sm bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none">
               <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
@@ -327,7 +349,7 @@ function TreeNodeComponent({
             >
               <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
               <span className="hidden sm:inline">{t("commission.updatePercentCommission")}</span>
-              <span className="sm:hidden">{t("commission.update")}</span>
+              <span className="sm:hidden">{t("commission.updatePercentCommission")}</span>
             </Button>
           )}
         </div>
@@ -559,7 +581,7 @@ export default function AffiliateTree() {
           ) : (
             <div className="space-y-4">
               {/* Level Statistics */}
-              <div className="flex gap-2 mb-4 sm:mb-6 overflow-x-auto pb-2">
+              <div className="flex gap-2 mb-0 sm:mb-6 overflow-x-auto pb-2">
                 {Object.entries(nodesByLevel).map(([level, count], index) => (
                   <Badge
                     key={level}

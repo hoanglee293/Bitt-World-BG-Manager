@@ -114,6 +114,7 @@
     "noLevelStats": "레벨별 통계가 없습니다.",
     "count": "수량",
     "totalTransactions": "전체 거래",
+    "totalReward": "전체 보상",
     "minVolume": "최소 거래량",
     "maxVolume": "최대 거래량",
     "volume": "거래량",

@@ -114,6 +114,7 @@
     "noLevelStats": "レベル別統計がありません。",
     "count": "数量",
     "totalTransactions": "総取引",
+    "totalReward": "総報酬",
     "minVolume": "最小取引量",
     "maxVolume": "最大取引量",
     "volume": "取引量",

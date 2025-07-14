@@ -114,6 +114,7 @@
     "noLevelStats": "No level statistics available.",
     "count": "Count",
     "totalTransactions": "Total Transactions",
+    "totalReward": "Total Reward",
     "minVolume": "Minimum Volume",
     "maxVolume": "Maximum Volume",
     "volume": "Volume",

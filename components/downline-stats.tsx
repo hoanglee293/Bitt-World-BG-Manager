@@ -271,7 +271,7 @@ export default function DownlineStats() {
             {Object.keys(stats.stats).length === 0 ? (
               <p className="text-muted-foreground text-sm sm:text-base">{t("stats.noLevelStats")}</p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                 {Object.entries(stats.stats).map(([level, data], index) => (
                   <Card key={level} className="p-2 sm:p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 100}ms` }}>
                     <div className="flex items-center gap-2 mb-2">
@@ -307,7 +307,7 @@ export default function DownlineStats() {
 
         {/* Filters Section */}
         <div className="rounded-xl p-3 sm:p-4 animate-in slide-in-from-bottom-2 duration-500 delay-200" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
             {/* Start Date */}
             <div>
               <label
@@ -591,9 +591,9 @@ export default function DownlineStats() {
                             <Sparkles className="h-3 w-3" />
                             {t("affiliate.solanaAddress")}
                           </div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 w-fit">
                             <span className="text-[#ffb300] font-semibold text-xs sm:text-sm flex-1 break-all">
-                              {member.walletInfo.solanaAddress}
+                              {member.walletInfo.solanaAddress.slice(0, 8)}...{member.walletInfo.solanaAddress.slice(-8)}
                             </span>
                             <Button
                               variant="ghost"
