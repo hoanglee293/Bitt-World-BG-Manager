@@ -35,6 +35,7 @@
     "ascending": "Tăng dần",
     "descending": "Giảm dần",
     "applyFilters": "Áp dụng bộ lọc",
+    "reset": "Đặt lại",
     "id": "ID"
   },
   "auth": {
@@ -47,6 +48,7 @@
     "user": "Người dùng",
     "regularUser": "Người dùng thường",
     "bgAffiliate": "BG Affiliate",
+    "bgAffiliateBadge": "BG Affiliate",
     "level": "Cấp độ",
     "telegramId": "ID Telegram",
     "email": "Email",
@@ -86,7 +88,10 @@
     "affiliateTree": "Cây Affiliate",
     "updateCommission": "Cập nhật phần trăm hoa hồng tuyến dưới",
     "myStatus": "Trạng thái của tôi",
-    "selectTab": "Chọn tab"
+    "selectTab": "Chọn tab",
+    "downlineTransactionStats": "Thống kê giao dịch tuyến dưới",
+    "personalProfile": "Hồ sơ cá nhân",
+    "downlineProfileStats": "Thống kê hồ sơ tuyến dưới"
   },
   "stats": {
     "totalMembers": "Tổng thành viên",
@@ -135,6 +140,7 @@
     "rateTooLow": "Tỷ lệ hoa hồng phải lớn hơn hoặc bằng 0%",
     "rateTooHigh": "Tỷ lệ hoa hồng không được vượt quá 100%",
     "rateExceedsCurrent": "Tỷ lệ hoa hồng mới không được lớn hơn tỷ lệ hiện tại",
+    "rateExceedsParent": "Phần trăm hoa hồng không được vượt quá {percent}% để tránh ảnh hưởng đến tuyến dưới",
     "totalCommission": "Tổng hoa hồng",
     "commission": "Hoa hồng",
     "minCommission": "Hoa hồng tối thiểu",
@@ -179,7 +185,12 @@
     "structureDescription": "Xem cấu trúc phân cấp và thông tin chi tiết từng thành viên",
     "noDownlineMembers": "Chưa có thành viên tuyến dưới nào.",
     "startInviting": "Bắt đầu mời bạn bè để xây dựng mạng lưới affiliate của bạn!",
-    "shareThisLink": "Chia sẻ liên kết này với người khác để tham gia mạng lưới affiliate của bạn!"
+    "shareThisLink": "Chia sẻ liên kết này với người khác để tham gia mạng lưới affiliate của bạn!",
+    "profileInfo": "Thông tin hồ sơ của bạn",
+    "treeId": "ID Cây",
+    "treeWalletAddress": "Địa chỉ ví cây",
+    "totalLevels": "Tổng số cấp độ",
+    "yourCommissionPercent": "Phần trăm hoa hồng của bạn"
   },
   "table": {
     "noData": "Không có dữ liệu",
@@ -227,7 +238,24 @@
     "languageCode": "Mã ngôn ngữ",
     "languageList": "Danh sách ngôn ngữ",
     "languageMismatch": "Ngôn ngữ trình duyệt khác với ngôn ngữ hiện tại",
-    "copiedToClipboard": "Đã sao chép vào clipboard"
+    "copiedToClipboard": "Đã sao chép vào clipboard",
+    "notBgAffiliate": "Bạn không phải là BG Affiliate",
+    "authenticating": "Đang xác thực...",
+    "noStatusData": "Không có dữ liệu trạng thái.",
+    "myBgAffiliateStatus": "Trạng thái BG Affiliate của tôi",
+    "myBgAffiliateStatusDescription": "Thông tin chi tiết về trạng thái BG Affiliate của ví hiện tại.",
+    "currentWalletInfo": "Thông tin ví hiện tại:",
+    "walletId": "ID Ví",
+    "solanaAddress": "Địa chỉ Solana",
+    "nickname": "Biệt danh",
+    "ethAddress": "Địa chỉ ETH",
+    "bgAffiliateInfo": "Thông tin BG Affiliate:",
+    "treeId": "ID Cây",
+    "parentWalletId": "ID Ví cha",
+    "commissionPercent": "Phần trăm hoa hồng",
+    "level": "Cấp độ",
+    "yes": "Có",
+    "no": "Không"
   },
   "login": {
     "error": "Lỗi đăng nhập",

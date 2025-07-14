@@ -35,6 +35,7 @@
     "ascending": "Ascending",
     "descending": "Descending",
     "applyFilters": "Apply Filters",
+    "reset": "Reset",
     "id": "ID"
   },
   "auth": {
@@ -47,6 +48,7 @@
     "user": "User",
     "regularUser": "Regular User",
     "bgAffiliate": "BG Affiliate",
+    "bgAffiliateBadge": "BG Affiliate",
     "level": "Level",
     "telegramId": "Telegram ID",
     "email": "Email",
@@ -86,7 +88,10 @@
     "affiliateTree": "Affiliate Tree",
     "updateCommission": "Update Downline Commission Percentage",
     "myStatus": "My Status",
-    "selectTab": "Select a tab"
+    "selectTab": "Select a tab",
+    "downlineTransactionStats": "Downline Transaction Statistics",
+    "personalProfile": "Personal Profile",
+    "downlineProfileStats": "Downline Profile Statistics"
   },
   "stats": {
     "totalMembers": "Total Members",
@@ -135,6 +140,7 @@
     "rateTooLow": "Commission rate must be greater than or equal to 0%",
     "rateTooHigh": "Commission rate cannot exceed 100%",
     "rateExceedsCurrent": "New commission rate cannot be greater than current rate",
+    "rateExceedsParent": "Commission percent cannot exceed {percent}% to avoid affecting the downline",
     "totalCommission": "Total Commission",
     "commission": "Commission",
     "minCommission": "Minimum Commission",
@@ -179,7 +185,12 @@
     "structureDescription": "View hierarchical structure and detailed information of each member",
     "noDownlineMembers": "No downline members yet.",
     "startInviting": "Start inviting friends to build your affiliate network!",
-    "shareThisLink": "Share this link with others to invite them to join your network!"
+    "shareThisLink": "Share this link with others to invite them to join your network!",
+    "profileInfo": "Your Profile Information",
+    "treeId": "Tree ID",
+    "treeWalletAddress": "Tree Wallet Address",
+    "totalLevels": "Total Levels",
+    "yourCommissionPercent": "Your Commission Percent"
   },
   "table": {
     "noData": "No data available",
@@ -227,7 +238,24 @@
     "languageCode": "Language Code",
     "languageList": "Language List",
     "languageMismatch": "Browser language differs from current language",
-    "copiedToClipboard": "Copied to clipboard"
+    "copiedToClipboard": "Copied to clipboard",
+    "notBgAffiliate": "You are not a BG Affiliate",
+    "authenticating": "Authenticating...",
+    "noStatusData": "No status data available.",
+    "myBgAffiliateStatus": "My BG Affiliate Status",
+    "myBgAffiliateStatusDescription": "Detailed information about the current wallet's BG Affiliate status.",
+    "currentWalletInfo": "Current Wallet Information:",
+    "walletId": "Wallet ID",
+    "solanaAddress": "Solana Address",
+    "nickname": "Nickname",
+    "ethAddress": "ETH Address",
+    "bgAffiliateInfo": "BG Affiliate Information:",
+    "treeId": "Tree ID",
+    "parentWalletId": "Parent Wallet ID",
+    "commissionPercent": "Commission Percentage",
+    "level": "Level",
+    "yes": "Yes",
+    "no": "No"
   },
   "login": {
     "error": "Login Error",

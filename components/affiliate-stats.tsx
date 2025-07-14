@@ -25,7 +25,7 @@ export default function BgAffiliateStats() {
         const data = await getBgAffiliateStatsWithFallback()
         setStats(data)
       } catch (err) {
-        setError("Failed to fetch BG affiliate statistics.")
+        setError(t("errors.networkError"))
         console.error(err)
       } finally {
         setIsLoading(false)
@@ -81,25 +81,25 @@ export default function BgAffiliateStats() {
               <div className="p-1 bg-gradient-to-r from-yellow-500 to-orange-600 rounded">
                 <Users className="h-4 w-4 text-white" />
               </div>
-              <h3 className="font-semibold text-lg group-hover:text-orange-600 transition-colors">{t("affiliate.referralLink") || "Referral Link"}:</h3>
+              <h3 className="font-semibold text-lg group-hover:text-orange-600 transition-colors">{t("affiliate.referralLink")}:</h3>
             </div>
             <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg border border-orange-200">
               <span className="font-mono text-sm text-orange-700 truncate flex-1">
                 {process.env.NEXT_PUBLIC_API_URL}/?ref={user.code}
               </span>
-              <button 
+              <button
                 onClick={() => {
                   navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_API_URL}/?ref=${user.code}`)
-                  toast.success(t("messages.copiedToClipboard") || "Copied to clipboard!")
+                  toast.success(t("messages.copiedToClipboard"))
                 }}
                 className="p-2 hover:bg-orange-100 rounded transition-all duration-200 hover:scale-110"
-                title={t("common.copy") || "Copy"}
+                title={t("common.copy")}
               >
                 <Copy className="h-4 w-4 text-orange-500" />
               </button>
             </div>
             <p className="text-xs text-orange-600 opacity-75">
-              {t("affiliate.shareThisLink") || "Share this link with others to invite them to join your network"}
+              {t("affiliate.shareThisLink")}
             </p>
           </div>
         )}
@@ -115,26 +115,26 @@ export default function BgAffiliateStats() {
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <Hash className="h-3 w-3 text-blue-500" />
-                <span className="font-medium">{t("affiliate.tree")} ID:</span>
+                <span className="font-medium">{t("affiliate.treeId")}:</span>
               </div>
               <div className="font-mono bg-white/50 p-1 rounded text-blue-700">{stats.treeInfo.treeId}</div>
-              
+
               <div className="flex items-center gap-2">
                 <Wallet className="h-3 w-3 text-yellow-500" />
-                <span className="font-medium">{t("affiliate.tree")} {t("affiliate.walletAddress")}:</span>
+                <span className="font-medium">{t("affiliate.treeWalletAddress")}:</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-mono bg-white/50 p-1 rounded text-yellow-700 truncate">
                   {stats.treeInfo.rootWallet?.solanaAddress.substring(0, 7)}...{stats.treeInfo.rootWallet?.solanaAddress.substring(stats.treeInfo.rootWallet.solanaAddress.length - 4)}
                 </span>
-                <button 
+                <button
                   onClick={() => navigator.clipboard.writeText(stats.treeInfo.rootWallet?.solanaAddress)}
                   className="p-1 hover:bg-yellow-100 rounded transition-all duration-200 hover:scale-110"
                 >
                   <Copy className="h-3 w-3 text-yellow-500" />
                 </button>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <DollarSign className="h-3 w-3 text-green-500" />
                 <span className="font-medium">{t("commission.totalCommission")} {t("commission.percentage")}:</span>
@@ -143,48 +143,47 @@ export default function BgAffiliateStats() {
             </div>
           </div>
         }
-        {stats.nodeInfo.parentWallet &&
+        {stats?.currentWallet &&
           <div className="grid gap-3 p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 delay-200">
             <div className="flex items-center gap-2">
               <div className="p-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded">
                 <Network className="h-4 w-4 text-white" />
               </div>
-              <h3 className="font-semibold text-lg group-hover:text-purple-600 transition-colors">{t("affiliate.upline")} {t("affiliate.walletAddress")}:</h3>
+              <h3 className="font-semibold text-lg group-hover:text-purple-600 transition-colors">{t("affiliate.profileInfo")}:</h3>
             </div>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <Hash className="h-3 w-3 text-purple-500" />
-                <span className="font-medium">{t("affiliate.tree")} ID:</span>
+                <span className="font-medium">{t("common.id")}:</span>
               </div>
-              <div className="font-mono bg-white/50 p-1 rounded text-purple-700">{stats.nodeInfo.treeId}</div>
-              
+              <div className="font-mono bg-[#2d69c9]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.walletId}  <button
+                onClick={() => navigator.clipboard.writeText(stats.currentWallet?.walletId)}
+                className="p-1 hover:bg-purple-100 rounded transition-all duration-200 hover:scale-110"
+              >
+                <Copy className="h-3 w-3 text-white" />
+              </button></div>
+
               <div className="flex items-center gap-2">
                 <UserCheck className="h-3 w-3 text-purple-500" />
-                <span className="font-medium">{t("affiliate.upline")}:</span>
+                <span className="font-medium">{t("auth.wallet")}:</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono bg-white/50 p-1 rounded text-purple-700 truncate">
-                  {stats.nodeInfo.parentWallet?.solanaAddress.substring(0, 7)}...{stats.nodeInfo.parentWallet?.solanaAddress.substring(stats.nodeInfo.parentWallet.solanaAddress.length - 4)}
+              <div className="flex items-center gap-2 bg-[#2d69c9]/70 py-1 px-2 font-semibold w-fit rounded ">
+                <span className="font-mono text-white truncate">
+                  {stats.currentWallet?.solanaAddress.substring(0, 7)}...{stats.currentWallet?.solanaAddress.substring(stats.currentWallet.solanaAddress.length - 4)}
                 </span>
-                <button 
-                  onClick={() => navigator.clipboard.writeText(stats.nodeInfo.parentWallet?.solanaAddress)}
+                <button
+                  onClick={() => navigator.clipboard.writeText(stats.currentWallet?.solanaAddress)}
                   className="p-1 hover:bg-purple-100 rounded transition-all duration-200 hover:scale-110"
                 >
-                  <Copy className="h-3 w-3 text-purple-500" />
+                  <Copy className="h-3 w-3 text-white" />
                 </button>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <DollarSign className="h-3 w-3 text-green-500" />
                 <span className="font-medium">{t("commission.commissionRate")}:</span>
               </div>
-              <div className="font-bold text-green-600 group-hover:text-green-700 transition-colors">{stats.nodeInfo.commissionPercent}%</div>
-              
-              <div className="flex items-center gap-2">
-                <Target className="h-3 w-3 text-orange-500" />
-                <span className="font-medium">{t("auth.level")}:</span>
-              </div>
-              <div className="font-bold text-orange-600 group-hover:text-orange-700 transition-colors">{stats.nodeInfo.level}</div>
+              <div className="font-bold text-green-600 group-hover:text-green-700 transition-colors">{stats.treeInfo.totalCommissionPercent}%</div>
             </div>
           </div>
         }

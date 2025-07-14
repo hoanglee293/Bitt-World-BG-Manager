@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useLang } from "@/app/lang"
@@ -13,24 +13,33 @@ import DownlineStats from "./downline-stats"
 import UpdateCommission from "./update-commission"
 
 export default function BgAffiliateDashboard() {
-  const [activeTab, setActiveTab] = useState("downline-stats")
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
   const { t } = useLang()
 
+  // Get active tab from URL query parameter, default to "downline-stats"
+  const activeTab = searchParams.get("tab") || "downline-stats"
+
   const tabOptions = [
-    { value: "downline-stats", label: t("dashboard.downlineStats") },
+    { value: "downline-stats", label: t("dashboard.downlineTransactionStats") },
     { value: "commission-history", label: t("dashboard.commissionHistory") },
-    { value: "affiliate-stats", label: t("dashboard.affiliateStats") },
-    { value: "affiliate-tree", label: t("dashboard.affiliateTree") },
-   
+    { value: "affiliate-stats", label: t("dashboard.personalProfile") },
+    { value: "affiliate-tree", label: t("dashboard.downlineProfileStats") },
   ]
 
   const handleTabChange = (value: string) => {
-    setActiveTab(value)
+    // Create new URLSearchParams object
+    const params = new URLSearchParams(searchParams)
+    params.set("tab", value)
+    
+    // Navigate to the same path with updated query parameters
+    router.push(`${pathname}?${params.toString()}`)
   }
 
   return (
     <div className="w-full h-full">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full h-full">
         {/* Mobile & Tablet: Dropdown select */}
         <div className="lg:hidden w-full bg-background border-b sticky top-12 z-30 py-4" style={{ zIndex: 10 }}>
           <Select value={activeTab} onValueChange={handleTabChange}>

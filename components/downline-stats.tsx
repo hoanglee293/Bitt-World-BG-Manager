@@ -123,6 +123,24 @@ export default function DownlineStats() {
     fetchStats()
   }
 
+  const handleResetFilters = () => {
+    setFilters({
+      startDate: "",
+      endDate: "",
+      minCommission: "",
+      maxCommission: "",
+      minVolume: "",
+      maxVolume: "",
+      level: "",
+      sortBy: "commission",
+      sortOrder: "desc",
+    })
+    // Gọi API ngay sau khi reset filters
+    setTimeout(() => {
+      fetchStats()
+    }, 100)
+  }
+
   // Get date format based on current language
   const getDateFormat = () => {
     switch (lang) {
@@ -201,7 +219,7 @@ export default function DownlineStats() {
           <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
             <BarChart3 className="h-6 w-6 text-white" />
           </div>
-          <CardTitle className="text-lg sm:text-xl lg:text-2xl">{t("dashboard.downlineStats")}</CardTitle>
+          <CardTitle className="text-lg sm:text-xl lg:text-2xl">{t("dashboard.downlineTransactionStats")}</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="grid gap-4 sm:gap-6 px-3 sm:px-6">
@@ -477,10 +495,13 @@ export default function DownlineStats() {
             </div>
 
             {/* Apply Filters Button */}
-            <div className="sm:col-span-2 lg:col-span-1 flex items-end">
+            <div className="sm:col-span-2 lg:col-span-1 flex items-end gap-[5%]">
               <Button onClick={handleApplyFilters} className="w-full text-xs sm:text-sm h-8 sm:h-10 transition-all duration-200 hover:scale-105 hover:shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
                 <Search className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 animate-pulse" />
                 {t("common.applyFilters")}
+              </Button>
+              <Button onClick={handleResetFilters} className="w-3/5 px-6 text-xs sm:text-sm h-8 sm:h-10 transition-all duration-200 hover:scale-105 hover:shadow-lg bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700">
+                {t("common.reset")}
               </Button>
             </div>
           </div>
@@ -574,9 +595,9 @@ export default function DownlineStats() {
                             <span className="text-[#ffb300] font-semibold text-xs sm:text-sm flex-1 break-all">
                               {member.walletInfo.solanaAddress}
                             </span>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               onClick={() => navigator.clipboard.writeText(member.walletInfo.solanaAddress)}
                               className="h-6 w-6 flex-shrink-0 transition-all duration-200 hover:scale-110 hover:bg-yellow-100"
                             >
@@ -657,9 +678,9 @@ export default function DownlineStats() {
                             <div className="inline-flex items-center gap-1">
                               <Sparkles className="h-3 w-3" />
                               <span>{truncateString(member.walletInfo.solanaAddress, 8)}</span>
-                              <Button 
-                                variant="ghost" 
-                                size="icon" 
+                              <Button
+                                variant="ghost"
+                                size="icon"
                                 onClick={() => navigator.clipboard.writeText(member.walletInfo.solanaAddress)}
                                 className="h-6 w-6 sm:h-8 sm:w-8 transition-all duration-200 hover:scale-110 hover:bg-yellow-100"
                               >

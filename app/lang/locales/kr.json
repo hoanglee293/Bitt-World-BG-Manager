@@ -35,6 +35,7 @@
     "ascending": "오름차순",
     "descending": "내림차순",
     "applyFilters": "필터 적용",
+    "reset": "재설정",
     "id": "ID"
   },
   "auth": {
@@ -47,6 +48,7 @@
     "user": "사용자",
     "regularUser": "일반 사용자",
     "bgAffiliate": "BG 어필리에이트",
+    "bgAffiliateBadge": "BG 어필리에이트",
     "level": "레벨",
     "telegramId": "텔레그램 ID",
     "email": "이메일",
@@ -86,7 +88,10 @@
     "affiliateTree": "어필리에이트 트리",
     "updateCommission": "하위 라인 수수료 비율 업데이트",
     "myStatus": "내 상태",
-    "selectTab": "탭 선택"
+    "selectTab": "탭 선택",
+    "downlineTransactionStats": "하위 라인 거래 통계",
+    "personalProfile": "개인 프로필",
+    "downlineProfileStats": "하위 라인 프로필 통계"
   },
   "stats": {
     "totalMembers": "전체 멤버",
@@ -135,6 +140,7 @@
     "rateTooLow": "수수료 비율은 0% 이상이어야 합니다",
     "rateTooHigh": "수수료 비율은 100%를 초과할 수 없습니다",
     "rateExceedsCurrent": "새 수수료 비율은 현재 비율보다 클 수 없습니다",
+    "rateExceedsParent": "하위 라인에 영향을 주지 않도록 수수료 비율은 {percent}%를 초과할 수 없습니다",
     "totalCommission": "총 수수료",
     "commission": "수수료",
     "minCommission": "최소 수수료",
@@ -179,7 +185,12 @@
     "structureDescription": "계층 구조와 각 멤버의 상세 정보를 확인하세요",
     "noDownlineMembers": "아직 하위 라인 멤버가 없습니다.",
     "startInviting": "친구를 초대하여 어필리에이트 네트워크를 구축하세요!",
-    "shareThisLink": "이 링크를 다른 사람에게 공유하여 어필리에이트 네트워크를 구축하세요!"
+    "shareThisLink": "이 링크를 다른 사람에게 공유하여 어필리에이트 네트워크를 구축하세요!",
+    "profileInfo": "귀하의 프로필 정보",
+    "treeId": "트리 ID",
+    "treeWalletAddress": "트리 지갑 주소",
+    "totalLevels": "총 레벨 수",
+    "yourCommissionPercent": "귀하의 수수료 비율"
   },
   "table": {
     "noData": "데이터가 없습니다",
@@ -227,7 +238,24 @@
     "languageCode": "언어 코드",
     "languageList": "언어 목록",
     "languageMismatch": "브라우저 언어가 현재 언어와 다릅니다",
-    "copiedToClipboard": "복사되었습니다"
+    "copiedToClipboard": "복사되었습니다",
+    "notBgAffiliate": "당신은 BG 어필리에이트가 아닙니다",
+    "authenticating": "인증 중...",
+    "noStatusData": "상태 데이터가 없습니다.",
+    "myBgAffiliateStatus": "내 BG 어필리에이트 상태",
+    "myBgAffiliateStatusDescription": "현재 지갑의 BG 어필리에이트 상태에 대한 자세한 정보.",
+    "currentWalletInfo": "현재 지갑 정보:",
+    "walletId": "지갑 ID",
+    "solanaAddress": "솔라나 주소",
+    "nickname": "닉네임",
+    "ethAddress": "이더리움 주소",
+    "bgAffiliateInfo": "BG 어필리에이트 정보:",
+    "treeId": "트리 ID",
+    "parentWalletId": "상위 지갑 ID",
+    "commissionPercent": "수수료 비율",
+    "level": "레벨",
+    "yes": "예",
+    "no": "아니오"
   },
   "login": {
     "error": "로그인 오류",

@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useLang } from "@/app/lang"
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -14,6 +15,7 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children, requireBgAffiliate = true }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading, user, refreshUser } = useAuth()
   const router = useRouter()
+  const { t } = useLang()
 
   // Refresh user data when component mounts
   useEffect(() => {
@@ -32,11 +34,11 @@ export default function ProtectedRoute({ children, requireBgAffiliate = true }: 
   useEffect(() => {
     if (!isLoading && isAuthenticated && user && requireBgAffiliate) {
       if (!user.isBgAffiliate) {
-        toast.error("Bạn không phải là BG Affiliate")
+        toast.error(t("messages.notBgAffiliate"))
         router.push('/unauthorized')
       }
     }
-  }, [isAuthenticated, isLoading, user, requireBgAffiliate, router])
+  }, [isAuthenticated, isLoading, user, requireBgAffiliate, router, t])
 
   // Show loading while checking authentication
   if (isLoading) {
@@ -44,7 +46,7 @@ export default function ProtectedRoute({ children, requireBgAffiliate = true }: 
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex items-center space-x-2">
           <Loader2 className="h-8 w-8 animate-spin" />
-          <span>Đang xác thực...</span>
+          <span>{t("messages.authenticating")}</span>
         </div>
       </div>
     )

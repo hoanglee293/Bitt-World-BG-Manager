@@ -289,102 +289,108 @@ const mockBgAffiliateStats = {
 }
 
 const mockAffiliateTree = {
-  isBgAffiliate: true,
-  treeInfo: {
-    treeId: 1,
-    referrer: {
-      solanaAddress: "ABC123DEF456GHI789JKL012MNO345PQR678STU901VWX234YZA567",
-      nickName: "ReferrerUser",
-    },
-    totalCommissionPercent: 70.0,
-    createdAt: "2024-01-01T00:00:00.000Z",
+  "isBgAffiliate": true,
+  "treeInfo": {
+      "treeId": 2,
+      "totalCommissionPercent": "78.00",
+      "createdAt": "2025-07-11T09:25:20.912Z"
   },
-  downlineNodes: [
-    {
-      nodeId: 2,
-      solanaAddress: "XYZ789ABC123DEF456GHI789JKL012MNO345PQR678STU901VWX234",
-      commissionPercent: 35.0,
-      effectiveFrom: "2024-01-15T10:30:00.000Z",
-      level: 1,
-      walletInfo: {
-        nickName: "User1",
-        solanaAddress: "XYZ789ABC123DEF456GHI789JKL012MNO345PQR678STU901VWX234",
-        ethAddress: "0xDEF456...",
+  "downlineStructure": [
+      {
+          "nodeId": 5,
+          "solanaAddress": "EBuWA9nftomxAgFauFnfKvjTcPcfDPcVM5HFBKwPDuRS",
+          "commissionPercent": "19.00",
+          "effectiveFrom": "2025-07-11T16:35:15.838Z",
+          "walletInfo": {
+              "walletId": 3252745,
+              "nickName": "코",
+              "solanaAddress": "EBuWA9nftomxAgFauFnfKvjTcPcfDPcVM5HFBKwPDuRS",
+              "ethAddress": "0x2DbDe07a6d9E571C2Cb3be3D79906a3307f6ce3e"
+          },
+          "children": [
+              {
+                  "nodeId": 6,
+                  "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                  "commissionPercent": "50.00",
+                  "effectiveFrom": "2025-07-11T16:40:19.875Z",
+                  "walletInfo": {
+                      "walletId": 3260520,
+                      "nickName": "haxaki2",
+                      "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                      "ethAddress": "0x991548110b8fAB5B4deC75a69b87C1DA764D3acc"
+                  },
+                  "children": [
+                    {
+                      "nodeId": 6,
+                      "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                      "commissionPercent": "50.00",
+                      "effectiveFrom": "2025-07-11T16:40:19.875Z",
+                      "walletInfo": {
+                          "walletId": 3260520,
+                          "nickName": "haxaki2",
+                          "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                          "ethAddress": "0x991548110b8fAB5B4deC75a69b87C1DA764D3acc"
+                      },
+                      "children": []
+                    }
+                  ]
+              },
+              {
+                "nodeId": 6,
+                "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                "commissionPercent": "50.00",
+                "effectiveFrom": "2025-07-11T16:40:19.875Z",
+                "walletInfo": {
+                    "walletId": 3260520,
+                    "nickName": "haxaki2",
+                    "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                    "ethAddress": "0x991548110b8fAB5B4deC75a69b87C1DA764D3acc"
+                },
+                "children": [
+                  {
+                    "nodeId": 6,
+                    "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                    "commissionPercent": "50.00",
+                    "effectiveFrom": "2025-07-11T16:40:19.875Z",
+                    "walletInfo": {
+                        "walletId": 3260520,
+                        "nickName": "haxaki2",
+                        "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                        "ethAddress": "0x991548110b8fAB5B4deC75a69b87C1DA764D3acc"
+                    },
+                    "children": []
+                  },
+                  {
+                    "nodeId": 6,
+                    "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                    "commissionPercent": "50.00",
+                    "effectiveFrom": "2025-07-11T16:40:19.875Z",
+                    "walletInfo": {
+                        "walletId": 3260520,
+                        "nickName": "haxaki2",
+                        "solanaAddress": "91Y9DWX3APSi7HEu2kirw2tgrrgERz5iU5dzG6sEJPnq",
+                        "ethAddress": "0x991548110b8fAB5B4deC75a69b87C1DA764D3acc"
+                    },
+                    "children": []
+                  }
+                ]
+            }
+          ]
       },
-    },
-    {
-      nodeId: 3,
-      solanaAddress: "JKL012MNO345PQR678STU901VWX234YZA567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-01-20T14:00:00.000Z",
-      level: 2,
-      walletInfo: {
-        nickName: "User2",
-        solanaAddress: "JKL012MNO345PQR678STU901VWX234YZA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-    {
-      nodeId: 4,
-      solanaAddress: "JKL012MNOZXCZXBSTU901VWX234YZA567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-02-20T14:00:00.000Z",
-      level: 3,
-      walletInfo: {
-        nickName: "User3",
-        solanaAddress: "JKL012MNO345PQR678STU901VWX234YZA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-    {
-      nodeId: 4,
-      solanaAddress: "JKL012MNOZXCZXBSTU901VWX234YZA567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-02-20T14:00:00.000Z",
-      level: 3,
-      walletInfo: {
-        nickName: "User5",
-        solanaAddress: "JKL012MNO3ASDSAD8STU901VWX234YZA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-    {
-      nodeId: 4,
-      solanaAddress: "JKL012MNOZXCZXBSTU901VWX234YZA567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-02-20T14:00:00.000Z",
-      level: 5,
-      walletInfo: {
-        nickName: "User4",
-        solanaAddress: "JKL012MNO345PQR678STU9123SAA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-    {
-      nodeId: 4,
-      solanaAddress: "JKL012MNOZXCZXBS123567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-02-20T14:00:00.000Z",
-      level: 4,
-      walletInfo: {
-        nickName: "User6",
-        solanaAddress: "JKL012MNO345PQ241X34YZA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-    {
-      nodeId: 4,
-      solanaAddress: "JKL012MNOZXCZXASDASXV234YZA567ABC123DEF456GHI789",
-      commissionPercent: 20.0,
-      effectiveFrom: "2024-02-20T14:00:00.000Z",
-      level: 5,
-      walletInfo: {
-        nickName: "User7",
-        solanaAddress: "JKL012MASDSADASU901VWX234YZA567ABC123DEF456GHI789",
-        ethAddress: "0xABC123...",
-      },
-    },
-  ],
+      {
+          "nodeId": 8,
+          "solanaAddress": "GYbsR7pcZ1nLwajupk35QSuhDoue5xCREM4xVZtyet5o",
+          "commissionPercent": "80.00",
+          "effectiveFrom": "2025-07-14T11:35:18.222Z",
+          "walletInfo": {
+              "walletId": 3253560,
+              "nickName": "hehehe",
+              "solanaAddress": "GYbsR7pcZ1nLwajupk35QSuhDoue5xCREM4xVZtyet5o",
+              "ethAddress": "0x53433c35f71989dCb29e697cB98B66fd7EB9ad00"
+          },
+          "children": []
+      }
+  ]
 }
 
 const mockDownlineStats = {

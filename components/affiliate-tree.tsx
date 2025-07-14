@@ -12,8 +12,6 @@ import { Loader2, Users, User, Crown, TrendingUp, CheckCircle, Sparkles, TreePin
 import { format } from "date-fns"
 import { useLang } from "@/app/lang"
 import { toast } from "sonner"
-import { cn } from "@/lib/utils"
-import { useAuth } from "@/hooks/useAuth"
 
 interface ReferrerInfo {
   solanaAddress: string
@@ -37,27 +35,29 @@ interface WalletInfo {
 interface DownlineNode {
   nodeId: number
   solanaAddress: string
-  commissionPercent: number
+  commissionPercent: string
   effectiveFrom: string
-  level: number
   walletInfo: WalletInfo
+  children: DownlineNode[]
 }
 
 interface AffiliateTreeData {
   isBgAffiliate: boolean
   treeInfo: TreeInfo
-  downlineNodes: DownlineNode[]
+  downlineStructure: DownlineNode[]
 }
 
 // Update Commission Modal Component
-function UpdateCommissionModal({ 
-  node, 
-  isOpen, 
-  onClose, 
-  onSuccess 
-}: { 
+function UpdateCommissionModal({
+  node,
+  isOpen,
+  treeParent,
+  onClose,
+  onSuccess
+}: {
   node: DownlineNode
   isOpen: boolean
+  treeParent: TreeInfo
   onClose: () => void
   onSuccess: () => void
 }) {
@@ -89,14 +89,20 @@ function UpdateCommissionModal({
       return false
     }
 
-    if (percent > node.commissionPercent) {
+    if (percent > parseFloat(node.commissionPercent)) {
       setValidationError(`${t("commission.rateExceedsCurrent")} (${node.commissionPercent}%)`)
+      return false
+    }
+
+    if (percent > treeParent.totalCommissionPercent) {
+      setValidationError(t("commission.rateExceedsParent", { percent: treeParent.totalCommissionPercent }))
       return false
     }
 
     setValidationError("")
     return true
   }
+  console.log(treeParent)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -110,11 +116,6 @@ function UpdateCommissionModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // if (!validateInput(newPercent)) {
-    //   return
-    // }
-
     setIsLoading(true)
     setSuccess(false)
 
@@ -132,7 +133,14 @@ function UpdateCommissionModal({
       }, 1500)
     } catch (error: any) {
       console.error("Failed to update commission:", error)
-      toast.error(error.response.data.message)
+      // Check if the error message contains the commission limit error
+      if (error.response?.data?.message?.includes("Commission percent cannot exceed")) {
+        // Extract the percentage from the error message or use treeParent.totalCommissionPercent
+        const maxPercent = treeParent.totalCommissionPercent
+        toast.error(t("commission.rateExceedsParent", { percent: maxPercent }))
+      } else {
+        toast.error(error.response?.data?.message || t("commission.updateError"))
+      }
     } finally {
       setIsLoading(false)
     }
@@ -161,7 +169,7 @@ function UpdateCommissionModal({
             {t("commission.updateCommission")} {t("affiliate.downline")}: {node.walletInfo.nickName}
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="currentPercent" className="text-sm flex items-center gap-1">
@@ -170,13 +178,13 @@ function UpdateCommissionModal({
             </Label>
             <Input
               id="currentPercent"
-              type="number" 
+              type="number"
               value={node.commissionPercent}
               disabled
               className="bg-gray-50 text-sm"
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="newPercent" className="text-sm flex items-center gap-1">
               <Target className="h-3 w-3" />
@@ -191,12 +199,7 @@ function UpdateCommissionModal({
               disabled={isLoading}
               className={`text-sm transition-all duration-200 hover:scale-[1.02] focus:scale-[1.02]`}
             />
-            {/* {validationError && (
-              <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
-                <Activity className="h-2 w-2" />
-                {validationError}
-              </p>
-            )} */}
+
           </div>
 
           <div className="flex flex-col sm:flex-row justify-end gap-2">
@@ -230,6 +233,20 @@ function UpdateCommissionModal({
   )
 }
 
+// Helper function to flatten the tree structure
+function flattenTree(nodes: DownlineNode[], level: number = 1): Array<DownlineNode & { level: number }> {
+  const result: Array<DownlineNode & { level: number }> = []
+
+  for (const node of nodes) {
+    result.push({ ...node, level })
+    if (node.children && node.children.length > 0) {
+      result.push(...flattenTree(node.children, level + 1))
+    }
+  }
+
+  return result
+}
+
 // Tree Node Component
 function TreeNodeComponent({
   node,
@@ -238,7 +255,7 @@ function TreeNodeComponent({
 }: {
   node: DownlineNode
   level: number
-  onUpdateCommission: (node: DownlineNode) => void
+  onUpdateCommission: (node: DownlineNode & { level: number }) => void
 }) {
   const { t } = useLang()
 
@@ -262,56 +279,73 @@ function TreeNodeComponent({
   }
 
   return (
-    <div
-      className="flex flex-col sm:flex-row items-start sm:items-center gap-2 p-2 sm:p-3 rounded-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg justify-between group animate-in slide-in-from-bottom-2 duration-500"
-      style={{ marginLeft: `${(level - 1) * 16}px` }}
-    >
-      {/* Node content */}
-      <div className={`flex items-center gap-2 p-2 rounded-md border ${getLevelColor(node.level)} flex-1 min-w-0 transition-all duration-200 hover:scale-105`}>
-        <div className="p-1 bg-white/50 rounded">
-          {getLevelIcon(node.level)}
-        </div>
-        <div className="flex flex-col min-w-0 flex-1">
-          <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.nickName}</div>
-          <div className="text-xs opacity-75 truncate flex items-center gap-1">
-            <Wallet className="h-2 w-2" />
-            <span className="sm:hidden">{node.solanaAddress.substring(0, 6)}...{node.solanaAddress.substring(node.solanaAddress.length - 4)}</span>
-            <span className="hidden sm:inline">{node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}</span>
-            <button 
-              onClick={() => navigator.clipboard.writeText(node.solanaAddress)}
-              className="p-1 hover:bg-white/50 rounded transition-all duration-200 hover:scale-110"
-            >
-              <Copy className="h-2 w-2" />
-            </button>
+    <div className="space-y-3">
+      {/* Parent Node */}
+      <div
+        className="flex flex-col sm:flex-row items-start sm:items-center gap-2 p-2 sm:p-3 rounded-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg justify-between group animate-in slide-in-from-bottom-2 duration-500"
+        style={{ marginLeft: `${(level - 1) * 16}px` }}
+      >
+        {/* Node content */}
+        <div className={`flex items-center gap-2 p-2 rounded-md border ${getLevelColor(level)} flex-1 min-w-0 transition-all duration-200 hover:scale-105`}>
+          <div className="p-1 bg-white/50 rounded">
+            {getLevelIcon(level)}
           </div>
+          <div className="flex flex-col min-w-0 flex-1">
+            <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.nickName}</div>
+            <div className="text-xs opacity-75 truncate flex items-center gap-1">
+              <Wallet className="h-2 w-2" />
+              <span className="sm:hidden">{node.solanaAddress.substring(0, 6)}...{node.solanaAddress.substring(node.solanaAddress.length - 4)}</span>
+              <span className="hidden sm:inline">{node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}</span>
+              <button
+                onClick={() => navigator.clipboard.writeText(node.solanaAddress)}
+                className="p-1 hover:bg-white/50 rounded transition-all duration-200 hover:scale-110"
+              >
+                <Copy className="h-2 w-2" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Commission badge */}
+        <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="flex gap-1">
+            <Badge variant="secondary" className="text-xs sm:text-sm bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none">
+              <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
+              {node.commissionPercent}%
+            </Badge>
+            <Badge variant="outline" className="text-xs bg-gradient-to-r from-blue-500 to-purple-600 text-white border-none">
+              <Target className="h-2 w-2 mr-1" />
+              {t("auth.level")}.{level}
+            </Badge>
+          </div>
+
+          {level === 1 && (
+            <Button
+              size="sm"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-xs px-2 py-1 sm:px-3 sm:py-2 transition-all duration-200 hover:scale-105"
+              onClick={() => onUpdateCommission({ ...node, level })}
+            >
+              <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
+              <span className="hidden sm:inline">{t("commission.updatePercentCommission")}</span>
+              <span className="sm:hidden">{t("commission.update")}</span>
+            </Button>
+          )}
         </div>
       </div>
 
-      {/* Commission badge */}
-      <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-between sm:justify-end">
-        <div className="flex gap-1">
-          <Badge variant="secondary" className="text-xs sm:text-sm bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none">
-            <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
-            {node.commissionPercent}%
-          </Badge>
-          <Badge variant="outline" className="text-xs bg-gradient-to-r from-blue-500 to-purple-600 text-white border-none">
-            <Target className="h-2 w-2 mr-1" />
-            {t("auth.level")}.{node.level}
-          </Badge>
+      {/* Children Nodes */}
+      {node.children && node.children.length > 0 && (
+        <div className="ml-4 sm:ml-6 border-l-2 border-dashed border-gray-300 pl-4 sm:pl-6">
+          {node.children.map((childNode) => (
+            <TreeNodeComponent
+              key={childNode.nodeId}
+              node={childNode}
+              level={level + 1}
+              onUpdateCommission={onUpdateCommission}
+            />
+          ))}
         </div>
-        
-        {level === 1 && (
-          <Button 
-            size="sm"
-            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-xs px-2 py-1 sm:px-3 sm:py-2 transition-all duration-200 hover:scale-105"
-            onClick={() => onUpdateCommission(node)}
-          >
-            <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
-            <span className="hidden sm:inline">{t("commission.updatePercentCommission")}</span>
-            <span className="sm:hidden">{t("commission.update")}</span>
-          </Button>
-        )}
-      </div>
+      )}
     </div>
   )
 }
@@ -320,7 +354,7 @@ export default function AffiliateTree() {
   const [treeData, setTreeData] = useState<AffiliateTreeData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [selectedNode, setSelectedNode] = useState<DownlineNode | null>(null)
+  const [selectedNode, setSelectedNode] = useState<DownlineNode & { level: number } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { t, lang } = useLang()
 
@@ -330,7 +364,7 @@ export default function AffiliateTree() {
       setError(null)
       try {
         const data = await getAffiliateTreeWithFallback()
-        setTreeData(data as AffiliateTreeData)
+        setTreeData(data as unknown as AffiliateTreeData)
       } catch (err) {
         setError(t("errors.networkError"))
         console.error(err)
@@ -341,7 +375,7 @@ export default function AffiliateTree() {
     fetchTree()
   }, [])
 
-  const handleUpdateCommission = (node: DownlineNode) => {
+  const handleUpdateCommission = (node: DownlineNode & { level: number }) => {
     setSelectedNode(node)
     setIsModalOpen(true)
   }
@@ -356,7 +390,7 @@ export default function AffiliateTree() {
     const fetchTree = async () => {
       try {
         const data = await getAffiliateTreeWithFallback()
-        setTreeData(data as AffiliateTreeData)
+        setTreeData(data as unknown as AffiliateTreeData)
       } catch (err) {
         console.error(err)
       }
@@ -404,8 +438,9 @@ export default function AffiliateTree() {
     )
   }
 
-  // Group nodes by level for statistics
-  const nodesByLevel = treeData.downlineNodes.reduce((acc, node) => {
+  // Flatten the tree structure and group nodes by level for statistics
+  const flattenedNodes = flattenTree(treeData.downlineStructure || [])
+  const nodesByLevel = flattenedNodes.reduce((acc: Record<number, number>, node) => {
     acc[node.level] = (acc[node.level] || 0) + 1
     return acc
   }, {} as Record<number, number>)
@@ -422,7 +457,7 @@ export default function AffiliateTree() {
             <div>
               <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                 <Crown className="h-4 w-4 sm:h-5 sm:w-5" />
-                {t("affiliate.treeInfo")}
+                {t("stats.overview")}
               </CardTitle>
               <CardDescription className="text-sm">
                 {t("affiliate.treeDescription")}
@@ -442,7 +477,7 @@ export default function AffiliateTree() {
             <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg group">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Users className="h-4 w-4 text-green-500 group-hover:animate-bounce" />
-                <div className="text-lg sm:text-2xl font-bold text-green-600 group-hover:text-green-700 transition-colors">{treeData.downlineNodes.length}</div>
+                <div className="text-lg sm:text-2xl font-bold text-green-600 group-hover:text-green-700 transition-colors">{flattenedNodes.length}</div>
               </div>
               <div className="text-xs sm:text-sm text-green-600">{t("stats.totalMembers")}</div>
             </div>
@@ -451,14 +486,14 @@ export default function AffiliateTree() {
                 <DollarSign className="h-4 w-4 text-yellow-500 group-hover:animate-pulse" />
                 <div className="text-lg sm:text-2xl font-bold text-yellow-600 group-hover:text-yellow-700 transition-colors">{treeData.treeInfo.totalCommissionPercent}%</div>
               </div>
-              <div className="text-xs sm:text-sm text-yellow-600">{t("commission.totalCommission")}</div>
+              <div className="text-xs sm:text-sm text-yellow-600">{t("affiliate.yourCommissionPercent")}</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg group">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Target className="h-4 w-4 text-purple-500 group-hover:animate-pulse" />
                 <div className="text-lg sm:text-2xl font-bold text-purple-600 group-hover:text-purple-700 transition-colors">{Object.keys(nodesByLevel).length}</div>
               </div>
-              <div className="text-xs sm:text-sm text-purple-600">{t("affiliate.levelCount")}</div>
+              <div className="text-xs sm:text-sm text-purple-600">{t("affiliate.totalLevels")}</div>
             </div>
           </div>
 
@@ -479,10 +514,6 @@ export default function AffiliateTree() {
                     <span className="sm:hidden">{treeData.treeInfo.referrer.solanaAddress.substring(0, 6)}...</span>
                     <span className="hidden sm:inline">{treeData.treeInfo.referrer.solanaAddress.substring(0, 8)}...</span>
                   </Badge>
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
-                  <Calendar className="h-3 w-3" />
-                  {format(new Date(treeData.treeInfo.createdAt), getDateFormat() + " HH:mm")}
                 </div>
               </div>
             ) : (
@@ -514,7 +545,7 @@ export default function AffiliateTree() {
           </div>
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
-          {treeData.downlineNodes.length === 0 ? (
+          {(treeData.downlineStructure?.length || 0) === 0 ? (
             <div className="text-center py-8 sm:py-12 text-muted-foreground">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-full flex items-center justify-center animate-pulse">
                 <Users className="h-8 w-8 sm:h-12 sm:w-12 text-blue-500" />
@@ -530,9 +561,9 @@ export default function AffiliateTree() {
               {/* Level Statistics */}
               <div className="flex gap-2 mb-4 sm:mb-6 overflow-x-auto pb-2">
                 {Object.entries(nodesByLevel).map(([level, count], index) => (
-                  <Badge 
-                    key={level} 
-                    variant="secondary" 
+                  <Badge
+                    key={level}
+                    variant="secondary"
                     className="text-xs whitespace-nowrap bg-gradient-to-r from-blue-500 to-purple-600 text-white border-none transition-all duration-200 hover:scale-105 animate-in slide-in-from-bottom-2 duration-500"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
@@ -544,16 +575,14 @@ export default function AffiliateTree() {
 
               {/* Tree Structure */}
               <div className="border rounded-lg p-2 sm:p-4 bg-gradient-to-br from-white to-gray-50 space-y-2">
-                {treeData.downlineNodes
-                  .sort((a, b) => a.level - b.level)
-                  .map((node, index) => (
-                    <TreeNodeComponent
-                      key={node.nodeId}
-                      node={node}
-                      level={node.level}
-                      onUpdateCommission={handleUpdateCommission}
-                    />
-                  ))}
+                {treeData.downlineStructure.map((node, index) => (
+                  <TreeNodeComponent
+                    key={node.nodeId}
+                    node={node}
+                    level={1}
+                    onUpdateCommission={handleUpdateCommission}
+                  />
+                ))}
               </div>
             </div>
           )}
@@ -564,6 +593,7 @@ export default function AffiliateTree() {
         <UpdateCommissionModal
           node={selectedNode}
           isOpen={isModalOpen}
+          treeParent={treeData.treeInfo}
           onClose={handleModalClose}
           onSuccess={handleUpdateSuccess}
         />
