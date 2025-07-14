@@ -310,21 +310,25 @@ function TreeNodeComponent({
         </div>
 
         {/* Transaction Statistics */}
-        <div className="flex flex-col sm:flex-row gap-2 lg:gap-4 flex-shrink-0">
-          <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-blue-50 to-cyan-50 px-2 py-1 rounded">
-            <BarChart3 className="h-3 w-3 text-blue-500" />
-            <span className="text-gray-700 font-medium">{t("stats.totalVolume")}:</span>
-            <span className="font-bold text-blue-600">{node.totalVolume.toLocaleString()}</span>
-          </div>
+        <div className="flex flex-col sm:flex-row gap-2 lg:gap-4 flex-shrink-0 flex-wrap xl:flex-nowrap">
           <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-green-50 to-emerald-50 px-2 py-1 rounded">
             <DollarSign className="h-3 w-3 text-green-500" />
             <span className="text-gray-700 font-medium">{t("stats.totalReward")}:</span>
             <span className="font-bold text-green-600">{node.totalReward.toLocaleString()}</span>
           </div>
-          <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-purple-50 to-pink-50 px-2 py-1 rounded">
-            <Activity className="h-3 w-3 text-purple-500" />
-            <span className="text-gray-700 font-medium">{t("stats.totalTransactions")}:</span>
-            <span className="font-bold text-purple-600">{node.totalTrans.toLocaleString()}</span>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-blue-50 to-cyan-50 px-2 py-1 rounded">
+
+              <BarChart3 className="h-3 w-3 text-blue-500" />
+              <span className="text-gray-700 font-medium">{t("stats.totalVolume")}:</span>
+              <span className="font-bold text-blue-600">{node.totalVolume.toLocaleString()}</span>
+            </div>
+
+            <div className="flex items-center gap-1 text-xs bg-gradient-to-r from-purple-50 to-pink-50 px-2 py-1 rounded">
+              <Activity className="h-3 w-3 text-purple-500" />
+              <span className="text-gray-700 font-medium">{t("stats.totalTransactions")}:</span>
+              <span className="font-bold text-purple-600">{node.totalTrans.toLocaleString()}</span>
+            </div>
           </div>
         </div>
 
