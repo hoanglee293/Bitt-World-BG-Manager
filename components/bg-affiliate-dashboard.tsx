@@ -11,6 +11,7 @@ import BgAffiliateStats from "./affiliate-stats"
 import AffiliateTree from "./affiliate-tree"
 import DownlineStats from "./downline-stats"
 import UpdateCommission from "./update-commission"
+import Withdraw from "./withdraw"
 
 export default function BgAffiliateDashboard() {
   const searchParams = useSearchParams()
@@ -26,6 +27,7 @@ export default function BgAffiliateDashboard() {
     { value: "commission-history", label: t("dashboard.commissionHistory") },
     { value: "affiliate-stats", label: t("dashboard.personalProfile") },
     { value: "affiliate-tree", label: t("dashboard.downlineProfileStats") },
+    { value: "withdraw", label: t("dashboard.withdraw") },
   ]
 
   const handleTabChange = (value: string) => {
@@ -87,6 +89,9 @@ export default function BgAffiliateDashboard() {
           </TabsContent>
           <TabsContent className="border-none p-3 sm:p-4 h-[calc(100vh-56px)] overflow-y-scroll" value="downline-stats">
             <DownlineStats />
+          </TabsContent>
+          <TabsContent className="border-none p-3 sm:p-4 h-[calc(100vh-56px)] overflow-y-scroll" value="withdraw">
+            <Withdraw />
           </TabsContent>
         </div>
       </Tabs>

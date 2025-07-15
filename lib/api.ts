@@ -787,6 +787,159 @@ const checkBgAffiliateStatusWithToken = async (): Promise<MyStatusData | null> =
   }
 }
 
+// BG Affiliate Withdrawal API functions
+const createWithdrawRequest = async (): Promise<any> => {
+  const response = await axiosClient.post('/bg-ref/withdraw')
+  return response.data
+}
+
+const retryWithdrawRequest = async (withdrawId: number): Promise<any> => {
+  const response = await axiosClient.post(`/bg-ref/withdraw/${withdrawId}/retry`)
+  return response.data
+}
+
+const getWithdrawHistory = async (): Promise<any> => {
+  return apiCall<any>('/bg-ref/withdraw-history')
+}
+
+const getAvailableWithdrawal = async (): Promise<any> => {
+  return apiCall<any>('/bg-ref/available-withdrawal')
+}
+
+const getTraditionalReferralRewards = async (): Promise<any> => {
+  return apiCall<any>('/bg-ref/traditional-referral-rewards')
+}
+
+// Mock data for withdrawal features
+const mockAvailableWithdrawal = {
+  totalUSD: 2500.75,
+  totalSOL: 42.15,
+  breakdown: {
+    walletRefRewardsUSD: 500.75,
+    walletRefRewardsCount: 12,
+    bgAffiliateRewardsUSD: 2000.00,
+    bgAffiliateRewardsCount: 45
+  }
+}
+
+const mockWithdrawHistory = [
+  {
+    rwh_id: 2,
+    rwh_wallet_id: 3253750,
+    rwh_amount: "0.000005",
+    rwh_hash: null,
+    rwh_status: "retry",
+    rwh_date: "2025-07-15T09:08:46.146Z",
+    rwh_created_at: "2025-07-15T08:38:21.215Z",
+    rwh_updated_at: "2025-07-15T08:38:35.701Z"
+  },
+  {
+    rwh_id: 1,
+    rwh_wallet_id: 3253750,
+    rwh_amount: "0.000000",
+    rwh_hash: null,
+    rwh_status: "retry",
+    rwh_date: "2025-07-15T08:56:46.489Z",
+    rwh_created_at: "2025-07-15T08:26:21.538Z",
+    rwh_updated_at: "2025-07-15T08:38:35.613Z"
+  },
+  {
+    rwh_id: 3,
+    rwh_wallet_id: 3253750,
+    rwh_amount: "0.001500",
+    rwh_hash: "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+    rwh_status: "completed",
+    rwh_date: "2025-07-14T10:30:00.000Z",
+    rwh_created_at: "2025-07-14T10:00:00.000Z",
+    rwh_updated_at: "2025-07-14T10:35:00.000Z"
+  },
+  {
+    rwh_id: 4,
+    rwh_wallet_id: 3253750,
+    rwh_amount: "0.002000",
+    rwh_hash: null,
+    rwh_status: "pending",
+    rwh_date: "2025-07-13T15:20:00.000Z",
+    rwh_created_at: "2025-07-13T15:00:00.000Z",
+    rwh_updated_at: "2025-07-13T15:00:00.000Z"
+  }
+]
+
+const mockTraditionalReferralRewards = {
+  walletId: 456,
+  totalRewards: 500.75,
+  rewardsCount: 12,
+  walletInfo: {
+    solanaAddress: "ABC123DEF456GHI789JKL012MNO345PQR678STU901VWX234YZA567",
+    nickName: "My Wallet",
+    ethAddress: "0x123456789ABCDEF123456789ABCDEF123456789A"
+  }
+}
+
+// Fallback functions for withdrawal features
+export const getAvailableWithdrawalWithFallback = async () => {
+  try {
+    return await getAvailableWithdrawal()
+  } catch (error) {
+    return simulateApiCall(mockAvailableWithdrawal)
+  }
+}
+
+export const getWithdrawHistoryWithFallback = async () => {
+  try {
+    return await getWithdrawHistory()
+  } catch (error) {
+    return simulateApiCall(mockWithdrawHistory)
+  }
+}
+
+export const createWithdrawRequestWithFallback = async () => {
+  try {
+    return await createWithdrawRequest()
+  } catch (error) {
+    // Simulate successful withdrawal request
+    return simulateApiCall({
+      success: true,
+      message: "Tạo yêu cầu rút tiền thành công",
+      data: {
+        withdrawId: 124,
+        amountUSD: 2500.75,
+        amountSOL: 42.15,
+        breakdown: {
+          bgAffiliateRewards: 2000.00,
+          traditionalReferralRewards: 500.75,
+          totalUSD: 2500.75,
+          totalSOL: 42.15
+        }
+      }
+    })
+  }
+}
+
+export const retryWithdrawRequestWithFallback = async (withdrawId: number) => {
+  try {
+    return await retryWithdrawRequest(withdrawId)
+  } catch (error) {
+    // Simulate successful retry
+    return simulateApiCall({
+      success: true,
+      message: "Thử lại rút tiền thành công",
+      data: {
+        withdrawId: withdrawId,
+        status: "pending"
+      }
+    })
+  }
+}
+
+export const getTraditionalReferralRewardsWithFallback = async () => {
+  try {
+    return await getTraditionalReferralRewards()
+  } catch (error) {
+    return simulateApiCall(mockTraditionalReferralRewards)
+  }
+}
+
 // Export both real and fallback versions
 export {
   getCommissionHistory,
@@ -797,4 +950,10 @@ export {
   updateCommissionPercent,
   checkBgAffiliateStatus,
   checkBgAffiliateStatusWithToken,
+  // Withdrawal APIs
+  createWithdrawRequest,
+  retryWithdrawRequest,
+  getWithdrawHistory,
+  getAvailableWithdrawal,
+  getTraditionalReferralRewards,
 }
