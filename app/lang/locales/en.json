@@ -91,7 +91,8 @@
     "selectTab": "Select a tab",
     "downlineTransactionStats": "Downline Transaction Statistics",
     "personalProfile": "Personal Profile",
-    "downlineProfileStats": "Downline Profile Statistics"
+    "downlineProfileStats": "Downline Profile Statistics",
+    "withdraw": "Withdraw"
   },
   "stats": {
     "totalMembers": "Total Members",
@@ -350,6 +351,7 @@
     "confirmInfo2": "Funds will be sent to your registered wallet address",
     "confirmInfo3": "Transaction hash will be provided once processed",
     "confirmWithdraw": "Confirm Withdraw",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "minimumAmount": "Minimum amount to withdraw is $10"
   }
 }

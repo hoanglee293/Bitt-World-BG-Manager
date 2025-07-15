@@ -91,7 +91,8 @@
     "selectTab": "탭 선택",
     "downlineTransactionStats": "하위 라인 거래 통계",
     "personalProfile": "개인 프로필",
-    "downlineProfileStats": "하위 라인 프로필 통계"
+    "downlineProfileStats": "하위 라인 프로필 통계",
+    "withdraw": "출금"
   },
   "stats": {
     "totalMembers": "전체 멤버",
@@ -350,6 +351,7 @@
     "confirmInfo2": "자금은 등록된 지갑 주소로 전송됩니다",
     "confirmInfo3": "처리 후 거래 해시가 제공됩니다",
     "confirmWithdraw": "출금 확인",
-    "cancel": "취소"
+    "cancel": "취소",
+    "minimumAmount": "출금 최소 금액은 10달러입니다"
   }
 }

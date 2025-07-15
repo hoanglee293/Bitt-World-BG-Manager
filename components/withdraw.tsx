@@ -15,24 +15,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { 
-  getAvailableWithdrawalWithFallback, 
-  getWithdrawHistoryWithFallback, 
+import {
+  getAvailableWithdrawalWithFallback,
+  getWithdrawHistoryWithFallback,
   createWithdrawRequestWithFallback,
   retryWithdrawRequestWithFallback
 } from "@/lib/api"
-import { 
-  Loader2, 
-  Search, 
-  CalendarIcon, 
-  DollarSign, 
-  TrendingUp, 
-  Activity, 
-  ChevronRight, 
-  Sparkles, 
-  Target, 
-  BarChart3, 
-  Clock, 
+import {
+  Loader2,
+  Search,
+  CalendarIcon,
+  DollarSign,
+  TrendingUp,
+  Activity,
+  ChevronRight,
+  Sparkles,
+  Target,
+  BarChart3,
+  Clock,
   UserPlus,
   Wallet,
   Coins,
@@ -119,11 +119,11 @@ export default function Withdraw() {
         getAvailableWithdrawalWithFallback(),
         getWithdrawHistoryWithFallback()
       ])
-      
+
       // Safe access with validation
       const available = availableData.data || availableData
       const history = historyData.data || historyData
-      
+
       // Validate available withdrawal data
       if (available && typeof available === 'object') {
         setAvailableWithdrawal({
@@ -149,7 +149,7 @@ export default function Withdraw() {
           }
         })
       }
-      
+
       // Validate history data
       if (Array.isArray(history)) {
         setWithdrawHistory(history.map(item => ({
@@ -179,7 +179,7 @@ export default function Withdraw() {
     try {
       const historyData = await getWithdrawHistoryWithFallback()
       const history = historyData.data || historyData
-      
+
       if (Array.isArray(history)) {
         setWithdrawHistory(history.map(item => ({
           rwh_id: item.rwh_id || 0,
@@ -240,9 +240,9 @@ export default function Withdraw() {
 
     try {
       const response = await createWithdrawRequestWithFallback()
-      
+
       if (response.success) {
-        setSuccessMessage(response.message || t("withdraw.withdrawalRequestSuccess"))
+        setSuccessMessage(t("withdraw.withdrawalRequestSuccess"))
         // Refresh data after successful withdrawal
         setTimeout(() => {
           fetchData()
@@ -269,15 +269,15 @@ export default function Withdraw() {
 
     try {
       const response = await retryWithdrawRequestWithFallback(withdrawId)
-      
+
       if (response.success) {
-        setSuccessMessage(response.message || t("withdraw.retrySuccess"))
+        setSuccessMessage(t("withdraw.retrySuccess"))
         // Refresh data after successful retry
         setTimeout(() => {
           fetchData()
         }, 1000)
       } else {
-        setError(response.message || t("withdraw.retryError"))
+        setError(t("withdraw.retryError"))
       }
     } catch (err) {
       setError(t("withdraw.retryError"))
@@ -358,7 +358,7 @@ export default function Withdraw() {
   const formatRelativeTime = (date: Date) => {
     const now = new Date()
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-    
+
     if (diffInSeconds < 60) {
       return `${diffInSeconds}${t("withdraw.seconds")} ${t("withdraw.ago")}`
     } else if (diffInSeconds < 3600) {
@@ -420,33 +420,33 @@ export default function Withdraw() {
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <div className="flex items-center gap-1">
-                  {isPolling ? (
-                    <Loader2 className="h-3 w-3 animate-spin text-blue-500" />
-                  ) : (
-                    <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
-                  )}
-                  <span className="hidden sm:inline">{t("withdraw.autoRefresh")}</span>
-                  <span className="sm:hidden">{t("withdraw.auto")}</span>
-                </div>
-                <span className="hidden sm:inline">•</span>
-                <span className="text-xs">{t("withdraw.lastUpdate")}: {formatRelativeTime(lastUpdate)}</span>
+              <div className="flex items-center gap-1">
+                {isPolling ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-blue-500" />
+                ) : (
+                  <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+                )}
+                <span className="hidden sm:inline">{t("withdraw.autoRefresh")}</span>
+                <span className="sm:hidden">{t("withdraw.auto")}</span>
+              </div>
+              <span className="hidden sm:inline">•</span>
+              <span className="text-xs">{t("withdraw.lastUpdate")}: {formatRelativeTime(lastUpdate)}</span>
             </div>
-                          <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={fetchData}
-                disabled={isLoading}
-                className="transition-all duration-300 hover:scale-105 hover:shadow-md w-full sm:w-auto"
-              >
-                <RefreshCw className={cn("h-4 w-4 mr-2", isLoading && "animate-spin")} />
-                <span className="hidden sm:inline">{t("withdraw.refresh")}</span>
-                <span className="sm:hidden">{t("withdraw.refresh")}</span>
-              </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={fetchData}
+              disabled={isLoading}
+              className="transition-all duration-300 hover:scale-105 hover:shadow-md w-full sm:w-auto"
+            >
+              <RefreshCw className={cn("h-4 w-4 mr-2", isLoading && "animate-spin")} />
+              <span className="hidden sm:inline">{t("withdraw.refresh")}</span>
+              <span className="sm:hidden">{t("withdraw.refresh")}</span>
+            </Button>
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="grid gap-6 px-3 sm:px-6">
         {/* Success Message */}
         {successMessage && (
@@ -503,7 +503,7 @@ export default function Withdraw() {
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <p className="text-xs sm:text-sm font-medium text-orange-600 truncate">{t("withdraw.totalWithdrawalHistory")}</p>
-                 
+
                     <p className="text-lg sm:text-2xl font-bold text-orange-900 group-hover:text-orange-800 transition-colors truncate">
                       {(withdrawHistory.length || 0)}
                     </p>
@@ -516,17 +516,20 @@ export default function Withdraw() {
         )}
 
         {/* Withdraw Action */}
-        {availableWithdrawal && (availableWithdrawal.totalUSD || 0) > 0 && (
+        {availableWithdrawal && (availableWithdrawal.totalUSD || 0) > 10 && (
           <Card className="border-2 border-dashed border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group">
             <CardContent className="p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="text-center sm:text-left">
                   <h3 className="text-base sm:text-lg font-semibold text-blue-900 group-hover:text-blue-800 transition-colors">{t("withdraw.readyToWithdraw")}</h3>
-                  <p className="text-xs sm:text-sm text-blue-700 group-hover:text-blue-600 transition-colors">
-                    {t("withdraw.youCanWithdraw", { amount: `$${formatAmount(availableWithdrawal.totalUSD || 0)}`, solAmount: formatAmount(availableWithdrawal.totalSOL || 0) })}
-                  </p>
+                  <div className="flex gap-2">
+                    <p className="text-xs sm:text-sm text-blue-700 group-hover:text-blue-600 transition-colors">
+                      {t("withdraw.youCanWithdraw", { amount: `$${formatAmount(availableWithdrawal.totalUSD || 0)}`, solAmount: formatAmount(availableWithdrawal.totalSOL || 0) })}
+                    </p>
+                    <span className="text-xs sm:text-sm text-red-500 group-hover:text-red-600 transition-colors">({t("withdraw.minimumAmount")})</span>
+                  </div>
                 </div>
-                <Button 
+                <Button
                   onClick={handleWithdrawClick}
                   disabled={isWithdrawing}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto transition-all duration-300 hover:scale-105 hover:shadow-lg"
@@ -576,8 +579,8 @@ export default function Withdraw() {
                     </TableHeader>
                     <TableBody>
                       {withdrawHistory.map((item, index) => (
-                        <TableRow 
-                          key={item.rwh_id} 
+                        <TableRow
+                          key={item.rwh_id}
                           className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all animate-in slide-in-from-bottom-2 duration-500"
                           style={{ animationDelay: `${index * 50}ms` }}
                         >
@@ -618,7 +621,7 @@ export default function Withdraw() {
                           <TableCell>
                             <div className="text-xs space-y-2">
                               {item.rwh_hash ? (
-                                <div className="flex justify-between items-center">
+                                <div className="flex gap-2 items-center">
                                   <span className="text-muted-foreground">{t("withdraw.transactionHash")}:</span>
                                   <div className="flex items-center gap-1">
                                     <TooltipProvider>
@@ -646,7 +649,7 @@ export default function Withdraw() {
                               ) : (
                                 <span className="text-muted-foreground">-</span>
                               )}
-                              
+
                               {/* Retry Button for failed transactions */}
                               {item.rwh_status === 'failed' && (
                                 <Button
@@ -681,7 +684,7 @@ export default function Withdraw() {
                 <div className="lg:hidden space-y-3">
                   {withdrawHistory.map((item, index) => (
                     <Collapsible key={item.rwh_id} open={expandedHistoryItems.has(item.rwh_id || 0)}>
-                      <Card 
+                      <Card
                         className="transition-all duration-300 hover:shadow-md animate-in slide-in-from-bottom-2 duration-500"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
@@ -705,82 +708,82 @@ export default function Withdraw() {
                               </CollapsibleTrigger>
                             </div>
 
-                          {/* Amount */}
-                          <div className="space-y-1">
-                            <p className="font-semibold text-green-600 flex items-center gap-1 text-lg">
-                              <DollarSign className="h-4 w-4" />
-                              ${formatAmount(Number(item.rwh_amount) || 0)}
-                            </p>
-                            <p className="text-sm text-muted-foreground flex items-center gap-1">
-                              <Coins className="h-3 w-3" />
-                              {formatAmount(Number(item.rwh_amount) || 0)} SOL
-                            </p>
-                          </div>
-
-                          {/* Created Date */}
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <CalendarIcon className="h-4 w-4" />
-                                <span>{t("withdraw.createdDate")}: {format(new Date(item.rwh_created_at || new Date()), 'dd/MM/yyyy HH:mm')}</span>
+                            {/* Amount */}
+                            <div className="space-y-1">
+                              <p className="font-semibold text-green-600 flex items-center gap-1 text-lg">
+                                <DollarSign className="h-4 w-4" />
+                                ${formatAmount(Number(item.rwh_amount) || 0)}
+                              </p>
+                              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                <Coins className="h-3 w-3" />
+                                {formatAmount(Number(item.rwh_amount) || 0)} SOL
+                              </p>
                             </div>
 
-                          {/* Collapsible Details */}
-                          <Collapsible open={expandedHistoryItems.has(item.rwh_id || 0)}>
-                            <CollapsibleContent className="space-y-3 pt-2 border-t border-gray-100">
-                              {/* Updated Date */}
-                              {item.rwh_updated_at && (
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                  <CalendarIcon className="h-4 w-4" />
-                                  <span>{t("withdraw.updatedDate")}: {format(new Date(item.rwh_updated_at), 'dd/MM/yyyy HH:mm')}</span>
-                                </div>
-                              )}
+                            {/* Created Date */}
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <CalendarIcon className="h-4 w-4" />
+                              <span>{t("withdraw.createdDate")}: {format(new Date(item.rwh_created_at || new Date()), 'dd/MM/yyyy HH:mm')}</span>
+                            </div>
 
-                              {/* Hash */}
-                              {item.rwh_hash && (
-                                <div className="space-y-2">
-                                  <p className="text-xs font-medium text-muted-foreground">{t("withdraw.transactionHash")}:</p>
-                                  <div className="flex items-center gap-2 p-2 bg-gray-50 rounded text-xs">
-                                    <span className="font-mono text-blue-600 flex-1 truncate" title={item.rwh_hash}>
-                                      {item.rwh_hash}
-                                    </span>
-                                    <Button
-                                      variant="ghost"
-                                      size="icon"
-                                      onClick={() => copyToClipboard(item.rwh_hash || '')}
-                                      className="h-6 w-6 transition-all duration-200 hover:scale-110 hover:bg-blue-100"
-                                    >
-                                      <Copy className="h-3 w-3" />
-                                    </Button>
+                            {/* Collapsible Details */}
+                            <Collapsible open={expandedHistoryItems.has(item.rwh_id || 0)}>
+                              <CollapsibleContent className="space-y-3 pt-2 border-t border-gray-100">
+                                {/* Updated Date */}
+                                {item.rwh_updated_at && (
+                                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <CalendarIcon className="h-4 w-4" />
+                                    <span>{t("withdraw.updatedDate")}: {format(new Date(item.rwh_updated_at), 'dd/MM/yyyy HH:mm')}</span>
                                   </div>
-                                </div>
-                              )}
+                                )}
 
-                              {/* Retry Button for failed transactions */}
-                              {item.rwh_status === 'failed' && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => handleRetry(item.rwh_id || 0)}
-                                  disabled={retryingIds.has(item.rwh_id || 0)}
-                                  className="w-full transition-all duration-300 hover:scale-105"
-                                >
-                                  {retryingIds.has(item.rwh_id || 0) ? (
-                                    <>
-                                      <Loader2 className="h-3 w-3 mr-2 animate-spin" />
-                                      {t("withdraw.retrying")}
-                                    </>
-                                  ) : (
-                                    <>
-                                      <RefreshCw className="h-3 w-3 mr-2" />
-                                      {t("withdraw.retry")}
-                                    </>
-                                  )}
-                                </Button>
-                              )}
-                            </CollapsibleContent>
-                          </Collapsible>
-                        </div>
-                      </CardContent>
-                    </Card>
+                                {/* Hash */}
+                                {item.rwh_hash && (
+                                  <div className="space-y-2">
+                                    <p className="text-xs font-medium text-muted-foreground">{t("withdraw.transactionHash")}:</p>
+                                    <div className="flex items-center gap-2 p-2 bg-gray-50 rounded text-xs">
+                                      <span className="font-mono text-blue-600 flex-1 truncate" title={item.rwh_hash}>
+                                        {item.rwh_hash}
+                                      </span>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => copyToClipboard(item.rwh_hash || '')}
+                                        className="h-6 w-6 transition-all duration-200 hover:scale-110 hover:bg-blue-100"
+                                      >
+                                        <Copy className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Retry Button for failed transactions */}
+                                {item.rwh_status === 'failed' && (
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => handleRetry(item.rwh_id || 0)}
+                                    disabled={retryingIds.has(item.rwh_id || 0)}
+                                    className="w-full transition-all duration-300 hover:scale-105"
+                                  >
+                                    {retryingIds.has(item.rwh_id || 0) ? (
+                                      <>
+                                        <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                        {t("withdraw.retrying")}
+                                      </>
+                                    ) : (
+                                      <>
+                                        <RefreshCw className="h-3 w-3 mr-2" />
+                                        {t("withdraw.retry")}
+                                      </>
+                                    )}
+                                  </Button>
+                                )}
+                              </CollapsibleContent>
+                            </Collapsible>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </Collapsible>
                   ))}
                 </div>
@@ -804,13 +807,13 @@ export default function Withdraw() {
               {t("withdraw.confirmWithdrawal")}
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground">
-              {t("withdraw.confirmWithdrawalDescription", { 
-                amount: `$${formatAmount(availableWithdrawal?.totalUSD || 0)}`, 
-                solAmount: formatAmount(availableWithdrawal?.totalSOL || 0) 
+              {t("withdraw.confirmWithdrawalDescription", {
+                amount: `$${formatAmount(availableWithdrawal?.totalUSD || 0)}`,
+                solAmount: formatAmount(availableWithdrawal?.totalSOL || 0)
               })}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-200">
               <div className="flex items-center justify-between">
@@ -822,7 +825,7 @@ export default function Withdraw() {
                 <Coins className="h-8 w-8 text-blue-600" />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-green-600" />

@@ -91,7 +91,8 @@
     "selectTab": "タブを選択",
     "downlineTransactionStats": "ダウンライン取引統計",
     "personalProfile": "個人プロフィール",
-    "downlineProfileStats": "ダウンラインプロフィール統計"
+    "downlineProfileStats": "ダウンラインプロフィール統計",
+    "withdraw": "出金"
   },
   "stats": {
     "totalMembers": "総メンバー数",
@@ -350,6 +351,7 @@
     "confirmInfo2": "資金は登録されたウォレットアドレスに送金されます",
     "confirmInfo3": "処理後、取引ハッシュが提供されます",
     "confirmWithdraw": "出金確認",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "minimumAmount": "出金の最低金額は10ドルです"
   }
 }
