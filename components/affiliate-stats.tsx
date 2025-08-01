@@ -85,11 +85,11 @@ export default function BgAffiliateStats() {
             </div>
             <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg border border-orange-200">
               <span className="font-mono text-sm text-orange-700 truncate flex-1">
-                {process.env.NEXT_PUBLIC_API_URL}/?ref={user.code}
+                https://bitworld-mmp-fe-production.up.railway.app/?ref={user.code}
               </span>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_API_URL}/?ref=${user.code}`)
+                  navigator.clipboard.writeText(`https://bitworld-mmp-fe-production.up.railway.app/?ref=${user.code}`)
                   toast.success(t("messages.copiedToClipboard"))
                 }}
                 className="p-2 hover:bg-orange-100 rounded transition-all duration-200 hover:scale-110"
@@ -156,7 +156,7 @@ export default function BgAffiliateStats() {
                 <Hash className="h-3 w-3 text-purple-500" />
                 <span className="font-medium">{t("common.id")}:</span>
               </div>
-              <div className="font-mono bg-[#2d69c9]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.walletId}  <button
+              <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.walletId}  <button
                 onClick={() => navigator.clipboard.writeText(stats.currentWallet?.walletId)}
                 className="p-1 hover:bg-purple-100 rounded transition-all duration-200 hover:scale-110"
               >
@@ -167,7 +167,7 @@ export default function BgAffiliateStats() {
                 <UserCheck className="h-3 w-3 text-purple-500" />
                 <span className="font-medium">{t("auth.wallet")}:</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#2d69c9]/70 py-1 px-2 font-semibold w-fit rounded ">
+              <div className="flex items-center gap-2 bg-[#009144]/70 py-1 px-2 font-semibold w-fit rounded ">
                 <span className="font-mono text-white truncate">
                   {stats.currentWallet?.solanaAddress.substring(0, 7)}...{stats.currentWallet?.solanaAddress.substring(stats.currentWallet.solanaAddress.length - 4)}
                 </span>
@@ -184,18 +184,6 @@ export default function BgAffiliateStats() {
                 <span className="font-medium">{t("commission.commissionRate")}:</span>
               </div>
               <div className="font-bold text-green-600 group-hover:text-green-700 transition-colors">{stats.treeInfo.totalCommissionPercent}%</div>
-            </div>
-          </div>
-        }
-        {stats.totalEarnings &&
-          <div className="flex items-center justify-between text-lg font-bold p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl transition-all hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500 delay-300">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-green-500 group-hover:animate-pulse" />
-              <span className="group-hover:text-green-600 transition-colors">{t("commission.totalCommission")}:</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-green-500 group-hover:animate-bounce" />
-              <span className="text-green-600 group-hover:text-green-700 transition-colors">${stats.totalEarnings.toFixed(6)}</span>
             </div>
           </div>
         }

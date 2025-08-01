@@ -32,9 +32,8 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="h-8 w-8 rounded-lg flex items-center justify-center">
-                <img src="/logo.png" alt="logo" className="h-8 w-8" />
+                <img src="/bitworld-logo-light.png" alt="logo" className="h-8 w-8" />
               </div>
-              <span className="text-lg font-semibold">{t("dashboard.title")}</span>
             </div>
             <div className="h-8 w-20 bg-muted animate-pulse rounded"></div>
           </div>
@@ -48,10 +47,9 @@ export default function Header() {
       <div className="px-4 py-2  w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="h-8 w-8  rounded-lg flex items-center justify-center">
-              <img src="/logo.png" alt="logo" className="h-8 w-8" />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center">
+              <img src="/bitworld-logo-light.png" alt="logo" className="h-8 w-8" />
             </div>
-            <span className="text-base font-semibold">{t("dashboard.title")}</span>
           </div>
 
           <div className="flex items-center space-x-4">
