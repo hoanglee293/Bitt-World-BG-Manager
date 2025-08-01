@@ -16,6 +16,7 @@ export interface CommissionEntry {
   bacr_commission_amount: string
   bacr_level: number
   bacr_created_at: string
+  bittworldUid?: string
 }
 
 export interface BgAffiliateInfo {

@@ -36,7 +36,8 @@
     "descending": "降順",
     "applyFilters": "フィルターを適用",
     "reset": "リセット",
-    "id": "ID"
+    "id": "ID",
+    "switchLanguage": "言語を切り替え"
   },
   "auth": {
     "login": "ログイン",
@@ -151,7 +152,16 @@
     "historyDescription": "取引からのコミッション履歴を確認してください。",
     "noHistory": "コミッション履歴がありません。",
     "orderId": "注文ID",
-    "receivingWallet": "受信ウォレット"
+    "receivingWallet": "受信ウォレット",
+    "updateAlias": "BGエイリアス更新",
+    "updateAliasFor": "BGエイリアス更新",
+    "currentAlias": "現在のBGエイリアス",
+    "newAlias": "新しいBGエイリアス",
+    "enterNewAlias": "新しいエイリアスを入力（最大255文字）",
+    "aliasRequired": "エイリアスは空にできません",
+    "aliasTooLong": "エイリアスは255文字を超えることはできません",
+    "aliasUpdateSuccess": "エイリアスが正常に更新されました",
+    "aliasUpdateError": "エイリアスの更新に失敗しました"
   },
   "affiliate": {
     "tree": "アフィリエイトツリー",

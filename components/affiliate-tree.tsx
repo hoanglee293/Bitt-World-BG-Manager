@@ -32,6 +32,7 @@ interface WalletInfo {
   solanaAddress: string
   ethAddress: string
   walletId: number
+  bittworldUid: string
 }
 
 interface DownlineNode {
@@ -43,6 +44,7 @@ interface DownlineNode {
   totalReward: number
   totalTrans: number
   walletInfo: WalletInfo
+  bgAlias: string
   children: DownlineNode[]
 }
 
@@ -258,12 +260,12 @@ function UpdateAliasModal({
 
   const validateInput = (value: string) => {
     if (!value.trim()) {
-      setValidationError("Alias không được để trống")
+      setValidationError(t("commission.aliasRequired"))
       return false
     }
 
     if (value.length > 255) {
-      setValidationError("Alias không được vượt quá 255 ký tự")
+      setValidationError(t("commission.aliasTooLong"))
       return false
     }
 
@@ -289,7 +291,7 @@ function UpdateAliasModal({
     try {
       await updateAlias(node.walletInfo.walletId, newAlias.trim())
       setSuccess(true)
-      toast.success("Cập nhật alias thành công")
+      toast.success(t("commission.aliasUpdateSuccess"))
       setNewAlias("")
       setValidationError("")
       onSuccess()
@@ -299,7 +301,7 @@ function UpdateAliasModal({
       }, 1500)
     } catch (error: any) {
       console.error("Failed to update alias:", error)
-      toast.error(error.response?.data?.message || "Cập nhật alias thất bại")
+      toast.error(error.response?.data?.message || t("commission.aliasUpdateError"))
     } finally {
       setIsLoading(false)
     }
@@ -322,10 +324,10 @@ function UpdateAliasModal({
             <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded">
               <User className="h-4 w-4 text-white" />
             </div>
-            <DialogTitle className="text-lg">Cập nhật Alias</DialogTitle>
+            <DialogTitle className="text-lg">{t("commission.updateAlias")}</DialogTitle>
           </div>
           <DialogDescription className="text-sm">
-            Cập nhật alias cho: {node.walletInfo.bgAlias ?? node.walletInfo.nickName}
+            {t("commission.updateAliasFor")}: {node.walletInfo.bgAlias ?? node.walletInfo.nickName}
           </DialogDescription>
         </DialogHeader>
 
@@ -333,7 +335,7 @@ function UpdateAliasModal({
           <div className="space-y-2">
             <Label htmlFor="currentAlias" className="text-sm flex items-center gap-1">
               <User className="h-3 w-3" />
-              Alias hiện tại
+              {t("commission.currentAlias")}
             </Label>
             <Input
               id="currentAlias"
@@ -347,14 +349,14 @@ function UpdateAliasModal({
           <div className="space-y-2">
             <Label htmlFor="newAlias" className="text-sm flex items-center gap-1">
               <User className="h-3 w-3" />
-              Alias mới
+              {t("commission.newAlias")}
             </Label>
             <Input
               id="newAlias"
               type="text"
               value={newAlias}
               onChange={handleInputChange}
-              placeholder="Nhập alias mới (tối đa 255 ký tự)"
+              placeholder={t("commission.enterNewAlias")}
               disabled={isLoading}
               className={`text-sm transition-all duration-200 hover:scale-[1.02] focus:scale-[1.02] ${validationError ? 'border-red-500' : ''}`}
             />
@@ -365,18 +367,18 @@ function UpdateAliasModal({
 
           <div className="flex flex-col sm:flex-row justify-end gap-2">
             <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading} className="w-full sm:w-auto transition-all duration-200 hover:scale-105">
-              Hủy
+              {t("common.cancel")}
             </Button>
             <Button type="submit" disabled={isLoading} className="w-full sm:w-auto min-w-[100px] transition-all duration-200 hover:scale-105 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700">
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang xử lý...
+                  {t("messages.processing")}
                 </>
               ) : (
                 <>
                   <CheckCircle className="mr-2 h-4 w-4" />
-                  Lưu
+                  {t("common.save")}
                 </>
               )}
             </Button>
@@ -386,7 +388,7 @@ function UpdateAliasModal({
         {success && (
           <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg flex items-center space-x-2 animate-in slide-in-from-bottom-2 duration-300">
             <CheckCircle className="h-5 w-5 text-green-600 animate-pulse" />
-            <span className="text-green-800 text-sm">Dữ liệu đã được cập nhật thành công</span>
+            <span className="text-green-800 text-sm">{t("messages.dataUpdated")}</span>
           </div>
         )}
       </DialogContent>
@@ -449,16 +451,17 @@ function TreeNodeComponent({
         style={{ marginLeft: `${(level - 1) * 16}px` }}
       >
         {/* Node content */}
-        <div className={`flex items-center gap-2 p-2 rounded-md w-fit border ${getLevelColor(level)}  min-w-0 transition-all duration-200 hover:scale-105`}>
+        <div className={`flex items-center gap-2 p-2 rounded-md w-full md:w-fit border ${getLevelColor(level)}  min-w-0 transition-all duration-200 hover:scale-105`}>
           <div className="p-1 bg-white/50 rounded">
             {getLevelIcon(level)}
           </div>
           <div className="flex flex-col min-w-0 ">
-            <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.bgAlias ?? node.walletInfo.nickName}</div>
+            <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node?.bgAlias ?? node.walletInfo.nickName}</div>
             <div className="text-xs opacity-75 truncate flex items-center gap-1">
               <Wallet className="h-2 w-2" />
               <span className="sm:hidden">{node.solanaAddress.substring(0, 6)}...{node.solanaAddress.substring(node.solanaAddress.length - 4)}</span>
               <span className="hidden sm:inline">{node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}</span>
+              <span className="hidden sm:inline">Bittworld UID: {node.walletInfo.bittworldUid}</span>
               <button
                 onClick={() => navigator.clipboard.writeText(node.solanaAddress)}
                 className="p-1 hover:bg-white/50 rounded transition-all duration-200 hover:scale-110"
@@ -522,8 +525,8 @@ function TreeNodeComponent({
               onClick={() => onUpdateAlias({ ...node, level })}
             >
               <User className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
-              <span className="sm:hidden">Cập nhật nickName</span>
-              <span className="hidden sm:inline">Cập nhật Alias</span>
+              <span className="sm:hidden">{t("commission.updateAlias")}</span>
+              <span className="hidden sm:inline">{t("commission.updateAlias")}</span>
             </Button>
         </div>
       </div>

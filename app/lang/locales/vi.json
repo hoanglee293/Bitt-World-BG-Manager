@@ -36,7 +36,8 @@
     "descending": "Giảm dần",
     "applyFilters": "Áp dụng bộ lọc",
     "reset": "Đặt lại",
-    "id": "ID"
+    "id": "ID",
+    "switchLanguage": "Chuyển đổi ngôn ngữ"
   },
   "auth": {
     "login": "Đăng nhập",
@@ -151,7 +152,16 @@
     "historyDescription": "Xem lịch sử hoa hồng của bạn từ các giao dịch.",
     "noHistory": "Không có lịch sử hoa hồng nào.",
     "orderId": "Mã đơn hàng",
-    "receivingWallet": "Ví nhận hoa hồng"
+    "receivingWallet": "Ví nhận hoa hồng",
+    "updateAlias": "Cập nhật biệt danh BG",
+    "updateAliasFor": "Cập nhật biệt danh BG cho",
+    "currentAlias": "Biệt danh BG hiện tại",
+    "newAlias": "Biệt danh BG mới",
+    "enterNewAlias": "Nhập alias mới (tối đa 255 ký tự)",
+    "aliasRequired": "Alias không được để trống",
+    "aliasTooLong": "Alias không được vượt quá 255 ký tự",
+    "aliasUpdateSuccess": "Cập nhật alias thành công",
+    "aliasUpdateError": "Cập nhật alias thất bại"
   },
   "affiliate": {
     "tree": "Cây Affiliate",
@@ -347,7 +357,7 @@
     "confirmWithdrawal": "Xác nhận rút tiền",
     "confirmWithdrawalDescription": "Bạn có chắc chắn muốn rút {amount} ({solAmount} SOL)? Hành động này không thể hoàn tác.",
     "totalAmount": "Tổng số tiền",
-    "confirmInfo1": "Rút tiền sẽ được xử lý trong vòng tối đa 30 phút",
+    "confirmInfo1": "Rút tiền sẽ được xử lý trong vòng 24-48 giờ",
     "confirmInfo2": "Tiền sẽ được gửi đến địa chỉ ví đã đăng ký của bạn",
     "confirmInfo3": "Hash giao dịch sẽ được cung cấp sau khi xử lý",
     "confirmWithdraw": "Xác nhận rút tiền",

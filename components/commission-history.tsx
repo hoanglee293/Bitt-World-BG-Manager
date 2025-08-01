@@ -5,21 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { getCommissionHistoryWithFallback } from "@/lib/api"
+import { CommissionEntry } from "@/lib/types"
 import { format } from "date-fns"
 import { Loader2, Wallet, Calendar, DollarSign, Hash, TrendingUp, Sparkles, Receipt, Clock, Target, BarChart3, Copy, Activity } from "lucide-react"
 import { useLang } from "@/app/lang"
 import { useResponsive } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-
-interface CommissionEntry {
-  bacr_id: number
-  bacr_tree_id: number
-  bacr_order_id: number
-  bacr_wallet: string
-  bacr_commission_amount: string
-  bacr_level: number
-  bacr_created_at: string
-}
 
 export default function CommissionHistory() {
   const [history, setHistory] = useState<CommissionEntry[]>([])
@@ -116,7 +107,7 @@ export default function CommissionHistory() {
             <div className="space-y-4 max-h-[70vh] overflow-y-auto">
               {history.map((entry, index) => (
                 <Card 
-                  key={entry.bacr_id} 
+                  key={entry.bittworldUid} 
                   className="border border-border/50 hover:border-green-300 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 "
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
@@ -264,14 +255,14 @@ export default function CommissionHistory() {
                 <TableBody className="max-h-[80vh] overflow-y-auto">
                   {history.map((entry, index) => (
                     <TableRow 
-                      key={entry.bacr_id} 
+                      key={entry.bittworldUid} 
                       className="hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 transition-all duration-200 animate-in slide-in-from-bottom-2"
                       style={{ animationDelay: `${index * 30}ms` }}
                     >
                       <TableCell className="font-mono text-sm px-1 sm:px-3 py-2">
                         <div className="inline-flex items-center gap-1">
                           <Hash className="h-3 w-3 text-blue-500" />
-                          {entry.bacr_id}
+                          {entry?.bittworldUid ?? entry.bacr_id}
                         </div>
                       </TableCell>
                       <TableCell className="font-mono text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">
@@ -294,7 +285,6 @@ export default function CommissionHistory() {
                       </TableCell>
                       <TableCell className="text-right sticky right-0 bg-background font-bold text-green-500 px-1 sm:px-3 py-2">
                         <div className="inline-flex items-center justify-end gap-1">
-                          <DollarSign className="h-3 w-3" />
                           {formatAmount(entry.bacr_commission_amount)}
                         </div>
                       </TableCell>

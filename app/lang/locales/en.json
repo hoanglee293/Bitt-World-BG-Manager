@@ -36,7 +36,8 @@
     "descending": "Descending",
     "applyFilters": "Apply Filters",
     "reset": "Reset",
-    "id": "ID"
+    "id": "ID",
+    "switchLanguage": "Switch language"
   },
   "auth": {
     "login": "Login",
@@ -151,7 +152,16 @@
     "historyDescription": "View your commission history from transactions.",
     "noHistory": "No commission history available.",
     "orderId": "Order ID",
-    "receivingWallet": "Receiving Wallet"
+    "receivingWallet": "Receiving Wallet",
+    "updateAlias": "Update BG Alias",
+    "updateAliasFor": "Update BG alias for",
+    "currentAlias": "Current BG Alias",
+    "newAlias": "New BG Alias",
+    "enterNewAlias": "Enter new alias (max 255 characters)",
+    "aliasRequired": "Alias cannot be empty",
+    "aliasTooLong": "Alias cannot exceed 255 characters",
+    "aliasUpdateSuccess": "Alias updated successfully",
+    "aliasUpdateError": "Failed to update alias"
   },
   "affiliate": {
     "tree": "Affiliate Tree",

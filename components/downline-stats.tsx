@@ -23,7 +23,7 @@ interface WalletInfo {
   solanaAddress: string
   ethAddress: string
   createdAt: string,
-  bgAlias: string
+  bittworldUid: string
 }
 
 interface DetailedMember {
@@ -34,6 +34,7 @@ interface DetailedMember {
   totalVolume: number
   totalTransactions: number
   lastTransactionDate: string
+  bgAlias: string
   walletInfo: WalletInfo
 }
 
@@ -526,13 +527,13 @@ export default function DownlineStats() {
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs text-muted-foreground">#{member.walletId}</span>
+                              <span className="text-xs text-muted-foreground">#{member.walletInfo?.bittworldUid}</span>
                               <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-full flex items-center gap-1">
                                 <Target className="h-2 w-2" />
                                 {t("auth.level")} {member.level}
                               </span>
                             </div>
-                            <h4 className="font-semibold text-sm sm:text-base group-hover:text-blue-600 transition-colors">{member.walletInfo?.bgAlias || member.walletInfo?.nickName}</h4>
+                            <h4 className="font-semibold text-sm sm:text-base group-hover:text-blue-600 transition-colors">{member?.bgAlias || member.walletInfo?.nickName}</h4>
                           </div>
                           <div className="text-right">
                             <div className="text-green-500 font-semibold text-sm sm:text-base flex items-center gap-1">
@@ -631,8 +632,8 @@ export default function DownlineStats() {
                     <TableBody>
                       {stats.detailedMembers.map((member, index) => (
                         <TableRow key={member.walletId} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 30}ms` }}>
-                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">{member.walletId}</TableCell>
-                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">{member.walletInfo?.bgAlias || member.walletInfo?.nickName}</TableCell>
+                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">{member.walletInfo?.bittworldUid}</TableCell>
+                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">{member?.bgAlias || member.walletInfo?.nickName}</TableCell>
                           <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">
                             <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-full text-xs inline-flex items-center gap-1">
                               <Target className="h-2 w-2" />

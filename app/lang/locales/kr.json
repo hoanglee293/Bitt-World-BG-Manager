@@ -36,7 +36,8 @@
     "descending": "내림차순",
     "applyFilters": "필터 적용",
     "reset": "재설정",
-    "id": "ID"
+    "id": "ID",
+    "switchLanguage": "언어 변경"
   },
   "auth": {
     "login": "로그인",
@@ -80,7 +81,7 @@
     "emailConnecting": "이메일 연결"
   },
   "dashboard": {
-    "title": "MemePump 제휴하다",
+    "title": "MemePump 어필리에이트",
     "bgAffiliateDashboard": "BG 어필리에이트 대시보드",
     "downlineStats": "상세 하위 라인 통계",
     "commissionHistory": "수수료 내역",
@@ -151,7 +152,16 @@
     "historyDescription": "거래에서 수수료 내역을 확인하세요.",
     "noHistory": "수수료 내역이 없습니다.",
     "orderId": "주문 ID",
-    "receivingWallet": "수신 지갑"
+    "receivingWallet": "수신 지갑",
+    "updateAlias": "BG 별칭 업데이트",
+    "updateAliasFor": "BG 별칭 업데이트",
+    "currentAlias": "현재 BG 별칭",
+    "newAlias": "새 BG 별칭",
+    "enterNewAlias": "새 별칭 입력 (최대 255자)",
+    "aliasRequired": "별칭은 비워둘 수 없습니다",
+    "aliasTooLong": "별칭은 255자를 초과할 수 없습니다",
+    "aliasUpdateSuccess": "별칭이 성공적으로 업데이트되었습니다",
+    "aliasUpdateError": "별칭 업데이트에 실패했습니다"
   },
   "affiliate": {
     "tree": "어필리에이트 트리",
