@@ -156,12 +156,17 @@ export default function BgAffiliateStats() {
                 <Hash className="h-3 w-3 text-purple-500" />
                 <span className="font-medium">{t("common.id")}:</span>
               </div>
-              <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.walletId}  <button
-                onClick={() => navigator.clipboard.writeText(stats.currentWallet?.walletId)}
+              <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.bittworldUid}  <button
+                onClick={() => navigator.clipboard.writeText(stats.currentWallet?.bittworldUid)}
                 className="p-1 hover:bg-purple-100 rounded transition-all duration-200 hover:scale-110"
               >
                 <Copy className="h-3 w-3 text-white" />
               </button></div>
+              <div className="flex items-center gap-2">
+              <UserCheck className="h-3 w-3 text-purple-500" />
+                <span className="font-medium">{t("commission.currentAlias")}:</span>
+              </div>
+              <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.bgAlias}</div>
 
               <div className="flex items-center gap-2">
                 <UserCheck className="h-3 w-3 text-purple-500" />

@@ -327,7 +327,7 @@ function UpdateAliasModal({
             <DialogTitle className="text-lg">{t("commission.updateAlias")}</DialogTitle>
           </div>
           <DialogDescription className="text-sm">
-            {t("commission.updateAliasFor")}: {node.walletInfo.bgAlias ?? node.walletInfo.nickName}
+            {t("commission.updateAliasFor")}: {node.bgAlias ?? node.walletInfo.nickName}
           </DialogDescription>
         </DialogHeader>
 
