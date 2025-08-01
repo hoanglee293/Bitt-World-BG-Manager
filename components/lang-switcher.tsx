@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Globe } from "lucide-react"
 
 export default function LangSwitcher() {
-  const { lang, setLang, langConfig } = useLang()
+  const { t, lang, setLang, langConfig } = useLang()
 
   return (
     <DropdownMenu>
