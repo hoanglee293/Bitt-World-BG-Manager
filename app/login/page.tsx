@@ -46,7 +46,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#03a7a7b3]/70 to-[#006cdfb3]/70 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-r from-[#03a7a7b3]/70 to-[#079325b3]/70 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gradient-to-br from-blue-50/70 to-indigo-100/70 rounded-xl">
         <Card className="shadow-xl w-full h-full rounded-xl bg-theme-blue-300">
           <CardHeader className="text-center">
@@ -76,36 +76,6 @@ export default function LoginPage() {
                   />
                 )}
                 <span className="text-white text-base">{t("auth.connectViaGoogle")}</span>
-              </Button>
-
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-black" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-[#b8d9f1] px-2 text-sm text-black">
-                    {t("auth.or")}
-                  </span>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleTelegramLogin}
-                disabled={isLoading}
-                variant="outline"
-                className="w-full h-12"
-                size="lg"
-              >
-                {isLoading ? (
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                ) : (
-                  <img
-                    src="https://img.icons8.com/color/48/telegram-app.png"
-                    alt="telegram"
-                    className="mr-2 h-8 w-8"
-                  />
-                )}
-                <span className="text-base">{t("auth.loginWithTelegram")}</span>
               </Button>
             </div>
 
