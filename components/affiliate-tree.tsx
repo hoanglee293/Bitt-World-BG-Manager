@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { getAffiliateTreeWithFallback, updateCommissionPercent } from "@/lib/api"
+import { getAffiliateTreeWithFallback, updateCommissionPercent, updateAlias } from "@/lib/api"
 import { Loader2, Users, User, Crown, TrendingUp, CheckCircle, Sparkles, TreePine, Network, Target, DollarSign, Calendar, Hash, Copy, BarChart3, UserPlus, Activity, Wallet } from "lucide-react"
 import { format } from "date-fns"
 import { useLang } from "@/app/lang"
@@ -16,6 +16,7 @@ import { toast } from "sonner"
 interface ReferrerInfo {
   solanaAddress: string
   nickName: string
+  bgAlias: string
 }
 
 interface TreeInfo {
@@ -27,6 +28,7 @@ interface TreeInfo {
 
 interface WalletInfo {
   nickName: string
+  bgAlias: string
   solanaAddress: string
   ethAddress: string
   walletId: number
@@ -169,7 +171,7 @@ function UpdateCommissionModal({
             <DialogTitle className="text-lg">{t("commission.updateCommission")}</DialogTitle>
           </div>
           <DialogDescription className="text-sm">
-            {t("commission.updateCommission")} {t("affiliate.downline")}: {node.walletInfo.nickName}
+            {t("commission.updateCommission")} {t("affiliate.downline")}: {node.walletInfo.bgAlias ?? node.walletInfo.nickName}
           </DialogDescription>
         </DialogHeader>
 
@@ -236,6 +238,162 @@ function UpdateCommissionModal({
   )
 }
 
+// Update Alias Modal Component
+function UpdateAliasModal({
+  node,
+  isOpen,
+  onClose,
+  onSuccess
+}: {
+  node: DownlineNode
+  isOpen: boolean
+  onClose: () => void
+  onSuccess: () => void
+}) {
+  const [newAlias, setNewAlias] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [validationError, setValidationError] = useState("")
+  const { t } = useLang()
+
+  const validateInput = (value: string) => {
+    if (!value.trim()) {
+      setValidationError("Alias không được để trống")
+      return false
+    }
+
+    if (value.length > 255) {
+      setValidationError("Alias không được vượt quá 255 ký tự")
+      return false
+    }
+
+    setValidationError("")
+    return true
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setNewAlias(value)
+    if (value) {
+      validateInput(value)
+    } else {
+      setValidationError("")
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setSuccess(false)
+
+    try {
+      await updateAlias(node.walletInfo.walletId, newAlias.trim())
+      setSuccess(true)
+      toast.success("Cập nhật alias thành công")
+      setNewAlias("")
+      setValidationError("")
+      onSuccess()
+      setTimeout(() => {
+        onClose()
+        setSuccess(false)
+      }, 1500)
+    } catch (error: any) {
+      console.error("Failed to update alias:", error)
+      toast.error(error.response?.data?.message || "Cập nhật alias thất bại")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleClose = () => {
+    if (!isLoading) {
+      setNewAlias("")
+      setValidationError("")
+      setSuccess(false)
+      onClose()
+    }
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="w-[95vw] max-w-[425px] mx-auto animate-in slide-in-from-bottom-2 duration-300">
+        <DialogHeader>
+          <div className="flex items-center gap-2">
+            <div className="p-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded">
+              <User className="h-4 w-4 text-white" />
+            </div>
+            <DialogTitle className="text-lg">Cập nhật Alias</DialogTitle>
+          </div>
+          <DialogDescription className="text-sm">
+            Cập nhật alias cho: {node.walletInfo.bgAlias ?? node.walletInfo.nickName}
+          </DialogDescription>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="currentAlias" className="text-sm flex items-center gap-1">
+              <User className="h-3 w-3" />
+              Alias hiện tại
+            </Label>
+            <Input
+              id="currentAlias"
+              type="text"
+              value={node.walletInfo.bgAlias ?? node.walletInfo.nickName}
+              disabled
+              className="bg-gray-50 text-sm"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="newAlias" className="text-sm flex items-center gap-1">
+              <User className="h-3 w-3" />
+              Alias mới
+            </Label>
+            <Input
+              id="newAlias"
+              type="text"
+              value={newAlias}
+              onChange={handleInputChange}
+              placeholder="Nhập alias mới (tối đa 255 ký tự)"
+              disabled={isLoading}
+              className={`text-sm transition-all duration-200 hover:scale-[1.02] focus:scale-[1.02] ${validationError ? 'border-red-500' : ''}`}
+            />
+            {validationError && (
+              <p className="text-red-500 text-xs">{validationError}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-end gap-2">
+            <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading} className="w-full sm:w-auto transition-all duration-200 hover:scale-105">
+              Hủy
+            </Button>
+            <Button type="submit" disabled={isLoading} className="w-full sm:w-auto min-w-[100px] transition-all duration-200 hover:scale-105 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Đang xử lý...
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Lưu
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+
+        {success && (
+          <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg flex items-center space-x-2 animate-in slide-in-from-bottom-2 duration-300">
+            <CheckCircle className="h-5 w-5 text-green-600 animate-pulse" />
+            <span className="text-green-800 text-sm">Dữ liệu đã được cập nhật thành công</span>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // Helper function to flatten the tree structure
 function flattenTree(nodes: DownlineNode[], level: number = 1): Array<DownlineNode & { level: number }> {
   const result: Array<DownlineNode & { level: number }> = []
@@ -254,11 +412,13 @@ function flattenTree(nodes: DownlineNode[], level: number = 1): Array<DownlineNo
 function TreeNodeComponent({
   node,
   level,
-  onUpdateCommission
+  onUpdateCommission,
+  onUpdateAlias
 }: {
   node: DownlineNode
   level: number
   onUpdateCommission: (node: DownlineNode & { level: number }) => void
+  onUpdateAlias: (node: DownlineNode & { level: number }) => void
 }) {
   const { t } = useLang()
 
@@ -285,7 +445,7 @@ function TreeNodeComponent({
     <div className="space-y-3">
       {/* Parent Node */}
       <div
-        className="flex flex-col lg:flex-row items-start lg:items-center gap-3 p-3 sm:p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500"
+        className="flex flex-col lg:flex-row items-start lg:items-center gap-3 p-3 sm:p-4 rounded-lg border transition-all hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500"
         style={{ marginLeft: `${(level - 1) * 16}px` }}
       >
         {/* Node content */}
@@ -294,7 +454,7 @@ function TreeNodeComponent({
             {getLevelIcon(level)}
           </div>
           <div className="flex flex-col min-w-0 ">
-            <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.nickName}</div>
+            <div className="font-medium truncate text-sm sm:text-base group-hover:text-blue-600 transition-colors">{node.walletInfo.bgAlias ?? node.walletInfo.nickName}</div>
             <div className="text-xs opacity-75 truncate flex items-center gap-1">
               <Wallet className="h-2 w-2" />
               <span className="sm:hidden">{node.solanaAddress.substring(0, 6)}...{node.solanaAddress.substring(node.solanaAddress.length - 4)}</span>
@@ -348,7 +508,7 @@ function TreeNodeComponent({
           {level === 1 && (
             <Button
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-xs px-2 py-1 sm:px-3 sm:py-2 transition-all duration-200 hover:scale-105"
+              className="bg-[#0bcd66] text-white text-xs px-2 py-1 sm:px-3 sm:py-2 transition-all duration-200 hover:scale-105"
               onClick={() => onUpdateCommission({ ...node, level })}
             >
               <TrendingUp className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
@@ -356,6 +516,15 @@ function TreeNodeComponent({
               <span className="sm:hidden">{t("commission.updatePercentCommission")}</span>
             </Button>
           )}
+           <Button
+              size="sm"
+              className="bg-[#0bcd66] text-white text-xs px-2 py-1 sm:px-3 sm:py-2 transition-all duration-200 hover:scale-105"
+              onClick={() => onUpdateAlias({ ...node, level })}
+            >
+              <User className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
+              <span className="sm:hidden">Cập nhật nickName</span>
+              <span className="hidden sm:inline">Cập nhật Alias</span>
+            </Button>
         </div>
       </div>
 
@@ -368,6 +537,7 @@ function TreeNodeComponent({
               node={childNode}
               level={level + 1}
               onUpdateCommission={onUpdateCommission}
+              onUpdateAlias={onUpdateAlias}
             />
           ))}
         </div>
@@ -382,6 +552,8 @@ export default function AffiliateTree() {
   const [error, setError] = useState<string | null>(null)
   const [selectedNode, setSelectedNode] = useState<DownlineNode & { level: number } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedAliasNode, setSelectedAliasNode] = useState<DownlineNode & { level: number } | null>(null)
+  const [isAliasModalOpen, setIsAliasModalOpen] = useState(false)
   const { t, lang } = useLang()
 
   useEffect(() => {
@@ -406,9 +578,19 @@ export default function AffiliateTree() {
     setIsModalOpen(true)
   }
 
+  const handleUpdateAlias = (node: DownlineNode & { level: number }) => {
+    setSelectedAliasNode(node)
+    setIsAliasModalOpen(true)
+  }
+
   const handleModalClose = () => {
     setIsModalOpen(false)
     setSelectedNode(null)
+  }
+
+  const handleAliasModalClose = () => {
+    setIsAliasModalOpen(false)
+    setSelectedAliasNode(null)
   }
 
   const handleUpdateSuccess = () => {
@@ -585,7 +767,7 @@ export default function AffiliateTree() {
           ) : (
             <div className="space-y-4">
               {/* Level Statistics */}
-              <div className="flex gap-2 mb-0 sm:mb-6 overflow-x-auto pb-2">
+              <div className="flex gap-2 mb-0 sm:mb-2 overflow-x-auto pb-2">
                 {Object.entries(nodesByLevel).map(([level, count], index) => (
                   <Badge
                     key={level}
@@ -600,13 +782,14 @@ export default function AffiliateTree() {
               </div>
 
               {/* Tree Structure */}
-              <div className="border rounded-lg p-2 sm:p-4 bg-gradient-to-br from-white to-gray-50 space-y-2">
+              <div className="border rounded-lg p-2 sm:p-4 bg-gradient-to-br from-white to-gray-50">
                 {treeData.downlineStructure.map((node, index) => (
                   <TreeNodeComponent
                     key={node.nodeId}
                     node={node}
                     level={1}
                     onUpdateCommission={handleUpdateCommission}
+                    onUpdateAlias={handleUpdateAlias}
                   />
                 ))}
               </div>
@@ -621,6 +804,15 @@ export default function AffiliateTree() {
           isOpen={isModalOpen}
           treeParent={treeData.treeInfo}
           onClose={handleModalClose}
+          onSuccess={handleUpdateSuccess}
+        />
+      )}
+
+      {selectedAliasNode && (
+        <UpdateAliasModal
+          node={selectedAliasNode}
+          isOpen={isAliasModalOpen}
+          onClose={handleAliasModalClose}
           onSuccess={handleUpdateSuccess}
         />
       )}

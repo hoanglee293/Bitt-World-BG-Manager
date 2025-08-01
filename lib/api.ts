@@ -68,6 +68,15 @@ const updateCommissionPercent = async (toWalletId: number, newPercent: number): 
   return response.data
 }
 
+const updateAlias = async (toWalletId: number, newAlias: string): Promise<any> => {
+  const response = await axiosClient.put('/bg-ref/nodes/alias', {
+    toWalletId,
+    newAlias
+  })
+  
+  return response.data
+}
+
 const checkBgAffiliateStatus = async (targetWalletId: number): Promise<BgAffiliateStatusResponse> => {
   return apiCall<BgAffiliateStatusResponse>(`/bg-ref/bg-affiliate-status/${targetWalletId}`)
 }
@@ -948,6 +957,7 @@ export {
   getAffiliateTree,
   getDownlineStats,
   updateCommissionPercent,
+  updateAlias,
   checkBgAffiliateStatus,
   checkBgAffiliateStatusWithToken,
   // Withdrawal APIs

@@ -22,7 +22,8 @@ interface WalletInfo {
   nickName: string
   solanaAddress: string
   ethAddress: string
-  createdAt: string
+  createdAt: string,
+  bgAlias: string
 }
 
 interface DetailedMember {
@@ -495,8 +496,8 @@ export default function DownlineStats() {
             </div>
 
             {/* Apply Filters Button */}
-            <div className="sm:col-span-2 lg:col-span-1 flex items-end gap-[5%]">
-              <Button onClick={handleApplyFilters} className="w-full text-xs sm:text-sm h-8 sm:h-10 transition-all duration-200 hover:scale-105 hover:shadow-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+            <div className="sm:col-span-2 lg:col-span-1 flex flex-col sm:flex-row items-end gap-[5%]">
+              <Button onClick={handleApplyFilters} className="w-full text-xs sm:text-sm h-8 sm:h-10 transition-all duration-200 hover:scale-105 hover:shadow-lg bg-[#009144]">
                 <Search className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 animate-pulse" />
                 {t("common.applyFilters")}
               </Button>
@@ -519,7 +520,7 @@ export default function DownlineStats() {
                 {/* Mobile Card Layout */}
                 <div className="block lg:hidden space-y-3">
                   {stats.detailedMembers.map((member, index) => (
-                    <Card key={member.walletId} className="p-3 sm:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 50}ms` }}>
+                    <Card key={member.walletId} className="p-3 sm:p-4 transition-all hover:scale-[1.02] hover:shadow-lg group animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 50}ms` }}>
                       <div className="space-y-2 sm:space-y-3">
                         {/* Header Row */}
                         <div className="flex justify-between items-start">
@@ -531,7 +532,7 @@ export default function DownlineStats() {
                                 {t("auth.level")} {member.level}
                               </span>
                             </div>
-                            <h4 className="font-semibold text-sm sm:text-base group-hover:text-blue-600 transition-colors">{member.walletInfo.nickName}</h4>
+                            <h4 className="font-semibold text-sm sm:text-base group-hover:text-blue-600 transition-colors">{member.walletInfo?.bgAlias || member.walletInfo?.nickName}</h4>
                           </div>
                           <div className="text-right">
                             <div className="text-green-500 font-semibold text-sm sm:text-base flex items-center gap-1">
@@ -614,7 +615,7 @@ export default function DownlineStats() {
                 <div className="hidden lg:block overflow-x-auto border-t border-b rounded-xl">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gradient-to-r from-blue-500/50 to-purple-600/50">
+                      <TableRow className="bg-[#0bcd66]">
                         <TableHead className="font-semibold text-xs sm:text-sm text-gray-950 px-1 sm:px-3 py-2">{t("affiliate.walletId")}</TableHead>
                         <TableHead className="font-semibold text-xs sm:text-sm text-gray-950 px-1 sm:px-3 py-2">{t("affiliate.nickname")}</TableHead>
                         <TableHead className="font-semibold text-xs sm:text-sm text-gray-950 px-1 sm:px-3 py-2">{t("auth.level")}</TableHead>
@@ -629,9 +630,9 @@ export default function DownlineStats() {
                     </TableHeader>
                     <TableBody>
                       {stats.detailedMembers.map((member, index) => (
-                        <TableRow key={member.walletId} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 30}ms` }}>
+                        <TableRow key={member.walletId} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 30}ms` }}>
                           <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">{member.walletId}</TableCell>
-                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">{member.walletInfo.nickName}</TableCell>
+                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">{member.walletInfo?.bgAlias || member.walletInfo?.nickName}</TableCell>
                           <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">
                             <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-full text-xs inline-flex items-center gap-1">
                               <Target className="h-2 w-2" />
