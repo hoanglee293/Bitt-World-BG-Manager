@@ -157,11 +157,11 @@
     "updateAliasFor": "Cập nhật biệt danh BG cho",
     "currentAlias": "Biệt danh BG hiện tại",
     "newAlias": "Biệt danh BG mới",
-    "enterNewAlias": "Nhập alias mới (tối đa 255 ký tự)",
-    "aliasRequired": "Alias không được để trống",
-    "aliasTooLong": "Alias không được vượt quá 255 ký tự",
-    "aliasUpdateSuccess": "Cập nhật alias thành công",
-    "aliasUpdateError": "Cập nhật alias thất bại"
+    "enterNewAlias": "Nhập biệt danh mới",
+    "aliasRequired": "Biệt danh không được để trống",
+    "aliasTooLong": "Biệt danh không được vượt quá 255 ký tự",
+    "aliasUpdateSuccess": "Cập nhật biệt danh thành công",
+    "aliasUpdateError": "Cập nhật biệt danh thất bại"
   },
   "affiliate": {
     "tree": "Cây Affiliate",

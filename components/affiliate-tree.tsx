@@ -460,14 +460,8 @@ function TreeNodeComponent({
             <div className="text-xs opacity-75 truncate flex items-center gap-1">
               <Wallet className="h-2 w-2" />
               <span className="sm:hidden">{node.solanaAddress.substring(0, 6)}...{node.solanaAddress.substring(node.solanaAddress.length - 4)}</span>
-              <span className="hidden sm:inline">{node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}</span> <br/>
-              <span className="hidden sm:inline text-xs font-semibold">Bittworld UID: {node.walletInfo.bittworldUid}</span>
-              <button
-                onClick={() => navigator.clipboard.writeText(node.solanaAddress)}
-                className="p-1 hover:bg-white/50 rounded transition-all duration-200 hover:scale-110"
-              >
-                <Copy className="h-2 w-2" />
-              </button>
+              <span className="hidden sm:inline">{node.solanaAddress.substring(0, 8)}...{node.solanaAddress.substring(node.solanaAddress.length - 6)}</span>
+              <div className="hidden sm:inline text-xs font-semibold">Bittworld UID: {node.walletInfo.bittworldUid}</div>
             </div>
           </div>
         </div>
