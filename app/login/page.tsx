@@ -50,7 +50,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-gradient-to-br from-blue-50/70 to-indigo-100/70 rounded-xl">
         <Card className="shadow-xl w-full h-full rounded-xl bg-theme-blue-300">
           <CardHeader className="text-center">
-            <div className="mx-auto h-16 w-16 rounded-lg flex items-center justify-center">
+            <div className="mx-auto max-w-[200px] h-auto rounded-lg flex items-center justify-center">
               <img src="/bitworld-logo-light.png" alt="logo" className="rounded-lg" />
             </div>
             <CardTitle className="text-2xl pt-4 uppercase">BG Affiliate</CardTitle>
