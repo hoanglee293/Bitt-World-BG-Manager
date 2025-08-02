@@ -217,7 +217,7 @@ export default function CommissionHistory() {
                     <TableHead className="font-semibold text-xs sm:text-sm text-gray-950 px-1 sm:px-3 py-2 rounded-tl-xl">
                       <div className="inline-flex items-center gap-1">
                         <Hash className="h-3 w-3" />
-                        {t("common.id")}
+                        BITWORLD UID
                       </div>
                     </TableHead>
                     <TableHead className="font-semibold text-xs sm:text-sm text-gray-950 px-1 sm:px-3 py-2">

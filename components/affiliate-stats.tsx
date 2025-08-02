@@ -154,7 +154,7 @@ export default function BgAffiliateStats() {
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <Hash className="h-3 w-3 text-purple-500" />
-                <span className="font-medium">{t("common.id")}:</span>
+                <span className="font-medium">BITWORLD UID:</span>
               </div>
               <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.bittworldUid}  <button
                 onClick={() => navigator.clipboard.writeText(stats.currentWallet?.bittworldUid)}

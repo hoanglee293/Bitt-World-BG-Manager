@@ -88,14 +88,7 @@ export default function Header() {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {/* <DropdownMenuItem>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>{t("auth.profile")}</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>{t("auth.settings")}</span>
-                    </DropdownMenuItem> */}
+                   
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                       <LogOut className="mr-2 h-4 w-4" />
