@@ -497,7 +497,7 @@ export default function DownlineStats() {
             </div>
 
             {/* Apply Filters Button */}
-            <div className="sm:col-span-2 lg:col-span-1 flex flex-col sm:flex-row items-end gap-[5%]">
+            <div className="sm:col-span-2 lg:col-span-1 flex flex-col sm:flex-row items-end md:gap-[5%] mt-4 sm:mt-0 gap-2">
               <Button onClick={handleApplyFilters} className="w-full text-xs sm:text-sm h-8 sm:h-10 transition-all duration-200 hover:scale-105 hover:shadow-lg bg-[#009144]">
                 <Search className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 animate-pulse" />
                 {t("common.applyFilters")}
