@@ -632,7 +632,7 @@ export default function DownlineStats() {
                     <TableBody>
                       {stats.detailedMembers.map((member, index) => (
                         <TableRow key={member.walletId} className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all animate-in slide-in-from-bottom-2 duration-500" style={{ animationDelay: `${index * 30}ms` }}>
-                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2"><div className="flex items-center gap-1">{member.walletInfo?.bittworldUid} <Copy className="h-3 w-3" onClick={() => navigator.clipboard.writeText(member.walletInfo?.bittworldUid)} /></div></TableCell>
+                          <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2"><div className="flex items-center gap-1 cursor-pointer" onClick={() => navigator.clipboard.writeText(member.walletInfo?.bittworldUid)}>{member.walletInfo?.bittworldUid} <Copy className="h-3 w-3" /></div></TableCell>
                           <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2 hover:text-blue-600 transition-colors">{member?.bgAlias || member.walletInfo?.nickName}</TableCell>
                           <TableCell className="text-xs sm:text-sm px-1 sm:px-3 py-2">
                             <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-full text-xs inline-flex items-center gap-1">
