@@ -51,7 +51,7 @@ export default function LoginPage() {
         <Card className="shadow-xl w-full h-full rounded-xl bg-theme-blue-300">
           <CardHeader className="text-center">
             <div className="mx-auto h-16 w-16 rounded-lg flex items-center justify-center">
-              <img src="/logo.png" alt="logo" className="rounded-lg" />
+              <img src="/bitworld-logo-light.png" alt="logo" className="rounded-lg" />
             </div>
             <CardTitle className="text-2xl pt-4 uppercase">BG Affiliate</CardTitle>
             <CardDescription className="text-black text-sm">
