@@ -516,7 +516,7 @@ export default function Withdraw() {
         )}
 
         {/* Withdraw Action */}
-        {availableWithdrawal && (availableWithdrawal.totalUSD || 0) > 10 && (
+        {availableWithdrawal && (
           <Card className="border-2 border-dashed border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg group">
             <CardContent className="p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -531,7 +531,7 @@ export default function Withdraw() {
                 </div>
                 <Button
                   onClick={handleWithdrawClick}
-                  disabled={isWithdrawing}
+                  disabled={isWithdrawing || (availableWithdrawal && (availableWithdrawal.totalUSD || 0) < 10)}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 w-full sm:w-auto transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   {isWithdrawing ? (
