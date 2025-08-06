@@ -81,7 +81,7 @@
     "emailConnecting": "Connecting Email"
   },
   "dashboard": {
-    "title": "MemePump Affiliate",
+    "title": "BittWorld Affiliate",
     "bgAffiliateDashboard": "BG Affiliate Dashboard",
     "downlineStats": "Downline Statistics",
     "commissionHistory": "Commission History",
@@ -231,7 +231,7 @@
     "unknownError": "Unknown error occurred"
   },
   "messages": {
-    "welcome": "Welcome to MemePump Affiliate",
+    "welcome": "Welcome to BittWorld Affiliate",
     "loginRequired": "Please login to continue",
     "accessDenied": "Access denied. BG Affiliate status required.",
     "sessionExpired": "Your session has expired. Please login again.",

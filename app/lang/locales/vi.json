@@ -81,7 +81,7 @@
     "emailConnecting": "Kết nối Email"
   },
   "dashboard": {
-    "title": "MemePump Affiliate",
+    "title": "BittWorld Affiliate",
     "bgAffiliateDashboard": "Bảng điều khiển BG Affiliate",
     "downlineStats": "Thống kê chi tiết tuyến dưới",
     "commissionHistory": "Lịch sử hoa hồng",
@@ -231,7 +231,7 @@
     "unknownError": "Lỗi không xác định"
   },
   "messages": {
-    "welcome": "Chào mừng đến với MemePump Affiliate",
+    "welcome": "Chào mừng đến với BittWorld Affiliate",
     "loginRequired": "Vui lòng đăng nhập để tiếp tục",
     "accessDenied": "Truy cập bị từ chối. Yêu cầu trạng thái BG Affiliate.",
     "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",

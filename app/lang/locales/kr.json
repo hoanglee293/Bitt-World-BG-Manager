@@ -81,7 +81,7 @@
     "emailConnecting": "이메일 연결"
   },
   "dashboard": {
-    "title": "MemePump 어필리에이트",
+    "title": "BittWorld 어필리에이트",
     "bgAffiliateDashboard": "BG 어필리에이트 대시보드",
     "downlineStats": "상세 하위 라인 통계",
     "commissionHistory": "수수료 내역",
@@ -231,7 +231,7 @@
     "unknownError": "알 수 없는 오류가 발생했습니다"
   },
   "messages": {
-    "welcome": "MemePump Affiliate에 오신 것을 환영합니다",
+    "welcome": "BittWorld Affiliate에 오신 것을 환영합니다",
     "loginRequired": "계속하려면 로그인하세요",
     "accessDenied": "접근이 거부되었습니다. BG 어필리에이트 상태가 필요합니다.",
     "sessionExpired": "세션이 만료되었습니다. 다시 로그인하세요.",

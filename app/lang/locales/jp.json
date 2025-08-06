@@ -81,7 +81,7 @@
     "emailConnecting": "メール接続"
   },
   "dashboard": {
-    "title": "MemePump Affiliate",
+    "title": "BittWorld Affiliate",
     "bgAffiliateDashboard": "BGアフィリエイトダッシュボード",
     "downlineStats": "詳細ダウンライン統計",
     "commissionHistory": "コミッション履歴",
@@ -231,7 +231,7 @@
     "unknownError": "不明なエラーが発生しました"
   },
   "messages": {
-    "welcome": "MemePump Affiliateへようこそ",
+    "welcome": "BittWorld Affiliateへようこそ",
     "loginRequired": "続行するにはログインしてください",
     "accessDenied": "アクセスが拒否されました。BGアフィリエイトステータスが必要です。",
     "sessionExpired": "セッションが期限切れです。再度ログインしてください。",
