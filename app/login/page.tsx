@@ -149,6 +149,8 @@ const Connect = () => {
       console.log("error", error);
       if (error.response?.data?.message === 'Invalid password') {
         toast.error(t('connectPage.messages.invalidPassword'));
+      } else if (error.response?.data?.message === 'Login failed: Wallet does not belong to BG affiliate system') {
+        toast.error(t('connectPage.messages.invalidWallet'));
       } else {
         toast.error(error.response?.data?.message || t('connectPage.messages.loginError'));
       }

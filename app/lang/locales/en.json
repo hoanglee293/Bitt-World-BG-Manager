@@ -45,6 +45,7 @@
     "logoutSuccess": "Logged out successfully",
     "connectWallet": "Connect Wallet",
     "profile": "Profile",
+    "initializing": "Initializing...",
     "settings": "Settings",
     "user": "User",
     "regularUser": "Regular User",

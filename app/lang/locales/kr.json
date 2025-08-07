@@ -42,6 +42,7 @@
   "auth": {
     "login": "로그인",
     "logout": "로그아웃",
+    "initializing": "초기화 중...",
     "logoutSuccess": "로그아웃되었습니다",
     "connectWallet": "지갑 연결",
     "profile": "프로필",
@@ -443,7 +444,8 @@
       "passwordChangeError": "비밀번호 변경 중 오류가 발생했습니다",
       "emailAlreadyExists": "이미 존재하는 이메일입니다. 다른 이메일을 사용하거나 로그인을 시도하세요",
       "invalidVerificationCode": "재설정 코드가 유효하지 않거나 만료되었습니다",
-      "invalidPassword": "비밀번호가 일치하지 않습니다"
+      "invalidPassword": "비밀번호가 일치하지 않습니다",
+      "invalidWallet": "지갑이 BG 어필리에이트 시스템에 속하지 않습니다"
     }
   }
 }
