@@ -231,7 +231,7 @@
     "unknownError": "不明なエラーが発生しました"
   },
   "messages": {
-    "welcome": "BittWorld Affiliateへようこそ",
+    "welcome": "BittWorld へようこそ",
     "loginRequired": "続行するにはログインしてください",
     "accessDenied": "アクセスが拒否されました。BGアフィリエイトステータスが必要です。",
     "sessionExpired": "セッションが期限切れです。再度ログインしてください。",
@@ -363,5 +363,87 @@
     "confirmWithdraw": "出金確認",
     "cancel": "キャンセル",
     "minimumAmount": "出金の最低金額は10ドルです"
+  },
+  "connectPage": {
+    "title": "アカウント接続",
+    "tabs": {
+      "login": "ログイン",
+      "register": "登録"
+    },
+    "login": {
+      "title": "ログイン",
+      "email": "メール",
+      "emailPlaceholder": "メールアドレスを入力",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力",
+      "forgotPassword": "パスワードを忘れた場合",
+      "loginButton": "ログイン",
+      "loggingIn": "ログイン中...",
+      "backToLogin": "ログインに戻る"
+    },
+    "register": {
+      "title": "登録",
+      "email": "メール",
+      "emailPlaceholder": "認証コードを受け取るメールアドレスを入力",
+      "verificationCode": "認証コード",
+      "verificationCodePlaceholder": "認証コードを入力",
+      "resendCode": "再送",
+      "resendCodeWithTimer": "再送 ({seconds}秒)",
+      "sendCode": "コード送信",
+      "sendingCode": "コード送信中...",
+      "fullName": "氏名",
+      "fullNamePlaceholder": "氏名を入力",
+      "nickname": "ニックネーム",
+      "nicknamePlaceholder": "ニックネームを入力",
+      "country": "国",
+      "countryPlaceholder": "国を選択",
+      "bitworldUid": "Bitworld UID",
+      "bitworldUidPlaceholder": "Bitworld UIDを入力",
+      "referralCode": "紹介コード（任意）",
+      "referralCodePlaceholder": "紹介コードを入力",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力",
+      "registerButton": "登録",
+      "registering": "登録中...",
+      "changeEmail": "変更",
+      "emailDisplay": "メール: {email}"
+    },
+    "forgotPassword": {
+      "title": "パスワードを忘れた場合",
+      "email": "メール",
+      "emailPlaceholder": "メールアドレスを入力",
+      "sendCode": "コード送信",
+      "sendingCode": "コード送信中...",
+      "verificationCode": "認証コード",
+      "verificationCodePlaceholder": "認証コードを入力",
+      "resendCode": "再送",
+      "resendCodeWithTimer": "再送 ({seconds}秒)",
+      "newPassword": "新しいパスワード",
+      "newPasswordPlaceholder": "新しいパスワードを入力",
+      "changePassword": "パスワード変更",
+      "changingPassword": "パスワード変更中...",
+      "backToEmail": "メールに戻る",
+      "backToCode": "コードに戻る"
+    },
+    "countries": {
+      "kr": "韓国",
+      "jp": "日本",
+      "vn": "ベトナム",
+      "en": "英語"
+    },
+    "messages": {
+      "verificationCodeSent": "認証コードが送信されました。メールを確認して認証コードを入力してください",
+      "verificationCodeResent": "認証コードが再送信されました。メールを確認してください",
+      "loginSuccess": "ログイン成功！{name}さん、おかえりなさい！",
+      "registerSuccess": "登録成功！アカウントが正常に作成されました！",
+      "passwordChangeSuccess": "パスワード変更成功！パスワードが正常に変更されました！",
+      "verificationCodeError": "認証コード送信中にエラーが発生しました",
+      "loginError": "ログイン中にエラーが発生しました",
+      "registerError": "登録中にエラーが発生しました",
+      "passwordChangeError": "パスワード変更中にエラーが発生しました",
+      "emailAlreadyExists": "メールアドレスが既に存在します。別のメールアドレスを使用するか、ログインを試してください",
+      "invalidVerificationCode": "無効または期限切れのリセットコード",
+      "invalidPassword": "無効なパスワード"
+    }
   }
 }

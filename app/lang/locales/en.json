@@ -231,7 +231,7 @@
     "unknownError": "Unknown error occurred"
   },
   "messages": {
-    "welcome": "Welcome to BittWorld Affiliate",
+    "welcome": "Welcome to BittWorld",
     "loginRequired": "Please login to continue",
     "accessDenied": "Access denied. BG Affiliate status required.",
     "sessionExpired": "Your session has expired. Please login again.",
@@ -442,7 +442,8 @@
       "registerError": "An error occurred while registering",
       "passwordChangeError": "An error occurred while changing password",
       "emailAlreadyExists": "Email already exists. Please use a different email or try to login",
-      "invalidVerificationCode": "Invalid or expired reset code"
+      "invalidVerificationCode": "Invalid or expired reset code",
+      "invalidPassword": "Invalid password"
     }
   }
 }

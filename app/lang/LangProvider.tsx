@@ -50,7 +50,7 @@ export const LangProvider: React.FC<LangProviderProps> = ({
     } else if (initialLang && ['en', 'vi', 'kr', 'jp'].includes(initialLang)) {
       finalLang = initialLang;
     } else if (detectedLang) {
-      finalLang = detectedLang;
+      finalLang = 'kr';
     }
     
     setLang(finalLang);

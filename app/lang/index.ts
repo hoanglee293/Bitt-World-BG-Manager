@@ -29,7 +29,7 @@ export const langConfig: {
 // Function to detect browser language
 export const detectBrowserLanguage = (): LangCodes => {
   if (typeof window === 'undefined') {
-    return 'en'; // Fallback for SSR
+    return 'kr'; // Fallback for SSR
   }
 
   const browserLang = navigator.language || navigator.languages?.[0] || 'kr';

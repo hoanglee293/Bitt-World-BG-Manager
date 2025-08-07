@@ -24,7 +24,6 @@ const Connect = () => {
   const router = useRouter();
   const [isForgot, setIsForgot] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
-  const [isTermsChecked, setIsTermsChecked] = useState(false);
   const { t } = useLang();
 
   // Login form state
@@ -32,8 +31,6 @@ const Connect = () => {
     email: '',
     password: ''
   });
-
-  console.log("isTermsChecked", isTermsChecked)
 
   // Email verification state
   const [emailForVerification, setEmailForVerification] = useState('');
@@ -76,15 +73,6 @@ const Connect = () => {
     setShowTermsModal(true);
   };
 
-  const handleTermsAccept = () => {
-    setIsTermsChecked(true);
-    setShowTermsModal(false);
-  };
-
-  const handleTermsDecline = () => {
-    setIsTermsChecked(false);
-    setShowTermsModal(false);
-  };
 
   const handleSendVerificationCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,21 +117,39 @@ const Connect = () => {
 
     try {
       const response = await manualLogin(loginData);
-      console.log("response", response)
+      console.log("response", response);
+      
       // Check if response has the expected structure
-      if (response) {
-        login(response.data.token);
-        const timeout = setTimeout(() => {
-          router.push('/');
-        }, 1000);
-        return () => clearTimeout(timeout);
-
-      } 
+      if (response && (response.walletInfo || response.token || response.data?.token)) {
+        // Extract token from response
+        const token = response.token || response.data?.token;
+        
+        if (token) {
+          login(token);
+          toast.success(t('connectPage.messages.loginSuccess', { name: response.walletInfo?.nickName || t('connectPage.login.title') }));
+          const timeout = setTimeout(() => {
+            router.push('/');
+          }, 1000);
+          return () => clearTimeout(timeout);
+        } else {
+          // If no token but response exists, still consider it successful
+          login();
+          toast.success(t('connectPage.messages.loginSuccess', { name: response.walletInfo.nickName || t('connectPage.login.title') }));
+          const timeout = setTimeout(() => {
+            router.push('/');
+          }, 1000);
+          return () => clearTimeout(timeout);
+        }
+      } else {
+        // Response exists but doesn't have expected structure
+        console.log("Unexpected response structure:", response);
+        toast.error(t('connectPage.messages.loginError'));
+      }
     } catch (error: any) {
-      console.log("error", error)
+      console.log("error", error);
       if (error.response?.data?.message === 'Invalid password') {
         toast.error(t('connectPage.messages.invalidPassword'));
-      }else{
+      } else {
         toast.error(error.response?.data?.message || t('connectPage.messages.loginError'));
       }
     } finally {
