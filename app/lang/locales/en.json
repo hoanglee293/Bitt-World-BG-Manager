@@ -445,7 +445,8 @@
       "passwordChangeError": "An error occurred while changing password",
       "emailAlreadyExists": "Email already exists. Please use a different email or try to login",
       "invalidVerificationCode": "Invalid or expired reset code",
-      "invalidPassword": "Invalid password"
+      "invalidPassword": "Invalid password",
+      "invalidWallet": "Login failed: Wallet does not belong to BG affiliate system"
     }
   }
 }
