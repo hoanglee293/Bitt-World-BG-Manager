@@ -163,7 +163,19 @@ export default function BgAffiliateStats() {
                 <Copy className="h-3 w-3 text-white" />
               </button></div>
               <div className="flex items-center gap-2">
-              <UserCheck className="h-3 w-3 text-purple-500" />
+                <UserCheck className="h-3 w-3 text-purple-500" />
+                <span className="font-medium">{t("auth.email")}:</span>
+              </div>
+              <div className="font-mono cursor-pointer text-[#009144]/70 py-1 px-2 font-semibold rounded w-fit flex items-center gap-2">{stats.currentWallet?.email}</div>
+
+              <div className="flex items-center gap-2">
+                <UserCheck className="h-3 w-3 text-purple-500" />
+                <span className="font-medium">{t("auth.referralCode")}:</span>
+              </div>
+              <div onClick={() => navigator.clipboard.writeText(user?.code ?? "")} className="font-mono cursor-pointer bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{user?.code} <Copy className="h-3 w-3 text-white" /></div>
+
+              <div className="flex items-center gap-2">
+                <UserCheck className="h-3 w-3 text-purple-500" />
                 <span className="font-medium">{t("commission.currentAlias")}:</span>
               </div>
               <div className="font-mono bg-[#009144]/70 py-1 px-2 font-semibold rounded text-white w-fit flex items-center gap-2">{stats.currentWallet.bgAlias ?? stats.currentWallet.nickName}</div>
