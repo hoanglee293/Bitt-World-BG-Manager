@@ -69,7 +69,7 @@ export default function BgAffiliateStats() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="grid gap-4 p-4 mx-4 rounded-lg animate-in slide-in-from-bottom-2 duration-500" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
+      <CardContent className="grid gap-4 p-4 md:mx-4 rounded-lg animate-in slide-in-from-bottom-2 duration-500 mx-0" style={{ boxShadow: "0px 3px 10px 9px #1f1f1f14" }}>
         {/* <div className="flex items-center justify-between">
           <span className="font-medium">{t("auth.bgAffiliate")}:</span>
           <span>{stats.isBgAffiliate ? t("common.yes") : t("common.no")}</span>
@@ -84,7 +84,7 @@ export default function BgAffiliateStats() {
               <h3 className="font-semibold text-lg group-hover:text-orange-600 transition-colors">{t("affiliate.referralLink")}:</h3>
             </div>
             <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg border border-orange-200">
-              <span className="font-mono text-sm text-orange-700 truncate flex-1">
+              <span className="font-mono text-sm text-orange-700 break-all min-w-0 flex-1 md:break-normal md:truncate">
                 https://bitworld-mmp-fe-production.up.railway.app/?ref={user.code}
               </span>
               <button
@@ -166,7 +166,7 @@ export default function BgAffiliateStats() {
                 <UserCheck className="h-3 w-3 text-purple-500" />
                 <span className="font-medium">{t("auth.email")}:</span>
               </div>
-              <div className="font-mono cursor-pointer text-[#009144]/70 py-1 px-2 font-semibold rounded w-fit flex items-center gap-2">{stats.currentWallet?.email}</div>
+              <div className="font-mono cursor-pointer text-[#009144]/70 py-1 px-2 font-semibold rounded w-fit flex items-center gap-2 break-all md:break-normal md:truncate">{stats.currentWallet?.email}</div>
 
               <div className="flex items-center gap-2">
                 <UserCheck className="h-3 w-3 text-purple-500" />
@@ -186,7 +186,7 @@ export default function BgAffiliateStats() {
               </div>
               <div className="flex items-center gap-2 bg-[#009144]/70 py-1 px-2 font-semibold w-fit rounded ">
                 <span className="font-mono text-white truncate">
-                  {stats.currentWallet?.solanaAddress.substring(0, 7)}...{stats.currentWallet?.solanaAddress.substring(stats.currentWallet.solanaAddress.length - 4)}
+                  {stats.currentWallet?.solanaAddress.substring(0, 4)}...{stats.currentWallet?.solanaAddress.substring(stats.currentWallet.solanaAddress.length - 4)}
                 </span>
                 <button
                   onClick={() => navigator.clipboard.writeText(stats.currentWallet?.solanaAddress)}
